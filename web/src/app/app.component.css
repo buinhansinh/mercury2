@@ -1,16 +1,46 @@
 .example-container {
-    height: 100%;
-    border: 1px solid rgba(0, 0, 0, 0.5);
-  }
-  
-  .example-sidenav-content {
-    display: flex;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .example-sidenav {
-    /* padding: 20px; */
-  }
-  
+  height: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.example-sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.example-sidenav {
+  /* padding: 20px; */
+}
+
+html {
+  font-family: "Roboto","Helvetica Neue","sans-serif";
+}
+
+body {
+  min-width: 1024px;
+}
+
+mat-toolbar {
+  padding: 0 10px;
+  min-width: 1024px;
+  box-shadow: 0 3px 3px gray;
+}
+
+mat-toolbar button {
+  margin: 0 2px;
+}
+
+mat-toolbar button span {
+  text-transform: uppercase;
+}
+
+mat-toolbar .spacer {
+  flex: 1 1 auto;
+}
+
+mat-toolbar input {
+  height: 30px;
+  margin: 0px 5px;
+}

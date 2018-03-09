@@ -1,8 +1,37 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <mat-toolbar color="primary">
-  <mat-icon>home</mat-icon>
-  <span>&nbsp;MERCURY</span>
+  <button mat-button routerLink="/" routerLinkActive="active">
+    <mat-icon>polymer</mat-icon>
+    <span>Mercury</span>
+  </button>
+  <input matInput type="search" placeholder="Search" [matAutocomplete]="auto">
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option [value]="boo">boo</mat-option>
+    <!-- <mat-option *ngFor="let option of options" [value]="option">
+        {{ option }}
+      </mat-option> -->
+  </mat-autocomplete>
+  <span class="spacer"></span>
+  <button mat-button routerLink="/admin" routerLinkActive="active">
+    <span>Sales</span>
+  </button>
+  <button mat-button routerLink="/admin" routerLinkActive="active">
+    <span>Purchasing</span>
+  </button>
+  <button mat-button routerLink="/admin" routerLinkActive="active">
+    <span>Inventory</span>
+  </button>
+  <button mat-button routerLink="/admin" routerLinkActive="active">
+    <span>Accounting</span>
+  </button>
+  <button mat-button routerLink="/admin" routerLinkActive="active">
+    <span>Management</span>
+  </button>  
+  <button mat-icon-button>
+    <mat-icon>account_circle</mat-icon>
+  </button>
 </mat-toolbar>
+<!--
 <mat-drawer-container class="example-container" autosize>
 
   <mat-drawer #drawer class="example-sidenav" mode="side">
@@ -19,4 +48,5 @@
     </button>
   </div>
 </mat-drawer-container>
-
+ -->
+<router-outlet></router-outlet>
