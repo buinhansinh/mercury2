@@ -1,3 +1,12 @@
-<p>
-  admin works!
-</p>
+<mat-drawer-container class="" autosize>
+    <mat-drawer #drawer class="drawer" mode="side" opened="true">
+        <p>Auto-resizing sidenav</p>
+        <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
+        <button (click)="showFiller = !showFiller" mat-raised-button>
+      Toggle extra text
+    </button>
+    </mat-drawer>
+    <mat-drawer-content>
+        admin works!
+    </mat-drawer-content>
+</mat-drawer-container>

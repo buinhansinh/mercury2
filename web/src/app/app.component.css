@@ -1,46 +1,42 @@
-.example-container {
-  height: 100%;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-}
-
-.example-sidenav-content {
-  display: flex;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-}
-
-.example-sidenav {
-  /* padding: 20px; */
-}
-
-html {
-  font-family: "Roboto","Helvetica Neue","sans-serif";
-}
-
 body {
-  min-width: 1024px;
+    font-family: "Roboto", "Helvetica Neue", "sans-serif";
 }
 
 mat-toolbar {
-  padding: 0 10px;
-  min-width: 1024px;
-  box-shadow: 0 3px 3px gray;
+    position: fixed;
+    z-index: 99;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 0 10px;
+    min-width: 1024px;
+    box-shadow: 0 3px 3px gray;
 }
 
 mat-toolbar button {
-  margin: 0 2px;
+    margin: 0 2px;
 }
 
 mat-toolbar button span {
-  text-transform: uppercase;
+    text-transform: uppercase;
 }
 
 mat-toolbar .spacer {
-  flex: 1 1 auto;
+    flex: 1 1 auto;
 }
 
 mat-toolbar input {
-  height: 30px;
-  margin: 0px 5px;
+    width: 300px;
+    height: 30px;
+    margin: 0 5px 0 5px;
+    padding: 5px 15px;
+    border: 0;
+}
+
+.container {
+    position: absolute;
+    top: 64px;
+    bottom: 0px;
+    left: 0;
+    right: 0;
 }

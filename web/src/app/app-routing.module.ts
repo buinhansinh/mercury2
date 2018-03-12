@@ -1,12 +1,13 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
-import { AdminComponent } from "./admin/admin.component";
 
 const routes: Routes = [
-  { path: "", redirectTo: "/dashboard", pathMatch: "full" },
+  { path: "admin", loadChildren: 'app/admin/admin.module#AdminModule', },
   { path: "dashboard", component: DashboardComponent },
-  { path: "admin", component: AdminComponent }
+  { path: '',   redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
