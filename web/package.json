@@ -18,7 +18,7 @@
     "@angular/cdk": "^5.2.4",
     "@angular/common": "^5.2.8",
     "@angular/compiler": "^5.2.8",
-    "@angular/core": "^5.2.8",
+    "@angular/core": "^5.2.9",
     "@angular/forms": "^5.2.8",
     "@angular/http": "^5.2.8",
     "@angular/material": "^5.2.4",
@@ -34,7 +34,6 @@
     "passport-local": "^1.0.0",
     "pg-native": "^2.2.0",
     "pg-promise": "^8.1.1",
-    "rxjs": "^5.5.6",
     "serve-favicon": "^2.4.5",
     "winston": "^2.4.0",
     "zone.js": "^0.8.19"

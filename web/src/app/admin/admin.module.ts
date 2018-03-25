@@ -7,41 +7,58 @@ import {
 import {
     RouterModule,
     Routes
-} from "@angular/router";
+} from '@angular/router';
 import {
     AdminComponent
 } from './admin.component';
 import {
     UserComponent
 } from './user/user.component';
+import { FormsModule } from '@angular/forms';
 import {
-    GroupComponent
-} from './group/group.component';
+    MatSidenavModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatListModule,
+    MatButton,
+    MatButtonModule,
+    MatCardModule,
+    MatInputModule,
+    MatCheckboxModule,
+} from '@angular/material';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import {
-  MatSidenavModule,
-} from "@angular/material";
+    UserService
+} from './user/user.service';
 
 const routes: Routes = [{
-    path: 'admin',
+    path: '',
     component: AdminComponent,
     children: [{
-            path: 'users',
-            component: UserComponent,
-        },
-        {
-            path: 'groups',
-            component: GroupComponent
-        }
+        path: 'user/:id',
+        component: UserComponent,
+    },
     ]
 }];
 
 @NgModule({
     imports: [
         CommonModule,
+        FormsModule,
         RouterModule.forChild(routes),
         MatSidenavModule,
-       
+        MatExpansionModule,
+        MatIconModule,
+        MatListModule,
+        MatButtonModule,
+        MatCardModule,
+        MatInputModule,
+        MatFormFieldModule,
+        MatCheckboxModule,
     ],
-    declarations: [AdminComponent, UserComponent, GroupComponent]
+    providers: [
+        UserService,
+    ],
+    declarations: [AdminComponent, UserComponent]
 })
-export class AdminModule {}
+export class AdminModule { }

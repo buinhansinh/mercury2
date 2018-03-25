@@ -40,3 +40,8 @@ mat-toolbar input {
     left: 0;
     right: 0;
 }
+
+input[type="search"] {
+    font-size: medium;
+    background: white;
+}

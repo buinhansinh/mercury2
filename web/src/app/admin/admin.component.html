@@ -1,12 +1,23 @@
 <mat-drawer-container class="" autosize>
     <mat-drawer #drawer class="drawer" mode="side" opened="true">
-        <p>Auto-resizing sidenav</p>
-        <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
-        <button (click)="showFiller = !showFiller" mat-raised-button>
-      Toggle extra text
-    </button>
+        <mat-nav-list>
+            <mat-list-item>
+                <mat-icon matListIcon>dashboard</mat-icon>
+                <a matLine routerLink="./">Dashboard</a>
+            </mat-list-item>
+            <h4 mat-subheader>Users</h4>
+            <mat-list-item *ngFor="let user of users" routerLink="./user/{{user.id}}">
+                <a matLine routerLink="./user/{{user.id}}">{{ user.firstName }} {{user.lastName}}</a>
+                <mat-icon matListIcon>person</mat-icon>
+            </mat-list-item>
+            <mat-list-item>
+                <mat-icon matListIcon>add_circle</mat-icon>
+                <a matLine routerLink="./">Add User</a>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+        </mat-nav-list>
     </mat-drawer>
     <mat-drawer-content>
-        admin works!
+        <router-outlet></router-outlet>
     </mat-drawer-content>
 </mat-drawer-container>

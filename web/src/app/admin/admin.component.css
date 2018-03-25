@@ -1,30 +1,28 @@
 mat-drawer-container {
-  /* position: absolute;
-  top: 64px;
-  bottom: 0px;
-  left: 0;
-  right: 0; */
-  height: 100%;
+    height: 100%;
 }
 
 mat-drawer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 200px;
-  /* background: rgba(255, 0, 0, 0.5); */
+    display: flex;
+    flex-direction: column;
+    align-items: top;
+    justify-content: top;
+    min-width: 200px;
+    background-color: transparent;
 }
 
-.example-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+mat-drawer-content {
+    padding: 20px;
 }
 
-.example-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+mat-expansion-panel {
+    background-color: transparent;
+}
+
+mat-list-item * {
+    color: rgb(97, 97, 97);
+}
+
+mat-nav-list h4 {
+    text-transform: uppercase;
 }
