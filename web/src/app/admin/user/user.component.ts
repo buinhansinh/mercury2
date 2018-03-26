@@ -17,6 +17,7 @@ export class UserComponent implements OnInit {
   public form: FormGroup;
   public user$: Observable<User>;
   public groups;
+  public oldUsername: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -25,8 +26,11 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     this.user$ = this.route.paramMap
-    .switchMap((params: ParamMap, index: number) =>
-      this.userService.getById(params.get('id')));
+      .switchMap((params: ParamMap, index: number) =>
+        this.userService.getById(params.get('id')));
+    this.user$.subscribe((user: User) => {
+      this.oldUsername = user.name;
+    });
     this.groups = [
       [Group.ADMIN, 'Admin'],
       [Group.SALES, 'Sales'],

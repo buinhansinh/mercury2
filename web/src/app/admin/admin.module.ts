@@ -8,12 +8,6 @@ import {
     RouterModule,
     Routes
 } from '@angular/router';
-import {
-    AdminComponent
-} from './admin.component';
-import {
-    UserComponent
-} from './user/user.component';
 import { FormsModule } from '@angular/forms';
 import {
     MatSidenavModule,
@@ -28,8 +22,17 @@ import {
 } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {
+    AdminComponent
+} from './admin.component';
+import {
     UserService
 } from './user/user.service';
+import {
+    UserComponent
+} from './user/user.component';
+import {
+    UsernameExistsDirective
+} from './user/username-exists.directive';
 
 const routes: Routes = [{
     path: '',
@@ -59,6 +62,6 @@ const routes: Routes = [{
     providers: [
         UserService,
     ],
-    declarations: [AdminComponent, UserComponent]
+    declarations: [AdminComponent, UserComponent, UsernameExistsDirective]
 })
 export class AdminModule { }

@@ -7,8 +7,13 @@
     <mat-card-content>
         <form>
             <mat-form-field>
-                <input matInput placeholder="Username" name="username" [(ngModel)]="user.name" required minlength="4" maxlength="16" pattern="^[a-z]*[0-9]*">
-                <mat-hint align="begin">Letters only but can end with a number</mat-hint>
+                <input matInput placeholder="Username" name="username" #name="ngModel" [(ngModel)]="user.name" 
+                    required 
+                    minlength="4" 
+                    maxlength="16" 
+                    pattern="^[a-z]*[0-9]*"
+                    [appUsernameExists]="oldUsername">
+                <div *ngIf="name.invalid" align="begin">Letters only but can end with a number</div>
             </mat-form-field>
 
             <mat-form-field>
@@ -28,4 +33,7 @@
             </mat-list>
         </form>
     </mat-card-content>
+    <mat-card-actions>
+        <button mat-button>Save</button>
+    </mat-card-actions>
 </mat-card>

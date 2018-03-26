@@ -4,6 +4,10 @@ import { USERS } from './user.mock-data';
 import { of } from 'rxjs/observable/of';
 import { Observable } from 'rxjs/Observable';
 
+function clone(obj) {
+    return JSON.parse(JSON.stringify(obj));
+}
+
 @Injectable()
 export class UserService {
 
@@ -11,25 +15,27 @@ export class UserService {
 
     constructor() { }
 
+
     getById(id: string): Observable<User> {
         const results: User[] = this.USERS.filter(user => user.id === id);
-        return of(results.length > 0 ? results[0] : null);
+        return of(results.length > 0 ? clone(results[0]) : null);
     }
 
-    getByName(name: string): User {
+    getByName(name: string): Observable<User> {
         const results: User[] = this.USERS.filter(user => user.name === name);
-        return results.length > 0 ? results[0] : null;
+        console.log('name: ' + name + ' results: ' + results[0].name);
+        return of(results.length > 0 ? clone(results[0]) : null);
     }
 
-    getAll(): User[] {
-        return this.USERS;
+    getAll(): Observable<User[]> {
+        return of(clone(this.USERS));
     }
 
-    put(user: User) {
+    put(user: User): void {
         this.USERS.push(user);
     }
 
-    delete(user: User) {
-        this.USERS = USERS.filter(u => u.id !== user.id);
+    delete(user: User): void {
+        this.USERS = this.USERS.filter(u => u.id !== user.id);
     }
 }

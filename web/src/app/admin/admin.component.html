@@ -6,7 +6,7 @@
                 <a matLine routerLink="./">Dashboard</a>
             </mat-list-item>
             <h4 mat-subheader>Users</h4>
-            <mat-list-item *ngFor="let user of users" routerLink="./user/{{user.id}}">
+            <mat-list-item *ngFor="let user of (users$ | async)" routerLink="./user/{{user.id}}">
                 <a matLine routerLink="./user/{{user.id}}">{{ user.firstName }} {{user.lastName}}</a>
                 <mat-icon matListIcon>person</mat-icon>
             </mat-list-item>
