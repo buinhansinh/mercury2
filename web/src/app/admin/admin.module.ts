@@ -19,6 +19,8 @@ import {
     MatCardModule,
     MatInputModule,
     MatCheckboxModule,
+    ErrorStateMatcher,
+    ShowOnDirtyErrorStateMatcher,
 } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {
@@ -61,6 +63,7 @@ const routes: Routes = [{
     ],
     providers: [
         UserService,
+        { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
     ],
     declarations: [AdminComponent, UserComponent, UsernameExistsDirective]
 })

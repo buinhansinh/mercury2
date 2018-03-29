@@ -23,7 +23,6 @@ export class UserService {
 
     getByName(name: string): Observable<User> {
         const results: User[] = this.USERS.filter(user => user.name === name);
-        console.log('name: ' + name + ' results: ' + results[0].name);
         return of(results.length > 0 ? clone(results[0]) : null);
     }
 

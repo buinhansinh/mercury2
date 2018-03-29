@@ -5,15 +5,22 @@
         <!-- <mat-card-subtitle></mat-card-subtitle> -->
     </mat-card-header>
     <mat-card-content>
-        <form>
+        <form #userForm="ngForm">
             <mat-form-field>
-                <input matInput placeholder="Username" name="username" #name="ngModel" [(ngModel)]="user.name" 
+                <input matInput placeholder="Username" name="name" #name="ngModel" [(ngModel)]="user.name" 
                     required 
                     minlength="4" 
                     maxlength="16" 
                     pattern="^[a-z]*[0-9]*"
-                    [appUsernameExists]="oldUsername">
-                <div *ngIf="name.invalid" align="begin">Letters only but can end with a number</div>
+                    [appUsernameExists]="oldUsername"
+                    >
+                <mat-error *ngIf="name.invalid && (name.dirty || name.touched)" align="begin">
+                    Invalid username:
+                    <span *ngIf="name.errors.usernameExists">{{name.errors.usernameExists}}</span>
+                    <span *ngIf="name.errors.minlength">Must have more than 4 characters</span>
+                    <span *ngIf="name.errors.maxlength">Must not have more than 16 characters</span>
+                    <span *ngIf="name.errors.pattern">Usernames must consist only of letters but can end with numbers</span>
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field>

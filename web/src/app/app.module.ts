@@ -15,6 +15,8 @@ import {
     MatButton,
     MatCardModule,
     MatFormFieldModule,
+    ErrorStateMatcher,
+    ShowOnDirtyErrorStateMatcher,
 } from '@angular/material';
 import {
     BrowserModule
@@ -60,7 +62,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
         MatCardModule,
         MatFormFieldModule,
     ],
-    providers: [],
+    providers: [
+        { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
