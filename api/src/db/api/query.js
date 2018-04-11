@@ -1,4 +1,4 @@
-const migrations = require("./tables/migrations")
+const migration = require("./table/migration")
 
 const query = (db) => {
 
@@ -22,9 +22,9 @@ const query = (db) => {
         }
     }
     
-    const users = {
+    const user = {
         create: () => {
-            return db.none(`CREATE TABLE users (
+            return db.none(`CREATE TABLE user_ (
                 uuid uuid PRIMARY KEY,
                 name varchar(64),
                 salt varchar(128),
@@ -32,28 +32,28 @@ const query = (db) => {
         }
     }
 
-    const groups = {
+    const group = {
         create: () => {
-            return db.none(`CREATE TABLE groups (
+            return db.none(`CREATE TABLE group_ (
                 uuid uuid PRIMARY KEY,
                 name varchar(64));`)            
         }
     }
 
-    const usergroups = {
+    const usergroup = {
         create: () => {
-            return db.none(`CREATE TABLE usergroups (
-                userId uuid REFERENCES users,
-                groupId uuid REFERENCES groups);`)
+            return db.none(`CREATE TABLE usergroup (
+                userId uuid REFERENCES user_,
+                groupId uuid REFERENCES group_);`)
         }
     }
 
     return {
         table: table,
-        migrations: migrations(db),
-        users: users,
-        groups: groups,
-        usergroups: usergroups,
+        migration: migration(db),
+        user: user,
+        group: group,
+        usergroup: usergroup,
     }
 }
 

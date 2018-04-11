@@ -1,9 +1,9 @@
-const logger = require('../common/log')
-const query = require('./query')
-const db = require('./connection')
+const logger = require('../../common/log')
+const query = require('../api/query')
+const db = require('../api/connection')
 
 // migrations
-const m0001 = require('./migrations/0001')
+const m0001 = require('./0001')
 var migrations = [
     ['init', m0001],
 ]
@@ -11,19 +11,21 @@ var migrations = [
 // do migration
 const migrate = async () => {
 
+    logger.log('info', `starting migrations`)
+
     // drop everything first - TODO: remove on production
     await query(db).table.dropAll()
 
     // ensure migration table exists
-    await query(db).migrations.create()
+    await query(db).migration.create()
 
     // do migrations
     for (let [index, val] of migrations.entries()) {
-        let res = await query(db).migrations.exists(index+1)
+        let res = await query(db).migration.exists(index+1)
         if (!res.exists)
             try {
                 await val[1]()
-                await query(db).migrations.insert(val[0])
+                await query(db).migration.insert(val[0])
                 logger.log('info', `migration ${val[0]} success`)
             } catch (e) {
                 logger.log('error', `migration ${val[0]} failed: ${e}`)

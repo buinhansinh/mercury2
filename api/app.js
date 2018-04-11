@@ -1,14 +1,13 @@
 const express = require('express');
 const path = require('path');
-const favicon = require('serve-favicon');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const passport = require('passport');
-const api_init = require('./api/init');
-const api_route = require('./api/route');
+const api_init = require('./src/init');
+const api_route = require('./src/route');
 
 
-// api_init()
+api_init()
 
 // var book = require('./routes/book');
 const app = express();
@@ -21,9 +20,9 @@ app.use(bodyParser.urlencoded({'extended':'false'}));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.static(path.join(__dirname, 'dist')));
+// app.use(express.static(path.join(__dirname, 'dist')));
 // app.use('/api', express.static(path.join(__dirname, 'dist')));
-// app.use('/api', api_route);
+app.use('/api', api_route);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

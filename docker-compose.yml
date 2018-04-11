@@ -1,17 +1,17 @@
 version: '2'
 services:
-  web:
+  api:
     build:
       context: .
-      dockerfile: web.dockerfile
+      dockerfile: api.dockerfile
     ports:
-      - "4200:4200"
+      - "8000:8000"
     volumes:
-      - ./web:/web
+      - ./api:/api
     depends_on:
       - postgres
     env_file: dev.env
-    command: ['npm', 'run', 'start:dev:ng']
+    command: ['npm', 'run', 'start:dev']
   postgres:
-    image: postgres:10.2-alpine
+    image: postgres:10.3-alpine
     env_file: dev.env

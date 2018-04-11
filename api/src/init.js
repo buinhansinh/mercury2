@@ -1,4 +1,4 @@
-const migrate = require('./db/migrate.js')
+const migrate = require('./db/migration/migrate')
 
 const init = () => {
     // Do db migrations
