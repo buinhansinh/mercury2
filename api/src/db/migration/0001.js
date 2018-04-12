@@ -1,4 +1,3 @@
-const query = require('../api/query')
 const db = require('../api/connection')
 
 module.exports = () => {
@@ -8,7 +7,7 @@ module.exports = () => {
             name varchar(64),
             salt varchar(128),
             password varchar(128),
-            groups bit(6)
+            groups bigint
         );`)
     })
 }

@@ -7,6 +7,10 @@ mat-form-field {
     margin-bottom: 30px;
 }
 
+mat-card {
+    margin-right: 300px;
+}
+
 mat-card > * {
     margin-bottom: 30px;
 }

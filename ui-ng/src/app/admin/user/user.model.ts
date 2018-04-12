@@ -8,22 +8,14 @@ export enum Group {
     // insert here
 }
 
-export class User {
+export interface User {
     id: string;
     name: string;
     firstName: string;
     lastName: string;
     groups: number;
+}
 
-    constructor(o: { id: string, name: string, firstName: string, lastName: string, groups: number }) {
-        this.id = o.id;
-        this.name = o.name;
-        this.firstName = o.firstName;
-        this.lastName = o.lastName;
-        this.groups = o.groups;
-    }
-
-    public belongsTo(g: Group): boolean {
-        return (this.groups & g) === g;
-    }
+export function userBelongsTo(user: User, group: Group): boolean {
+    return (user.groups & group) === group;
 }

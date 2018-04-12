@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { User, Group } from './user.model';
+import { User, Group, userBelongsTo } from './user.model';
 import { Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { UserService } from './user.service';
@@ -23,9 +23,7 @@ export class UserComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService) { }
 
-  userBelongsTo(user: User, group: number): boolean {
-    return user.belongsTo(group);
-  }
+  public userBelongsTo = userBelongsTo;
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
