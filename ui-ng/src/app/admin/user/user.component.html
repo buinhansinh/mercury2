@@ -35,7 +35,7 @@
                 <h3 mat-subheader>Member Of</h3>
                 <mat-divider [inset]="true"></mat-divider>
                 <mat-list-item *ngFor="let group of groups">
-                    <mat-checkbox [checked]="user.groups.indexOf(group[0]) !== -1">{{group[1]}}</mat-checkbox>
+                    <mat-checkbox [checked]="userBelongsTo(user, group[0])">{{group[1]}}</mat-checkbox>
                 </mat-list-item>
             </mat-list>
         </form>
