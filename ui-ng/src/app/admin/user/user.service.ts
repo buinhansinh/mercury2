@@ -3,6 +3,7 @@ import { User, Group } from './user.model';
 import { USERS } from './user.mock-data';
 import { of } from 'rxjs/observable/of';
 import { Observable } from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
 
 function clone(obj) {
     return JSON.parse(JSON.stringify(obj));
@@ -13,8 +14,37 @@ export class UserService {
 
     private USERS: User[] = USERS;
 
-    constructor() { }
+    constructor(private http: HttpClient) { }
 
+    getById(id: string): Observable<User> {
+        return this.http.get<User>(`api/admin/user/${id}`);
+    }
+
+    getByName(name: string): Observable<User> {
+        const results: User[] = this.USERS.filter(user => user.name === name);
+        return of(results.length > 0 ? clone(results[0]) : null);
+    }
+
+    getAll(): Observable<User[]> {
+        return of(clone(this.USERS));
+    }
+
+    put(user: User): void {
+        this.USERS.push(user);
+    }
+
+    delete(user: User): void {
+        this.USERS = this.USERS.filter(u => u.id !== user.id);
+    }
+}
+
+
+@Injectable()
+export class MockUserService {
+
+    private USERS: User[] = USERS;
+
+    constructor() { }
 
     getById(id: string): Observable<User> {
         const results: User[] = this.USERS.filter(user => user.id === id);

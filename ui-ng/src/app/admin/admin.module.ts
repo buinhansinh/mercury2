@@ -8,7 +8,12 @@ import {
     RouterModule,
     Routes
 } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import {
+    HttpClientModule
+} from '@angular/common/http';
+import {
+    FormsModule
+} from '@angular/forms';
 import {
     MatSidenavModule,
     MatExpansionModule,
@@ -51,6 +56,7 @@ const routes: Routes = [{
         CommonModule,
         FormsModule,
         RouterModule.forChild(routes),
+        HttpClientModule,
         MatSidenavModule,
         MatExpansionModule,
         MatIconModule,

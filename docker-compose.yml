@@ -1,5 +1,17 @@
 version: '2'
 services:
+  web:
+    image: nginx:1.13.12-alpine
+    volumes:
+      - ./ui-ng/dist:/www
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "8080:80"
+    environment:
+      - NGINX_HOST=mercury.com
+      - NGINX_PORT=80
+    links:
+      - api:api
   api:
     build:
       context: .
