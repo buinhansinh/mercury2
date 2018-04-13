@@ -15,7 +15,7 @@ import { Observable } from 'rxjs/Observable';
 export class UserComponent implements OnInit {
 
   public form: FormGroup;
-  public user$: Observable<User>;
+  public user: User;
   public groups;
   public oldUsername: string;
 
@@ -27,10 +27,11 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.user$ = this.route.paramMap
+    let user$ = this.route.paramMap
       .switchMap((params: ParamMap, index: number) =>
         this.userService.getById(params.get('id')));
-    this.user$.subscribe((user: User) => {
+    user$.subscribe((user: User) => {
+      this.user = user;
       this.oldUsername = user.name;
     });
     this.groups = [

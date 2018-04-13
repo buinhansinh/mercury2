@@ -1,16 +1,11 @@
-var router = require('express').Router()
+let router = require('express').Router()
+let q = require('../db/api/query')
 
-// middleware that is specific to this router
-router.use(function timeLog (req, res, next) {
-  console.log('Time: ', Date.now())
-  next()
+router.get('/user/:id', function (req, res) {
+  res.send(JSON.stringify({ id: "1", name: "sales", firstName: "John", lastName: "Sales" }))
 })
-// define the home page route
-router.get('/', function (req, res) {
-  res.send('Birds home page')
-})
-// define the about route
-router.get('/about', function (req, res) {
+
+router.put('/user/:id', function (req, res) {
   res.send(`About birds`)
 })
 
