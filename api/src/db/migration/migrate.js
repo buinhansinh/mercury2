@@ -11,8 +11,6 @@ var migrations = [
 // do migration
 const migrate = async () => {
 
-    logger.log('info', `starting migrations`)
-
     // drop everything first - TODO: remove on production
     await query(db).table.dropAll()
 
@@ -33,6 +31,8 @@ const migrate = async () => {
         else
             logger.log('info', `migration ${val[0]} skipped`)
     }
+
+    logger.log('info', `migrations complete`)
 }
 
 module.exports = migrate

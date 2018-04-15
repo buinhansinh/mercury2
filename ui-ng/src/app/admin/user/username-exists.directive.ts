@@ -11,13 +11,13 @@ import { of } from 'rxjs/observable/of';
 })
 export class UsernameExistsDirective implements AsyncValidator {
 
-    @Input('appUsernameExists') appUsernameExists: string;
+    @Input('appUsernameExists') formerName: string;
 
     constructor(private userService: UserService) { }
 
     validate(c: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
-        return this.userService.getByName(c.value).map(user => {
-            return user && (user.name !== this.appUsernameExists) ? { 'usernameExists': 'username already exists' } : null;
+        return this.userService.exists(c.value).map(exists => {
+            return exists && (c.value !== this.formerName) ? { 'usernameExists': 'username already exists' } : null;
         });
     }
 }
