@@ -3,12 +3,11 @@ const crypto = require("crypto");
 const user = (db) => {
     return {
         getAll: async () => {
-            return db.any(`select uuid as id, name, firstName, lastName, groups from user_`)
+            return db.any(`select id, name, display_name, groups from user_`)
         },
 
         getById: async id => {
-            console.log(id)
-            return db.one(`select uuid as id, name, firstName, lastName, groups from user_ where uuid = $1`, id)
+            return db.one(`select id, name, display_name, groups from user_ where id = $1`, id)
         },
 
         exists: async name => {
@@ -17,9 +16,9 @@ const user = (db) => {
 
         insert: async user => {
             // user["salt"] = crypto.randomBytes(16).toString("hex");
-            return db.one(`insert into user_ (uuid, name, firstName, lastName, salt, password, groups) 
-                values(uuid_generate_v4(), $(name), $(firstName), $(lastName), $(salt), $(password), $(groups))
-                returning uuid as id`, user)
+            return db.one(`insert into user_ (id, name, display_name, salt, password, groups) 
+                values(uuid_generate_v4(), $(name), $(display_name), $(salt), $(password), $(groups))
+                returning id`, user)
         },
 
         // // insert one or many users
@@ -52,22 +51,19 @@ const user = (db) => {
         // },
 
         update: async user => {
-            return db.one(`
+            return db.none(`
                 update user_ set
                     name = $(name), 
-                    firstName = $(firstName), 
-                    lastName = $(lastName), 
+                    display_name = $(display_name), 
                     groups = $(groups) 
-                where id = $(id)
-                returning id, name, firstName, lastName, groups`, user)
+                where id = $(id)`, user)
         },
 
         updatePassword: async (id, password) => {
-            return db.one(`
+            return db.none(`
                 update user_ set 
                     password = $1, 
-                where id = $2
-                returning id`, [ password, id ])
+                where id = $2`, [ password, id ])
         }
     }
 };

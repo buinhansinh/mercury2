@@ -4,8 +4,7 @@ const USERS = [
     {
         // id: '1',
         name: 'sales',
-        firstName: 'John',
-        lastName: 'Sales',
+        display_name: 'Sales',
         groups: Group.SALES,
         salt: 'salt',
         password: 'sales',
@@ -13,8 +12,7 @@ const USERS = [
     {
         // id: '2',
         name: 'purchasing',
-        firstName: 'John',
-        lastName: 'Purchasing',
+        display_name: 'Purchasing',
         groups: Group.PURCHASING,
         salt: 'salt',
         password: 'purchasing',
@@ -22,8 +20,7 @@ const USERS = [
     {
         // id: '3',
         name: 'inventory',
-        firstName: 'John',
-        lastName: 'Inventory',
+        display_name: 'Inventory',
         groups: Group.INVENTORY,
         salt: 'salt',
         password: 'inventory',
@@ -31,8 +28,7 @@ const USERS = [
     {
         // id: '4',
         name: 'accounting',
-        firstName: 'John',
-        lastName: 'Accounting',
+        display_name: 'Accounting',
         groups: Group.ACCOUNTING,
         salt: 'salt',
         password: 'accounting',
@@ -40,8 +36,7 @@ const USERS = [
     {
         // id: '5',
         name: 'management',
-        firstName: 'John',
-        lastName: 'Management',
+        display_name: 'Management',
         groups: Group.MANAGEMENT,
         salt: 'salt',
         password: 'management',
@@ -49,8 +44,7 @@ const USERS = [
     {
         // id: '6',
         name: 'admin',
-        firstName: 'John',
-        lastName: 'Admin',
+        display_name: 'Admin',
         groups: Group.ADMIN,
         salt: 'salt',
         password: 'admin',

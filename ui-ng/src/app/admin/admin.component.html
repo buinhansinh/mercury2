@@ -7,7 +7,7 @@
             </mat-list-item>
             <h4 mat-subheader>Users</h4>
             <mat-list-item *ngFor="let user of (users$ | async)" routerLink="./user/{{user.id}}">
-                <a matLine routerLink="./user/{{user.id}}">{{ user.firstname }} {{ user.lastname }}</a>
+                <a matLine routerLink="./user/{{user.id}}">{{ user.display_name }} </a>
                 <mat-icon matListIcon>person</mat-icon>
             </mat-list-item>
             <mat-list-item>

@@ -1,18 +1,17 @@
 export enum Group {
-    ADMIN       = 0b1 << 0,
-    SALES       = 0b1 << 1,
-    PURCHASING  = 0b1 << 2,
-    INVENTORY   = 0b1 << 3,
-    ACCOUNTING  = 0b1 << 4,
-    MANAGEMENT  = 0b1 << 5,
+    ADMIN       = 1 << 0,
+    SALES       = 1 << 1,
+    PURCHASING  = 1 << 2,
+    INVENTORY   = 1 << 3,
+    ACCOUNTING  = 1 << 4,
+    MANAGEMENT  = 1 << 5,
     // insert here
 }
 
 export interface User {
     id: string;
     name: string;
-    firstName: string;
-    lastName: string;
+    display_name: string;
     groups: number;
 }
 
