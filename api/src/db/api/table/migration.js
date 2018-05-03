@@ -2,26 +2,26 @@ const migration = (db) => {
     return {
         create: () => {
             return db.none(`
-                CREATE TABLE IF NOT EXISTS migration (
+                create table if not exists migration (
                     number serial,
                     name varchar(128));`)
         },
         drop: () => {
             return db.none(`
-                DROP TABLE IF EXISTS migration`)
+                drop table if exists migration`)
         },
         exists: (number) => {
             return db.one(`
-                SELECT EXISTS (
-                    SELECT 1 
-                    FROM migration
-                    WHERE number = $1);`, 
+                select exists (
+                    select 1 
+                    from migration
+                    where number = $1);`, 
                 number)
         },
         insert: (name) => {
             return db.none(`
-                INSERT INTO migration (name)
-                    VALUES ($1);`,
+                insert into migration (name)
+                    values ($1);`,
                 name)
         }
     }

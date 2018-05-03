@@ -3,11 +3,11 @@ const crypto = require("crypto");
 const user = (db) => {
     return {
         getAll: async () => {
-            return db.any(`select id, name, display_name, groups from user_`)
+            return db.any(`select id, trim(both ' ' from name), trim(both ' ' from display_name), groups from user_`)
         },
 
         getById: async id => {
-            return db.one(`select id, name, display_name, groups from user_ where id = $1`, id)
+            return db.one(`select id, trim(both ' ' from name), trim(both ' ' from display_name), groups from user_ where id = $1`, id)
         },
 
         exists: async name => {
@@ -17,7 +17,7 @@ const user = (db) => {
         insert: async user => {
             // user["salt"] = crypto.randomBytes(16).toString("hex");
             return db.one(`insert into user_ (id, name, display_name, salt, password, groups) 
-                values(uuid_generate_v4(), $(name), $(display_name), $(salt), $(password), $(groups))
+                values(uuid_generate_v4(), trim(both ' ' from $(name)), trim(both ' ' from $(display_name)), $(salt), $(password), $(groups))
                 returning id`, user)
         },
 
@@ -53,9 +53,9 @@ const user = (db) => {
         update: async user => {
             return db.none(`
                 update user_ set
-                    name = $(name), 
-                    display_name = $(display_name), 
-                    groups = $(groups) 
+                    name = trim(both ' ' from $(name)), 
+                    display_name = trim(both ' ' from $(display_name)), 
+                    groups = trim(both ' ' from $(groups)) 
                 where id = $(id)`, user)
         },
 
