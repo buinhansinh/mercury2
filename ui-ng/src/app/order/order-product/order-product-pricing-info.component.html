@@ -1,0 +1,6 @@
+<div *ngIf="pricing$ | async as pricing">
+    <span>Suggested: {{pricing.suggested}}</span>
+    <span>Last: {{pricing.last}}</span>
+    <span>High: {{pricing.high}}</span>
+    <span>Low: {{pricing.low}}</span>
+</div>

@@ -1,27 +1,4 @@
 import {
-    BrowserAnimationsModule,
-    NoopAnimationsModule
-} from '@angular/platform-browser/animations';
-import {
-    MatButtonModule,
-    MatCheckboxModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatInputModule,
-    MatAutocompleteModule,
-    MatSidenavModule,
-    MatExpansionModule,
-    MatListModule,
-    MatButton,
-    MatCardModule,
-    MatFormFieldModule,
-    ErrorStateMatcher,
-    ShowOnDirtyErrorStateMatcher,
-} from '@angular/material';
-import {
-    BrowserModule
-} from '@angular/platform-browser';
-import {
     NgModule
 } from '@angular/core';
 import {
@@ -36,7 +13,15 @@ import {
 import {
     LoginComponent
 } from './login/login.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import {
+    DashboardComponent
+} from './dashboard/dashboard.component';
+import {
+    AdminModule
+} from './admin/admin.module';
+import { AppCommonModule } from './app-common/app-common.module';
+import { SalesModule } from './sales/sales.module';
+import { DbModule } from './db/db.module';
 
 @NgModule({
     declarations: [
@@ -46,25 +31,15 @@ import { DashboardComponent } from './dashboard/dashboard.component';
         LoginComponent,
     ],
     imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
+        AppCommonModule,
+        AdminModule,
+        SalesModule,
         AppRoutingModule,
-        MatButtonModule,
-        MatCheckboxModule,
-        MatAutocompleteModule,
-        MatToolbarModule,
-        MatIconModule,
-        MatInputModule,
-        MatSidenavModule,
-        MatExpansionModule,
-        MatListModule,
-        MatButtonModule,
-        MatCardModule,
-        MatFormFieldModule,
+        DbModule,
     ],
-    providers: [
-        { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
+    exports: [
     ],
+    providers: [],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

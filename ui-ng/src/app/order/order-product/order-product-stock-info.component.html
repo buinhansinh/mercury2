@@ -1,0 +1,5 @@
+<div *ngIf="stocks$ | async as stocks">
+    <span *ngFor="let stock of stocks">
+        {{ stock.location_name }} {{ stock.quantity }}
+    </span>
+</div>

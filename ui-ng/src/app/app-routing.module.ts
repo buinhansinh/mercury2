@@ -19,10 +19,14 @@ const routes: Routes = [{
         path: 'login',
         component: LoginComponent
     },
-    {
-        path: 'admin',
-        loadChildren: './admin/admin.module#AdminModule'
-    },
+    // {
+    //     path: 'admin',
+    //     loadChildren: './admin/admin.module#AdminModule'
+    // },
+    // {
+    //     path: 'sales',
+    //     loadChildren: './sales/sales.module#SalesModule'
+    // },
     {
         path: 'dashboard',
         component: DashboardComponent,

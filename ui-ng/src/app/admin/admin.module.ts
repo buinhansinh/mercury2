@@ -1,75 +1,16 @@
-import {
-    NgModule
-} from '@angular/core';
-import {
-    CommonModule
-} from '@angular/common';
-import {
-    RouterModule,
-    Routes
-} from '@angular/router';
-import {
-    HttpClientModule
-} from '@angular/common/http';
-import {
-    FormsModule
-} from '@angular/forms';
-import {
-    MatSidenavModule,
-    MatExpansionModule,
-    MatIconModule,
-    MatListModule,
-    MatButton,
-    MatButtonModule,
-    MatCardModule,
-    MatInputModule,
-    MatCheckboxModule,
-    ErrorStateMatcher,
-    ShowOnDirtyErrorStateMatcher,
-} from '@angular/material';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import {
-    AdminComponent
-} from './admin.component';
-import {
-    UserService
-} from './user/user.service';
-import {
-    UserComponent
-} from './user/user.component';
-import {
-    UsernameExistsDirective
-} from './user/username-exists.directive';
-
-const routes: Routes = [{
-    path: '',
-    component: AdminComponent,
-    children: [{
-        path: 'user/:id',
-        component: UserComponent,
-    },
-    ]
-}];
+import { NgModule } from '@angular/core';
+import { AppCommonModule } from '../app-common/app-common.module';
+import { AdminRoutingModule } from './admin-routing.module';
+import { AdminComponent } from './admin.component';
+import { UserComponent } from './user/user.component';
+import { UsernameExistsDirective } from './user/username-exists.directive';
 
 @NgModule({
     imports: [
-        CommonModule,
-        FormsModule,
-        RouterModule.forChild(routes),
-        HttpClientModule,
-        MatSidenavModule,
-        MatExpansionModule,
-        MatIconModule,
-        MatListModule,
-        MatButtonModule,
-        MatCardModule,
-        MatInputModule,
-        MatFormFieldModule,
-        MatCheckboxModule,
+        AppCommonModule,
+        AdminRoutingModule,
     ],
     providers: [
-        UserService,
-        { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
     ],
     declarations: [AdminComponent, UserComponent, UsernameExistsDirective]
 })

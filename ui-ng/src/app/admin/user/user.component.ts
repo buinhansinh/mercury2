@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { User, Group, userBelongsTo } from './user.model';
-import { Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { UserService } from './user.service';
+import { User, Group, userBelongsTo } from '../../db/user.model';
+import { UserService } from '../../db/user.service';
 import 'rxjs/add/operator/switchMap';
 import { Observable } from 'rxjs/Observable';
 

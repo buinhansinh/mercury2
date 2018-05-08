@@ -37,6 +37,7 @@ module.exports = () => {
             product (
                 id              uuid primary key,
                 brand           char(64),
+                category        char(64),
                 model           char(64),
                 specs           char(256),
                 type            smallint not null default 0,
@@ -49,6 +50,13 @@ module.exports = () => {
                 a               uuid not null references product(id),
                 b               uuid not null references product(id),
                 check (a != b)
+            );`)
+
+        t.none(`create table if not exists
+            service (
+                id              uuid primary key,
+                name            char(64),
+                description     jsonb
             );`)
 
         t.none(`create table if not exists 

@@ -1,0 +1,27 @@
+<p> order-item works!
+</p>
+<div class="order-item">
+    <form [formGroup]="form">
+
+        <app-product-picker (productPicked)="onProductPicked($event)"></app-product-picker>
+
+        <div *ngIf="stocks$ | async as stocks">
+            <input matInput placeholder="Quantity" aria-label="Quantity" formControlName="qtyInput" [(ngModel)]="quantity" type="number" required min="0" (focus)="onQtyFocus()" (blur)="onQtyBlur()">
+        </div>
+
+        <div *ngIf="pricing$ | async as pricing">
+            <input matInput placeholder="Price" aria-label="Price" [matAutocomplete]="autoPrice" formControlName="priceInput" [(ngModel)]="price" type="number" required min="0" (focus)="onPriceFocus()" (blur)="onPriceBlur()">
+            <mat-autocomplete #autoPrice autoActiveFirstOption>
+                <mat-option [value]="pricing?.suggested">
+                    <span>Suggested: </span>
+                    <span>{{ pricing?.suggested }}</span>
+                </mat-option>
+                <mat-option [value]="pricing?.last">
+                    <span>Last: </span>
+                    <span>{{ pricing?.last }}</span>
+                </mat-option>
+            </mat-autocomplete>
+        </div>
+
+    </form>
+</div>

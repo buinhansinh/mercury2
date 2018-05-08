@@ -1,5 +1,5 @@
 import { Directive, Input } from '@angular/core';
-import { UserService } from './user.service';
+import { UserService } from '../../db/user.service';
 import { Validator, AsyncValidator, NG_ASYNC_VALIDATORS, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
