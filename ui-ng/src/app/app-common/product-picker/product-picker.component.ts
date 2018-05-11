@@ -1,10 +1,9 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable ,  of } from 'rxjs';
 import { Product } from '../../db/product.model';
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap, startWith } from 'rxjs/operators';
 import { ProductService } from '../../db/product.service';
-import { of } from 'rxjs/observable/of';
 
 @Component({
     selector: 'app-product-picker',
@@ -18,7 +17,6 @@ export class ProductPickerComponent implements OnInit {
     products$: Observable<Product[]>;
     product: Product;
     searchInput: FormControl;
-    searchInputVal;
 
     constructor(private productService: ProductService) {
         this.searchInput = new FormControl();
@@ -38,13 +36,16 @@ export class ProductPickerComponent implements OnInit {
     }
 
     onSelect() {
-        this.product = this.searchInputVal;
-        this.productPicked.emit(this.product); // we're getting a product from autocomplete
-        this.reset();
+        this.product = this.searchInput.value;
+        this.productPicked.emit(this.searchInput.value); // we're getting a product from autocomplete
     }
 
     reset() {
-        this.searchInputVal = this.product ?
-            `${this.product.brand} ${this.product.category} ${this.product.model} ${this.product.specs}` : null;
+        this.searchInput.setValue(this.product);
+    }
+
+    productDesc(product) {
+        return product ?
+            `${product.brand} ${product.category} ${product.model} ${product.specs}` : null;
     }
 }

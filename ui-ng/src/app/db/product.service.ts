@@ -3,7 +3,7 @@ import {
 } from '@angular/core';
 import {
     Observable
-} from 'rxjs/Observable';
+,  of } from 'rxjs';
 import {
     Product,
     ProductType
@@ -11,8 +11,7 @@ import {
 import {
     PRODUCTS
 } from './product.mock';
-import { of } from 'rxjs/observable/of';
-import { clone } from '../common/util';
+import { clone } from '../app-common/util';
 import { SearchService } from './search.service';
 
 
@@ -24,6 +23,10 @@ export class ProductService implements SearchService<Product> {
     product: Product;
 
     constructor() { }
+
+    getById(id: string): Observable<Product> {
+        return of(PRODUCTS.find(p => p.id === id));
+    }
 
     private product_matches(product: Product, term: string): boolean {
         const lterm = term.toLowerCase();

@@ -1,10 +1,9 @@
 import { Injectable, Inject } from '@angular/core';
 import { User, Group } from './user.model';
 import { USERS } from './user.mock';
-import { of } from 'rxjs/observable/of';
-import { Observable } from 'rxjs/Observable';
+import { of ,  Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { clone } from '../common/util';
+import { clone } from '../app-common/util';
 
 
 export class MockUserService {

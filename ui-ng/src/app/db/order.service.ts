@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
-import { Pricing } from './order.model';
+import { Observable ,  of } from 'rxjs';
+import { OrderPricing } from './order.model';
+import { DocumentType } from './document.model';
 
 @Injectable()
 export class OrderService {
 
     constructor() { }
 
-    getPricing(productId: string, contactId: string, doctype: DocumentType): Observable<Pricing> {
+    getPricing(productId: string, contactId: string, doctype: DocumentType): Observable<OrderPricing> {
         return of({
             suggested: 500,
             last: 250,

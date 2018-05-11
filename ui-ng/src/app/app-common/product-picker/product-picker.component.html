@@ -1,5 +1,5 @@
-<input matInput placeholder="Search" aria-label="Search" [matAutocomplete]="auto" [formControl]="searchInput" [(ngModel)]="searchInputVal" (keyup.esc)="reset()">
-<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelect()">
+<input matInput placeholder="Search" aria-label="Search" [matAutocomplete]="auto" [formControl]="searchInput" (keyup.esc)="reset()" onClick="this.select();">
+<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelect()" [displayWith]="productDesc">
     <mat-option *ngFor="let product of products$ | async" [value]="product">
         <span>{{ product.brand }}</span>
         <span>{{ product.category }}</span>

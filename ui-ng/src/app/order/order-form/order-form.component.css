@@ -1,0 +1,86 @@
+.card {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1240px;
+    background-color: #fafafa; 
+} 
+
+.content {
+    padding: 25px 0;
+}
+
+div.header {
+    /* color: white; */
+    /* background-color: #673ab7; */
+    font-size: xx-large;
+    padding: 15px 30px;
+}
+
+div.top {
+    display: flex;
+}
+
+div.top>div.customer {
+    flex-grow: 3;
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+}
+
+div.customer mat-form-field {
+    width: 400px;
+}
+
+div.top>div.other {
+    display: flex;
+    flex-direction: column;
+}
+
+.bottom {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+ul.product-table-heading {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    padding: 0;
+}
+
+ul.product-table-heading>*{
+    flex-grow: 1;
+    min-width: 125px;
+    text-align: center;
+}
+
+ul.product-table-heading>li.product-heading{
+    flex-grow: 20;
+}
+
+.product-table-row {
+    margin: 10px 0;
+}
+
+app-order-product {
+    width: 100%;
+}
+
+.product-table-total {
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100%;
+}
+
+mat-form-field.grand-total {
+    width: 250px;
+    text-align: right;
+}
+
+mat-card-actions.actions {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+}
+

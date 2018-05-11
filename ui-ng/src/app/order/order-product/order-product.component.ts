@@ -2,11 +2,16 @@ import { Component, OnInit, Inject, Input } from '@angular/core';
 import { MatSnackBar, MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Product } from '../../db/product.model';
-import { Pricing } from '../../db/order.model';
+import { OrderPricing, OrderProduct } from '../../db/order.model';
 import { OrderService } from '../../db/order.service';
 import { InventoryService } from '../../db/inventory.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable ,  of } from 'rxjs';
 import { Stock } from '../../db/inventory.model';
+import { DocumentType } from '../../db/document.model';
+import { debounceTime, distinctUntilChanged, switchMap, startWith } from 'rxjs/operators';
+import { ProductService } from '../../db/product.service';
+import { OrderStockInfoComponent } from '../order-stock-info/order-stock-info.component';
+import { OrderPricingInfoComponent } from '../order-pricing-info/order-pricing-info.component';
 
 
 @Component({
@@ -16,84 +21,122 @@ import { Stock } from '../../db/inventory.model';
 })
 export class OrderProductComponent implements OnInit {
 
-    @Input() contactId;
-    @Input() docType;
+    @Input() contactId: string;
+    @Input() docType: DocumentType;
+    @Input() order: OrderProduct;
 
+    // form
     form: FormGroup;
-    qtyInput: FormControl;
+    quantityInput: FormControl;
     priceInput: FormControl;
-    priceSnackBar: any;
+    productInput: FormControl;
+    totalInput: FormControl;
+    snackbarRef: any;
 
+    // data
     product: Product;
     quantity: number;
     price: number;
 
-    pricing$: Observable<Pricing>;
+    // autocomplete observables
+    products$: Observable<Product[]>;
+    pricing$: Observable<OrderPricing>;
     stocks$: Observable<Stock[]>;
 
+    // table
+    displayedColumns = ['product'];
+
     constructor(private snackbar: MatSnackBar,
+        private productService: ProductService,
         private orderService: OrderService,
         private inventoryService: InventoryService) {
-        this.product = null;
-        this.qtyInput = new FormControl({ value: '', disabled: true });
-        this.priceInput = new FormControl({ value: '', disabled: true });
+
+        this.productInput = new FormControl();
+        this.quantityInput = new FormControl();
+        this.priceInput = new FormControl();
+        this.totalInput = new FormControl();
         this.form = new FormGroup({
-            qtyInput: this.qtyInput,
+            productInput: this.productInput,
+            quantityInput: this.quantityInput,
             priceInput: this.priceInput,
+            totalInput: this.totalInput,
         });
+
+        this.products$ = this.productInput.valueChanges
+            .pipe(
+                // wait 300ms after each keystroke before considering the term
+                debounceTime(300),
+                // ignore new term if same as previous term
+                distinctUntilChanged(),
+                // switch to new search observable each time the term changes
+                switchMap((terms: string | Product) => this.productSearch(terms)),
+        );
+
+        this.quantityInput.valueChanges.subscribe(value => this.totalInput.setValue(value * this.priceInput.value));
+        this.priceInput.valueChanges.subscribe(value => this.totalInput.setValue(value * this.quantityInput.value));
     }
 
     ngOnInit() {
-    }
-
-    onQtyFocus() {
-        this.priceSnackBar = this.snackbar.openFromComponent(OrderProductStockInfoComponent, {
-            data: this.stocks$,
+        this.productService.getById(this.order.product_id).subscribe(p => {
+            console.log(this.order);
+            this.productInput.setValue(p);
+            this.productSelect();
+            this.quantityInput.setValue(this.order.quantity);
+            this.priceInput.setValue(this.order.price);
         });
     }
 
-    onQtyBlur() {
-        this.priceSnackBar.dismiss();
+    productSearch(terms: string | Product): Observable<Product[]> {
+        switch (typeof terms) {
+            case 'string':
+                return this.productService.search(<string>terms);
+            default:
+                this.productInput.setValue(terms);
+                return of([]);
+        }
+        // return (typeof terms === 'string') ? this.productService.search(<string>terms) : of([]);
     }
 
-    onPriceFocus() {
-        console.log('focus');
-        this.priceSnackBar = this.snackbar.openFromComponent(OrderProductPricingInfoComponent, {
-            data: this.pricing$,
-        });
-    }
-
-    onPriceBlur() {
-        this.priceSnackBar.dismiss();
-    }
-
-    onProductPicked(p: Product) {
-        this.product = p;
+    productSelect() {
+        this.product = this.productInput.value;
         this.pricing$ = this.orderService.getPricing(this.product.id, this.contactId, this.docType);
         this.stocks$ = this.inventoryService.getStock(this.product.id);
-        this.qtyInput.enable();
-        this.priceInput.enable();
+        // this.quantityInput.enable();
+        // this.priceInput.enable();
     }
-}
 
-
-@Component({
-    selector: 'app-order-product-pricing-info',
-    templateUrl: 'order-product-pricing-info.component.html',
-    styleUrls: [`order-product.component.css`],
-})
-export class OrderProductPricingInfoComponent {
-    constructor(@Inject(MAT_SNACK_BAR_DATA) public pricing$: Observable<Pricing>) {
+    productReset() {
+        this.productInput.setValue(this.product);
     }
-}
 
+    productDisplay(product) {
+        return product ?
+            `${product.brand} ${product.category} ${product.model} ${product.specs}` : null;
+    }
 
-@Component({
-    selector: 'app-order-product-stock-info',
-    templateUrl: 'order-product-stock-info.component.html',
-    styleUrls: [`order-product.component.css`],
-})
-export class OrderProductStockInfoComponent {
-    constructor(@Inject(MAT_SNACK_BAR_DATA) public stocks$: Observable<Stock[]>) {
+    showSnackBar(type) {
+        if (this.snackbarRef) {
+            this.hideSnackBar();
+        }
+
+        const snackbars = {
+            stocks: {
+                component: OrderStockInfoComponent,
+                data: this.stocks$,
+            },
+            pricing: {
+                component: OrderPricingInfoComponent,
+                data: this.pricing$,
+            }
+        };
+
+        this.snackbarRef = this.snackbar.openFromComponent(snackbars[type].component, {
+            data: snackbars[type].data,
+        });
+    }
+
+    hideSnackBar() {
+        this.snackbarRef.dismiss();
+        this.snackbarRef = null;
     }
 }

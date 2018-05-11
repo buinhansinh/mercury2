@@ -1,5 +1,5 @@
 import {
-    NgModule
+    NgModule, CUSTOM_ELEMENTS_SCHEMA
 } from '@angular/core';
 
 import {
@@ -45,6 +45,7 @@ import {
 import { ServicePickerComponent } from './service-picker/service-picker.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SelectOnFocusDirective } from './select-on-focus.directive';
 
 
 const ngModules: any = [
@@ -88,6 +89,7 @@ const materialModules: any = [
 const commonComponents: any = [
     ProductPickerComponent,
     ServicePickerComponent,
+    SelectOnFocusDirective,
 ];
 
 const declarations_ = [].concat(commonComponents);
@@ -95,6 +97,7 @@ const imports_ = [].concat(ngModules).concat(materialModules);
 const exports_ = [].concat(ngModules).concat(materialModules).concat(commonComponents);
 
 @NgModule({
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
     declarations: declarations_,
     imports: imports_,
     exports: exports_,

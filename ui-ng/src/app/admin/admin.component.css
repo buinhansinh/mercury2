@@ -8,7 +8,7 @@ mat-drawer {
     align-items: top;
     justify-content: top;
     min-width: 200px;
-    background-color: transparent;
+    /* background-color: transparent; */
 }
 
 mat-drawer-content {
@@ -16,11 +16,11 @@ mat-drawer-content {
 }
 
 mat-expansion-panel {
-    background-color: transparent;
+    /* background-color: transparent; */
 }
 
 mat-list-item * {
-    color: rgb(97, 97, 97);
+    /* color: rgb(97, 97, 97); */
 }
 
 mat-nav-list h4 {

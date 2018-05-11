@@ -3,8 +3,9 @@ import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { User, Group, userBelongsTo } from '../../db/user.model';
 import { UserService } from '../../db/user.service';
-import 'rxjs/add/operator/switchMap';
-import { Observable } from 'rxjs/Observable';
+
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-user',
@@ -26,9 +27,9 @@ export class UserComponent implements OnInit {
 
     ngOnInit(): void {
         const id = this.route.snapshot.paramMap.get('id');
-        const user$ = this.route.paramMap
-            .switchMap((params: ParamMap, index: number) =>
-                this.userService.getById(params.get('id')));
+        const user$ = this.route.paramMap.pipe(
+            switchMap((params: ParamMap, index: number) =>
+                this.userService.getById(params.get('id'))));
         user$.subscribe((user: User) => {
             this.user = user;
             this.oldUsername = user.name;

@@ -1,22 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { OrderProduct } from '../../db/order.model';
 
 @Component({
-    selector: 'app-order',
-    templateUrl: './order.component.html',
-    styleUrls: ['./order.component.css']
+    selector: 'app-order-form',
+    templateUrl: './order-form.component.html',
+    styleUrls: ['./order-form.component.css']
 })
-export class OrderComponent implements OnInit {
+export class OrderFormComponent implements OnInit {
 
-    dataSource: Object[] = [
+    products: OrderProduct[] = [
         {
-            number: 1,
-            product: 'asdfasdfasdfds',
+            product_id: '1',
             quantity: 1,
             price: 1,
         },
         {
-            number: 1,
-            product: 'asdfasdfasdfds',
+            product_id: '2',
             quantity: 1,
             price: 1,
         }

@@ -9,8 +9,8 @@ import {
     SalesComponent
 } from './sales.component';
 import {
-    OrderComponent
-} from './order/order.component';
+    SalesOrderComponent
+} from './sales-order/sales-order.component';
 
 const routes: Routes = [{
     path: 'sales',
@@ -18,11 +18,11 @@ const routes: Routes = [{
     children: [
         {
             path: 'order',
-            component: OrderComponent,
+            component: SalesOrderComponent,
         },
         {
             path: 'order/:id',
-            component: OrderComponent,
+            component: SalesOrderComponent,
         },
     ]
 }];

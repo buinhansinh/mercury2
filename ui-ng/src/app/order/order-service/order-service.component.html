@@ -1,3 +1,34 @@
-<p>
-  order-service works!
-</p>
+<form class="order" [formGroup]="form">
+    <mat-form-field class="service-field" floatLabel="never" appearance="fill">
+        <input matInput size="64" placeholder="Add Service" aria-label="Add Service" [matAutocomplete]="autoService" formControlName="serviceInput" (keyup.esc)="serviceReset()" appSelectOnFocus>
+        <mat-autocomplete #autoService="matAutocomplete" (optionSelected)="serviceSelect()" [displayWith]="serviceDisplay">
+            <mat-option *ngFor="let service of services$ | async" [value]="service">
+                <span>{{ product.brand }}</span>
+                <span>{{ product.category }}</span>
+                <span>{{ product.model }}</span>
+                <span>{{ product.specs }}</span>
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field class="quantity-field" *ngIf="stocks$ | async as stocks" floatLabel="never" appearance="fill">
+        <input matInput placeholder="Quantity" aria-label="Quantity" formControlName="quantityInput" type="number" required min="0" (focus)="showSnackBar('stocks')" (blur)="hideSnackBar()" appSelectOnFocus>
+    </mat-form-field>
+    <mat-form-field class="price-field" *ngIf="pricing$ | async as pricing" floatLabel="never" appearance="fill">
+        <span matSuffix class="suffix">Php</span>
+        <input matInput placeholder="Price" aria-label="Price" [matAutocomplete]="autoPrice" formControlName="priceInput" type="number" required min="0" (focus)="showSnackBar('pricing')" (blur)="hideSnackBar()" appSelectOnFocus>
+        <mat-autocomplete #autoPrice autoActiveFirstOption>
+            <mat-option [value]="pricing?.suggested">
+                <span>Suggested: </span>
+                <span>{{ pricing?.suggested }}</span>
+            </mat-option>
+            <mat-option [value]="pricing?.last">
+                <span>Last: </span>
+                <span>{{ pricing?.last }}</span>
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field class="total-field" *ngIf="product" floatLabel="never" hideRequiredMarker="true" appearance="standard">
+        <span matSuffix class="suffix">Php</span>
+        <input matInput aria-label="Total" formControlName="totalInput" type="number" required min="0" readonly>
+    </mat-form-field>
+</form>
