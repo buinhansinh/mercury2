@@ -34,29 +34,19 @@ module.exports = () => {
             );`)
 
         t.none(`create table if not exists 
-            product (
+            offer (
                 id              uuid primary key,
-                brand           char(64),
-                category        char(64),
-                model           char(64),
-                specs           char(256),
+                description     char(256),
                 type            smallint not null default 0,
                 hidden          boolean default false,
                 profile         jsonb
             );`)
 
         t.none(`create table if not exists
-            product_merge (
-                a               uuid not null references product(id),
-                b               uuid not null references product(id),
+            offer_merge (
+                a               uuid not null references offer(id),
+                b               uuid not null references offer(id),
                 check (a != b)
-            );`)
-
-        t.none(`create table if not exists
-            service (
-                id              uuid primary key,
-                name            char(64),
-                description     jsonb
             );`)
 
         t.none(`create table if not exists 
@@ -95,7 +85,7 @@ module.exports = () => {
                 id              uuid primary key,
                 document_id     uuid not null references document(id),
                 contact_id      uuid not null references contact(id),
-                product_id      uuid not null references product (id),
+                offer_id        uuid not null references offer (id),
                 location_id     uuid not null references location (id),
                 date            date not null,
                 price           money not null,

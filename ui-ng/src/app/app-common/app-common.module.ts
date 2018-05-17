@@ -14,6 +14,7 @@ import {
     // nvaigation
     MatToolbarModule,
     MatSidenavModule,
+    MatMenuModule,
 
     // layout
     MatExpansionModule,
@@ -40,12 +41,12 @@ import {
     MatFormFieldModule
 } from '@angular/material/form-field';
 import {
-    ProductPickerComponent,
-} from './product-picker/product-picker.component';
-import { ServicePickerComponent } from './service-picker/service-picker.component';
+    OfferPickerComponent,
+} from './offer-picker/offer-picker.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SelectOnFocusDirective } from './select-on-focus.directive';
+import { ContactPickerComponent } from './contact-picker/contact-picker.component';
 
 
 const ngModules: any = [
@@ -61,6 +62,7 @@ const materialModules: any = [
     // navigation
     MatToolbarModule,
     MatSidenavModule,
+    MatMenuModule,
 
     // layout
     MatExpansionModule,
@@ -87,8 +89,8 @@ const materialModules: any = [
 ];
 
 const commonComponents: any = [
-    ProductPickerComponent,
-    ServicePickerComponent,
+    ContactPickerComponent,
+    OfferPickerComponent,
     SelectOnFocusDirective,
 ];
 

@@ -1,13 +1,15 @@
-import { Product } from './product.model';
+import { OfferType, Offer } from "./offer.model";
+import { Contact } from "./contact.model";
+import { Document } from "./document.model";
 
-export interface OrderProduct {
-    product_id: string;
-    quantity: number;
-    price: number;
+export enum OrderItemType {
+    PRODUCT,
+    SERVICE,
 }
 
-export interface OrderService {
-    service_id: string;
+export interface OrderItem {
+    offer: Offer;
+    custom_description: string;
     quantity: number;
     price: number;
 }
@@ -21,20 +23,14 @@ export interface OrderPricing {
 }
 
 export enum OrderStatus {
-    PLACED = 0,
-    FULFILLED,
-    CANCELED,
+    PLACED = 1,
+    FULFILLED = 2,
+    CANCELED = 3,
 }
 
-export enum InventoryDocumentStatus {
-    PLACED = 0,
-    CANCELED,
-}
-
-export interface Document {
-    id: string;
-    date: Date;
-    status: number;
-    processed: boolean;
-    parent: string;
+export interface Order extends Document {
+    content: {
+        items: OrderItem[];
+        total: number;
+    }
 }

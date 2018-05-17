@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProductService } from './product.service';
+import { OfferService } from './offer.service';
 import { UserService } from './user.service';
+import { ContactService } from './contact.service';
 
 @NgModule({
     imports: [
@@ -9,7 +10,8 @@ import { UserService } from './user.service';
     ],
     providers: [
         UserService,
-        ProductService
+        OfferService,
+        ContactService,
     ],
     declarations: []
 })

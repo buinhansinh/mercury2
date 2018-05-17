@@ -1,0 +1,10 @@
+<mat-form-field id="field" floatLabel="always" appearance="fill">
+    <mat-label>{{label}}</mat-label>
+    <input matInput [placeholder]="placeholder" [matAutocomplete]="auto" [formControl]="form" (keyup.esc)="reset()"
+        (blur)="reset()" appSelectOnFocus>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelect()" [displayWith]="contactDisplay">
+        <mat-option *ngFor="let contact of contacts$ | async" [value]="contact">
+            <span>{{ contact.name }}</span>
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>

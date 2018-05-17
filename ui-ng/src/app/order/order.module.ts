@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { OrderProductComponent } from './order-product/order-product.component';
+import { OrderItemComponent } from './order-item/order-item.component';
 import { InventoryService } from '../db/inventory.service';
 import { OrderService } from '../db/order.service';
 // import { OrderServiceComponent } from './order-service/order-service.component';
@@ -13,7 +13,7 @@ import { OrderStockInfoComponent } from './order-stock-info/order-stock-info.com
         AppCommonModule,
     ],
     declarations: [
-        OrderProductComponent,
+        OrderItemComponent,
         // OrderServiceComponent,
         OrderFormComponent,
         OrderPricingInfoComponent,

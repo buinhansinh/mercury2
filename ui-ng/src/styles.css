@@ -12,10 +12,54 @@ body {
     font-size: 14px;
 }
 
-.mat-option {
-    font-size: inherit;
+ul.table {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    padding: 0px;
+    font-size: small;
+    /* border: 1px solid #cfcfcf; */
 }
+
+ul.table>li {
+    margin: 0;
+}
+
+ul.table>li ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+ul.table>li.header>ul>li {
+    margin: 5px;
+    text-align: center;
+}
+
+div.mat-form-field-infix {
+    width: 100%;
+}
+
+.mat-menu-item {
+    font: inherit;
+}
+
+.mat-option {
+    font: inherit;
+}
+
+.mat-card {
+    font: inherit;
+}
+
+.mat-card-header-text {
+    margin: 0;
+}
+
 input[type='number'] {
+    appearance: textfield;
     -moz-appearance:textfield;
 }
 input[type=number]::-webkit-inner-spin-button,

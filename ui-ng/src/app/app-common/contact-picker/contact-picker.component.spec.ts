@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ServicePickerComponent } from './service-picker.component';
+import { ContactPickerComponent } from './contact-picker.component';
 
-describe('ServicePickerComponent', () => {
-  let component: ServicePickerComponent;
-  let fixture: ComponentFixture<ServicePickerComponent>;
+describe('ContactPickerComponent', () => {
+  let component: ContactPickerComponent;
+  let fixture: ComponentFixture<ContactPickerComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ServicePickerComponent ]
+      declarations: [ ContactPickerComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ServicePickerComponent);
+    fixture = TestBed.createComponent(ContactPickerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

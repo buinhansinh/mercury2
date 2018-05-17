@@ -1,0 +1,9 @@
+<mat-form-field id="field" floatLabel="never" appearance="fill">
+    <input matInput [placeholder]="placeholder" [matAutocomplete]="auto" [formControl]="form" 
+        (keyup.esc)="reset()" (blur)="reset()" appSelectOnFocus>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelect()" [displayWith]="offerDisplay">
+        <mat-option *ngFor="let offer of offers$ | async" [value]="offer">
+            <span>{{ offer.description }}</span>
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>
