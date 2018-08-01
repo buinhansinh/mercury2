@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { OrderPricing, OrderItemType, OrderItem } from './order.model';
+import { OrderPricing, OrderItem } from './order.model';
 import { DocumentType } from './document.model';
 import { clone } from '../app-common/util';
 

@@ -1,0 +1,9 @@
+.mat-form-field {
+  width: 100%;
+}
+
+#discounts-table {
+  border-left: none;
+  border-right: none;
+  font-size: 0.85rem;
+}

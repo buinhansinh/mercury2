@@ -1,0 +1,33 @@
+<mat-sidenav-container class="nav-container">
+  <mat-sidenav #sideNav mode="side" opened="true" class="nav">
+    <mat-nav-list>
+      <a mat-list-item routerLink="/accounting/receivables" routerLinkActive="active">
+        <mat-icon matBadge="8" matBadgePosition="after below" matBadgeColor="accent">inbox</mat-icon>
+        <span>Receivables</span>
+      </a>
+      <a mat-list-item routerLink="/accounting/payables" routerLinkActive="active">
+        <mat-icon matBadge="8" matBadgePosition="after below" matBadgeColor="accent">inbox</mat-icon>
+        <span>Payables</span>
+      </a>
+      <a mat-list-item routerLink="/accounting/payment" routerLinkActive="active">
+        <mat-icon>add_circle_outline</mat-icon>
+        <span>Payment</span>
+      </a>
+      <a mat-list-item routerLink="/accounting/disbursement" routerLinkActive="active">
+        <mat-icon>add_circle_outline</mat-icon>
+        <span>Disbursement</span>
+      </a>
+      <a mat-list-item routerLink="/accounting/expense" routerLinkActive="active">
+        <mat-icon>add_circle_outline</mat-icon>
+        <span>Expense</span>
+      </a>
+      <a mat-list-item routerLink="/accounting/payment/1/allocation" routerLinkActive="active">
+        <mat-icon>add_circle_outline</mat-icon>
+        <span>Allocation</span>
+      </a>      
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

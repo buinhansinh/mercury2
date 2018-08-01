@@ -1,0 +1,43 @@
+<div class="container">
+
+  <div class="toolbar">
+    <span class="title">Product</span>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <form [formGroup]="form" class="content" (ngSubmit)="onSubmit()">
+
+    <ng-container formArrayName="properties">
+      <div class="grid-container" *ngFor="let p of form.get('properties').controls; let i=index" [formGroupName]="i">
+        <mat-form-field class="grid-20 align-right" floatLabel="never" [appearance]="p.controls['required'].value ? 'none': 'fill'">
+          <input matInput aria-label="Name" placeholder="Name" formControlName="name" [readonly]="p.controls['required'].value">
+        </mat-form-field>
+        <mat-form-field class="grid-70" floatLabel="never" appearance="fill">
+          <input matInput aria-label="Value" placeholder="Value" formControlName="value">
+        </mat-form-field>
+        <button mat-icon-button class="grid-10" [disabled]="p.controls['required'].value" (click)="removeProperty(i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+      <div class="grid-container">
+        <button mat-button class="grid-100" (click)="addProperty()">Add Property</button>
+      </div>
+    </ng-container>
+  </form>
+
+  <mat-divider></mat-divider>
+
+  <div class="toolbar">
+    <span class="spacer"></span>
+    <button mat-raised-button mat-dialog-close color="primary" type="submit" [disabled]="!form.valid">
+      <mat-icon>check</mat-icon>
+      <span class="text">Save</span>
+    </button>
+    <button mat-raised-button mat-dialog-close color="basic">
+      <mat-icon>cancel</mat-icon>
+      <span class="text">Cancel</span>
+    </button>
+  </div>
+
+</div>

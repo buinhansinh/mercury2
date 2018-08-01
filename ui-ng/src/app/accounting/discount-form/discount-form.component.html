@@ -1,0 +1,81 @@
+<div class="container">
+
+  <div class="toolbar">
+    <span class="title">Discounts</span>
+    <span class="spacer"></span>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+      <span></span>
+    </button>
+    <mat-menu #menu="matMenu" yPosition="below" xPosition="before" [overlapTrigger]="false">
+      <div mat-menu-item>
+        <button mat-raised-button color="warn">
+          <mat-icon>block</mat-icon>
+          <span>Cancel</span>
+        </button>
+      </div>
+    </mat-menu>
+  </div>
+
+  <div>
+    <table id="discounts-table" class="highlight responsive-table bordered">
+      <thead>
+        <tr class="grid-container header">
+          <th class="grid-50">
+            Discount
+          </th>
+          <th class="grid-50">
+            Amount
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- <ng-container *ngFor="let item of form.get('items').controls; let i=index"> -->
+        <ng-container>
+          <tr class="grid-container">
+            <td class="grid-50">
+              <mat-form-field floatLabel="always" appearance="fill">
+                <mat-label>{{label}}</mat-label>
+                <input matInput [placeholder]="placeholder" [matAutocomplete]="auto" formControl="form" (keyup.esc)="resetDiscountType()"
+                  (blur)="resetDiscountType()" appSelectOnFocus>
+                <mat-autocomplete #auto="matAutocomplete" optionSelected="" [displayWith]="">
+                  <!-- <mat-option *ngFor="let contact of contacts$ | async" [value]="contact">
+                <span>{{ contact.name }}</span>
+              </mat-option> -->
+                </mat-autocomplete>
+              </mat-form-field>
+            </td>
+            <td class="grid-50">
+              <mat-form-field floatLabel="always" appearance="fill">
+                <mat-label></mat-label>
+                <input matInput aria-label="Quantity">
+              </mat-form-field>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+      <tfoot>
+        <tr class="grid-container">
+          <th class="grid-50">
+            Total
+          </th>
+          <td class="grid-50">
+            100
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="toolbar">
+    <span class="spacer"></span>
+    <button mat-raised-button mat-dialog-close color="primary" (click)="onSave()">
+      <mat-icon>check</mat-icon>
+      <span class="text">Save</span>
+    </button>
+    <button mat-raised-button mat-dialog-close color="basic">
+      <mat-icon>cancel</mat-icon>
+      <span class="text">Cancel</span>
+    </button>
+  </div>
+</div>

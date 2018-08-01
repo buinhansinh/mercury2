@@ -1,66 +1,11 @@
-@import '../order-item/order-item.component.css';
-
-.card {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 1240px;
-    background-color: #fafafa; 
-} 
-
-div.top {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 24px;
-}
-
-#contact-field {
-    width: 100%;
-}
-
-#ref-no-field {
-    width: 240px;
-}
-
-#date-field {
-    width: 240px;
-}
-
-div.bottom {
-    margin-top: 30px;
-    margin-bottom: 30px;
-}
-
-#order-item-table li.col {
-    margin: 5px 0;
-    width: 140px;
-}
-
-#order-item-table li.offer.col {
-    flex-grow: 20;
-}
-
-#order-item-table li.icon.col {
-    width: 16px;
-}
-
-#order-item-table > li.footer {
-    display: flex;
-    flex-direction: row-reverse;
-    width: 100%;
-}
-
-app-order-item {
-    width: 100%;
-}
+@import "../order-item/order-item.component.css";
 
 mat-form-field.grand-total {
-    width: 250px;
-    text-align: right;
+  text-align: right;
 }
 
-mat-card-actions.actions {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row-reverse;
+div.pad {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  height: 1rem;
 }
-

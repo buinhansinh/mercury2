@@ -20,22 +20,31 @@ import {
     MatExpansionModule,
     MatListModule,
     MatCardModule,
+    MatTabsModule,
 
     // buttons
     MatIconModule,
     MatButtonModule,
+    MatChipsModule,
+    MatBadgeModule,
 
     // forms
     MatInputModule,
     MatAutocompleteModule,
     MatCheckboxModule,
 
+    // popups
+    MatSnackBarModule,
+    MatDialogModule,
+
     ErrorStateMatcher,
     ShowOnDirtyErrorStateMatcher,
     MatDatepickerModule,
     MatTableModule,
     MatNativeDateModule,
-    MatSnackBarModule,
+    MatPaginatorModule,
+    MatSortModule,
+
 } from '@angular/material';
 import {
     MatFormFieldModule
@@ -68,13 +77,17 @@ const materialModules: any = [
     MatExpansionModule,
     MatListModule,
     MatCardModule,
+    MatTabsModule,
 
     // modals
     MatSnackBarModule,
+    MatDialogModule,
 
     // buttons and indicators
     MatIconModule,
     MatButtonModule,
+    MatChipsModule,
+    MatBadgeModule,
 
     // forms
     MatCheckboxModule,
@@ -86,6 +99,8 @@ const materialModules: any = [
 
     // tables
     MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
 ];
 
 const commonComponents: any = [

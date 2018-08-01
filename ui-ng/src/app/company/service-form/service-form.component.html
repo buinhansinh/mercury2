@@ -1,0 +1,40 @@
+<div class="container">
+
+  <div class="toolbar">
+    <span class="title">Service</span>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <form [formGroup]="form" class="content">
+    
+    <ng-container formArrayName="properties">
+      <div class="grid-container" *ngFor="let p of form.get('properties').controls; let i=index" [formGroupName]="i"> 
+        <mat-form-field class="grid-15" floatLabel="always" appearance="fill">
+          <mat-label>Name</mat-label>
+          <input matInput aria-label="Name" formControlName="name">
+        </mat-form-field>
+        <mat-form-field class="grid-85" floatLabel="always" appearance="fill">
+          <mat-label>Value</mat-label>
+          <input matInput aria-label="Value" formControlName="value">
+        </mat-form-field>
+      </div>
+    </ng-container>
+
+  </form>
+
+  <mat-divider></mat-divider>
+
+  <div class="toolbar">
+    <span class="spacer"></span>
+    <button mat-raised-button mat-dialog-close color="primary" (click)="onSave()">
+      <mat-icon>check</mat-icon>
+      <span class="text">Save</span>
+    </button>
+    <button mat-raised-button mat-dialog-close color="basic">
+      <mat-icon>cancel</mat-icon>
+      <span class="text">Cancel</span>
+    </button>    
+  </div>
+
+</div>

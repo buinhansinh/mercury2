@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, Input, SimpleChange, EventEmitter, Output } from '@angular/core';
 import { MatSnackBar, MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, ValidatorFn, AbstractControl } from '@angular/forms';
-import { OrderPricing, OrderItem, OrderItemType } from '../../db/order.model';
+import { OrderPricing, OrderItem } from '../../db/order.model';
 import { OrderService } from '../../db/order.service';
 import { InventoryService } from '../../db/inventory.service';
 import { Observable, of } from 'rxjs';

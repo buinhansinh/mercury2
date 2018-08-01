@@ -1,0 +1,140 @@
+<div class="container">
+
+  <div class="toolbar">
+    <span class="title">Payment Allocation</span>
+    <span class="spacer"></span>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+      <span></span>
+    </button>
+    <mat-menu #menu="matMenu" yPosition="below" xPosition="before" [overlapTrigger]="false">
+      <div mat-menu-item>
+        <button mat-raised-button color="warn">
+          <mat-icon>block</mat-icon>
+          <span>Cancel</span>
+        </button>
+      </div>
+    </mat-menu>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="header content">
+    <div class="grid-container">
+      <mat-form-field class="grid-20" floatLabel="always" appearance="fill">
+        <mat-label>Payment Mode</mat-label>
+        <input matInput aria-label="Document No.">
+      </mat-form-field>
+      <mat-form-field class="grid-30" floatLabel="always" appearance="fill">
+        <mat-label>Ref No.</mat-label>
+        <input matInput aria-label="Document No.">
+      </mat-form-field>
+      <mat-form-field class="prefix-5 grid-20" floatLabel="always" appearance="fill">
+        <mat-label>Date</mat-label>
+        <input matInput aria-label="Date" [matDatepicker]="picker">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class="prefix-5 grid-20" floatLabel="always" appearance="fill">
+        <mat-label>Allocated</mat-label>
+        <input matInput aria-label="Document No.">
+      </mat-form-field>
+    </div>
+    <div class="grid-container center">
+      <mat-form-field class="grid-75" floatLabel="always" appearance="fill">
+        <mat-label>Contact</mat-label>
+        <input matInput aria-label="Document No.">
+      </mat-form-field>
+      <mat-form-field class="prefix-5 grid-20" floatLabel="always" appearance="fill">
+        <mat-label>Amount</mat-label>
+        <input matInput aria-label="Document No.">
+      </mat-form-field>
+    </div>
+    <div class="grid-container">
+      <mat-form-field class="prefix-80 grid-20" floatLabel="always" appearance="fill">
+        <mat-label>Remaining</mat-label>
+        <input matInput aria-label="Document No.">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <table class="highlight responsive-table bordered content">
+    <thead>
+      <tr class="grid-container header">
+        <th class="grid-20">
+          Document No.
+        </th>
+        <th class="grid-15">
+          Date
+        </th>
+        <th class="grid-15">
+          Gross Amount
+        </th>
+        <th class="grid-15">
+          Discount
+        </th>
+        <th class="grid-15">
+          Net Amount
+        </th>
+        <th class="grid-15">
+          Allocation
+        </th>
+        <th class="grid-5">
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- <ng-container *ngFor="let item of form.get('items').controls; let i=index"> -->
+      <ng-container>
+        <tr class="grid-container">
+          <td class="grid-20">
+            Invoice / Payment
+          </td>
+          <td class="grid-15">
+            Date
+          </td>
+          <td class="grid-15">
+            Gross Amount
+          </td>
+          <td class="grid-15">
+            Discount
+            <button mat-icon-button (click)="openDiscountDialog()">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+          <td class="grid-15">
+            Net Amount
+          </td>
+          <td class="grid-15">
+            <mat-form-field floatLabel="always" appearance="fill">
+              <mat-label>Qty</mat-label>
+              <input matInput aria-label="Quantity">
+            </mat-form-field>
+          </td>
+          <td class="grid-5">
+            <button mat-icon-button>
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+
+  <div class="grid-container">
+    <button mat-raised-button color="accent" (click)="openAllocationDialog()">
+      <mat-icon>add</mat-icon>
+      Add Allocation
+    </button>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="toolbar">
+    <span class="spacer"></span>
+    <button mat-raised-button color="primary" (click)="onSave()">
+      <mat-icon>check</mat-icon>
+      <span class="text">Save</span>
+    </button>
+  </div>
+</div>

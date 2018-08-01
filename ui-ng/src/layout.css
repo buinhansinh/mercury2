@@ -1,0 +1,94 @@
+/* override grid-container limits */
+.grid-container {
+  max-width: none;
+  /* display: flex; */
+  /* align-items: center; */
+  padding: 0.5rem;
+}
+
+.nav-container {
+  width: 100%;
+  height: 100%;
+}
+
+.nav {
+  padding: 0.5rem 1rem;
+  min-width: 240px;
+  overflow-x: auto;
+  overflow-wrap: break-word;
+  /* background-color: #fafafa; */
+  border-right: 1px solid lightgray;
+  box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 3px -2px rgba(0, 0, 0, 0.14),
+    0 1px 8px 0 rgba(0, 0, 0, 0.12);  
+}
+
+div.container {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+  max-width: 1224px;
+  background-color: white;
+  border: 1px solid lightgray;
+  box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 3px -2px rgba(0, 0, 0, 0.14),
+    0 1px 8px 0 rgba(0, 0, 0, 0.12);
+}
+
+.toolbar {
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.toolbar .title {
+  font-size: 1.5rem;
+  margin: 0.5rem 1rem;
+}
+
+.toolbar .spacer {
+  flex: 1;
+}
+
+.toolbar button {
+  margin: 0.25rem;
+}
+
+.toolbar button .text {
+  margin-left: 0.5rem;
+}
+
+.content {
+  font-size: 0.85rem;
+  padding: 1rem 0;
+}
+
+ul.table {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  padding: 0px;
+  /* font-size: 0.3rem; */
+  /* border: 1px solid #cfcfcf; */
+}
+
+ul.table > li {
+  margin: 0;
+}
+
+ul.table > li ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+ul.table > li.header > ul > li {
+  margin: 5px;
+  text-align: center;
+}
+
+div.mat-form-field-infix {
+  width: 100%;
+}

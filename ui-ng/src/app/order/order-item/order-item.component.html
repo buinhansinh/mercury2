@@ -1,59 +1,41 @@
-<form [formGroup]="form">
-    <ul>
-        <li class="icon col">
-            <button mat-icon-button>
-                <mat-icon>reorder</mat-icon>
-            </button>
-        </li>
-        <li class="offer col">
-            <app-offer-picker [form]="offerPicker" (offerPicked)="selectOffer($event)" placeholder="+ Add Item"></app-offer-picker>
-            <mat-form-field id="custom-field" *ngIf="showCustomize()" floatLabel="never" appearance="fill">
-                <mat-icon matPrefix>subdirectory_arrow_right</mat-icon>
-                <input matInput placeholder="Custom Description" aria-label="Custom Description" formControlName="custom_description" type="text"
-                    appSelectOnFocus>
-            </mat-form-field>
-        </li>
-        <ng-container *ngIf="form.get('offer').value">
-            <li class="icon col">
-                <button mat-icon-button>
-                    <mat-icon (click)="toggleCustomize()">{{ showCustomize() ? "speaker_notes_off" : "speaker_notes" }}</mat-icon>
-                </button>
-            </li>
-            <li class="quantity col">
-                <mat-form-field *ngIf="stocks$ | async as stocks" floatLabel="never" appearance="fill">
-                    <input matInput placeholder="Quantity" aria-label="Quantity" formControlName="quantity" type="number" required min="0" (focus)="showSnackBar('stocks')"
-                        (blur)="hideSnackBar()" appSelectOnFocus>
-                </mat-form-field>
-            </li>
-            <li class="price col">
-                <mat-form-field *ngIf="pricing$ | async as pricing" floatLabel="never" appearance="fill">
-                    <span matSuffix class="suffix">Php</span>
-                    <input matInput placeholder="Price" aria-label="Price" [matAutocomplete]="autoPrice" formControlName="price" type="number"
-                        required min="0" (focus)="showSnackBar('pricing')" (blur)="hideSnackBar()" appSelectOnFocus>
-                    <mat-autocomplete #autoPrice>
-                        <mat-option [value]="pricing?.suggested">
-                            <span>Suggested: </span>
-                            <span>{{ pricing?.suggested }}</span>
-                        </mat-option>
-                        <mat-option [value]="pricing?.last">
-                            <span>Last: </span>
-                            <span>{{ pricing?.last }}</span>
-                        </mat-option>
-                    </mat-autocomplete>
-                </mat-form-field>
-            </li>
-            <li class="total col">
-                <mat-form-field class="total-field" floatLabel="never" hideRequiredMarker="true" appearance="standard">
-                    <span matSuffix class="suffix">Php</span>
-                    <input matInput aria-label="Total" [ngModel]="total" [ngModelOptions]="{standalone: true}" type="number" required min="0"
-                        readonly>
-                </mat-form-field>
-            </li>
-            <li class="icon col">
-                <button mat-icon-button (click)="deleteItem()">
-                    <mat-icon>delete</mat-icon>
-                </button>
-            </li>
-        </ng-container>
-    </ul>
+<form [formGroup]="form" class="grid-container">
+  <button class="grid-5" mat-icon-button>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <div class="grid-55">
+    <app-offer-picker [form]="offerPicker" (offerPicked)="selectOffer($event)" placeholder="+ Add Item"></app-offer-picker>
+    <mat-form-field id="custom-field" *ngIf="showCustomize()" floatLabel="never" appearance="fill">
+      <mat-icon matPrefix>subdirectory_arrow_right</mat-icon>
+      <input matInput placeholder="Custom Description" aria-label="Custom Description" formControlName="custom_description" type="text"
+        appSelectOnFocus>
+    </mat-form-field>
+  </div>
+  <ng-container *ngIf="form.get('offer').value">
+    <mat-form-field class="grid-10" *ngIf="stocks$ | async as stocks" floatLabel="never" appearance="fill">
+      <mat-label>Qty</mat-label>
+      <input matInput placeholder="Quantity" aria-label="Quantity" formControlName="quantity" type="number" required min="0" (focus)="showSnackBar('stocks')"
+        (blur)="hideSnackBar()" appSelectOnFocus>
+    </mat-form-field>
+    <mat-form-field class="grid-15" *ngIf="pricing$ | async as pricing" floatLabel="never" appearance="fill">
+      <mat-label>Price</mat-label>
+      <input matInput placeholder="Price" aria-label="Price" [matAutocomplete]="autoPrice" formControlName="price" type="number"
+        required min="0" (focus)="showSnackBar('pricing')" (blur)="hideSnackBar()" appSelectOnFocus>
+      <mat-autocomplete #autoPrice>
+        <mat-option [value]="pricing?.suggested">
+          <span>Suggested: </span>
+          <span>{{ pricing?.suggested }}</span>
+        </mat-option>
+        <mat-option [value]="pricing?.last">
+          <span>Last: </span>
+          <span>{{ pricing?.last }}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field class="grid-15" class="total-field" floatLabel="never" hideRequiredMarker="true" appearance="standard">
+      <mat-label>Total</mat-label>
+      <span matSuffix class="suffix">Php</span>
+      <input matInput aria-label="Total" [ngModel]="total" [ngModelOptions]="{standalone: true}" type="number" required min="0"
+        readonly>
+    </mat-form-field>
+  </ng-container>
 </form>

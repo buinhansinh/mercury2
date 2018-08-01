@@ -1,0 +1,106 @@
+<div class="container">
+
+  <div class="toolbar">
+    <span class="title">Location Transfer</span>
+    <mat-chip-list>
+      <mat-chip selected color="primary">
+        Complete
+      </mat-chip>
+      <mat-chip selected color="warn">
+        Canceled
+      </mat-chip>
+    </mat-chip-list>
+    <span class="spacer"></span>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+      <span></span>
+    </button>
+    <mat-menu #menu="matMenu" yPosition="below" xPosition="before" [overlapTrigger]="false">
+      <div mat-menu-item>
+        <button mat-raised-button color="warn">
+          <mat-icon>block</mat-icon>
+          <span>Cancel</span>
+        </button>
+      </div>
+    </mat-menu>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <form [formGroup]="form" class="content">
+    <div class="header">
+      <div class="grid-container">
+        <mat-form-field class="grid-30" floatLabel="always" appearance="fill">
+          <mat-label>Document No.</mat-label>
+          <input matInput aria-label="Document No." formControlName="ref_no">
+        </mat-form-field>
+        <mat-form-field class="prefix-40 grid-30" floatLabel="always" appearance="fill">
+          <mat-label>Date</mat-label>
+          <input matInput aria-label="Date" [matDatepicker]="picker" formControlName="date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="grid-container center">
+        <mat-form-field class="grid-45" floatLabel="always" appearance="fill">
+          <mat-label>Origin</mat-label>
+          <input matInput aria-label="Document No." formControlName="origin">
+        </mat-form-field>
+        <div class="grid-10">
+          <mat-icon class="arrow">forward</mat-icon>
+        </div>
+        <mat-form-field class="grid-45" floatLabel="always" appearance="fill">
+          <mat-label>Destination</mat-label>
+          <input matInput aria-label="Document No." formControlName="destination">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="table">
+      <table class="highlight responsive-table bordered">
+        <thead>
+          <tr class="grid-container header">
+            <th class="grid-80">
+              Item
+            </th>
+            <th class="grid-10">
+              Quantity
+            </th>
+            <th class="grid-10">
+              Delete
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let item of form.get('items').controls; let i=index">
+            <tr class="grid-container content">
+              <td class="grid-80">
+                <app-offer-picker [form]="item.get('offer_id')" (offerPicked)="selectOffer($event)" placeholder="Item"></app-offer-picker>
+              </td>
+              <td class="grid-10">
+                <mat-form-field floatLabel="always" appearance="fill">
+                  <mat-label>Qty</mat-label>
+                  <input matInput aria-label="Quantity">
+                </mat-form-field>
+              </td>
+              <td class="grid-10">
+                <button mat-icon-button>
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </form>
+
+  <mat-divider></mat-divider>
+
+  <div class="toolbar">
+    <span class="spacer"></span>
+    <button mat-raised-button color="primary" (click)="onSave()">
+      <mat-icon>check</mat-icon>
+      <span class="text">Save</span>
+    </button>
+  </div>
+</div>

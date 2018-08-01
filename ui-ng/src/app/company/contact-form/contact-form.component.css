@@ -1,0 +1,22 @@
+.container {
+  height: 100%;
+  margin: 0;
+  border: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.heading > *
+{
+  display: block;
+  width: 100%;
+  /* margin-top: 0.5rem; */
+  text-align: center;
+}

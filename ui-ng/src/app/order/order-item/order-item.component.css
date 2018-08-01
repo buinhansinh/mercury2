@@ -1,39 +1,14 @@
-li.col {
-    flex-grow: 1;
-    margin: 0 2px;
-    max-width: 140px;
-}
-
-li.offer.col {
-    flex-grow: 100;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    max-width: 100%;
+.grid-container {
+  display: flex;
+  justify-content: left;
+  padding: 0.5rem 1rem;
 }
 
 #custom-field {
-    width: 95%;
-    margin-left: auto;
-}
-
-li.icon.col>* {
-    width: 32px;
-}
-
-li.col>* {
-    width: 100%;
-}
-
-mat-form-field.custom {
-    width: 90%;
-}
-
-.suffix {
-    display: flex;
-    margin-left: 3px;
+  width: 95%;
+  margin-left: 5%;
 }
 
 input[type=number] {
-    text-align: right
+  text-align: right
 }

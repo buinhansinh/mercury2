@@ -1,0 +1,17 @@
+div.header {
+  /* margin: 1rem 1rem; */
+}
+
+div.table {
+  margin: 1.1rem;
+}
+
+mat-icon.arrow {
+  display: block;
+  margin: auto;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+}

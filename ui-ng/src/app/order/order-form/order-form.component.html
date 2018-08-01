@@ -1,62 +1,88 @@
-<mat-card class="card">
-    <mat-card-header class="header">
-        <mat-card-title>
-            <h3>SALES ORDER</h3>
-        </mat-card-title>
-        <!-- <mat-card-subtitle>Sales</mat-card-subtitle> -->
-    </mat-card-header>
-    <mat-card-content>
-        <form [formGroup]="form">
-            <div id="contact-field">
-                <app-contact-picker label="Customer" [form]="contactPicker"></app-contact-picker>
-            </div>
-            <ng-container *ngIf="form.get('contact').value">
-                <mat-divider></mat-divider>
-                <div class="top">
-                    <mat-form-field id="ref-no-field" floatLabel="always" appearance="fill">
-                        <mat-label>Document No.</mat-label>
-                        <input matInput aria-label="Document No." formControlName="ref_no">
-                        <span matPrefix>PO-</span>
-                    </mat-form-field>
-                    <mat-form-field id="date-field" floatLabel="always" appearance="fill">
-                        <mat-label>Date</mat-label>
-                        <input matInput aria-label="Date" [matDatepicker]="picker" formControlName="date">
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
-                </div>
-                <div class="bottom">
-                    <ul id="order-item-table" class="table">
-                        <li class="header">
-                            <ul>
-                                <li class="offer col">Item</li>
-                                <li class="icon col"></li>
-                                <li class="col">Qty</li>
-                                <li class="col">Price</li>
-                                <li class="col">Total</li>
-                                <li class="icon col"></li>
-                            </ul>
-                        </li>
-                        <li class="body" *ngFor="let item of form.get('items').controls; let i=index">
-                            <app-order-item [form]="item" [index]="i" (offerSelected)="onOfferSelected($event)" (itemDeleted)="onItemDelete($event);"></app-order-item>
-                        </li>
-                        <li class="footer">
-                            <mat-form-field class="grand-total">
-                                <span matPrefix>GRAND TOTAL</span>
-                                <span matSuffix>Php</span>
-                                <input matInput value="125 {{total}}" readonly/>
-                            </mat-form-field>
-                        </li>
-                    </ul>
-                </div>
-            </ng-container>
-        </form>
-    </mat-card-content>
+<div class="container">
+
+  <div class="toolbar">
+    <span class="title">Sales Order</span>
+    <mat-chip-list>
+      <mat-chip selected color="primary">
+        Fulfilled
+      </mat-chip>
+      <mat-chip selected color="accent">
+        Placed
+      </mat-chip>
+      <mat-chip selected color="warn">
+        Canceled
+      </mat-chip>
+    </mat-chip-list>
+    <span class="spacer"></span>
+    <button mat-raised-button color="primary">
+      <mat-icon>forward</mat-icon>
+      <span>Release</span>
+    </button>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+      <span></span>
+    </button>
+    <mat-menu #menu="matMenu" yPosition="below" xPosition="before" [overlapTrigger]="false">
+      <div mat-menu-item>
+        <button mat-raised-button color="accent">
+          <mat-icon>undo</mat-icon>
+          <span>Return</span>
+        </button>
+      </div>
+      <div mat-menu-item>
+        <button mat-raised-button color="warn">
+          <mat-icon>block</mat-icon>
+          <span>Cancel</span>
+        </button>
+      </div>
+    </mat-menu>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <form [formGroup]="form" class="content">
+    <div class="grid-container">
+      <mat-form-field class="grid-30" floatLabel="always" appearance="fill">
+        <mat-label>Document No.</mat-label>
+        <input placeholder="Document No." matInput aria-label="Document No." formControlName="ref_no">
+        <span matPrefix>PO-</span>
+      </mat-form-field>
+      <mat-form-field class="prefix-40 grid-30" floatLabel="always" appearance="fill">
+        <mat-label>Date</mat-label>
+        <input matInput aria-label="Date" [matDatepicker]="picker" formControlName="date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="grid-container">
+      <div class="grid-100">
+        <app-contact-picker label="Customer" [form]="contactPicker"></app-contact-picker>
+      </div>
+    </div>
     <ng-container *ngIf="form.get('contact').value">
+      <div class="pad">
         <mat-divider></mat-divider>
-        <mat-card-actions class="actions">
-            <button mat-raised-button color="primary" (click)="onSave()">Save</button>
-            <button mat-raised-button>Reset</button>
-        </mat-card-actions>
+      </div>
+      <app-order-item *ngFor="let item of form.get('items').controls; let i=index" [form]="item" [index]="i" (offerSelected)="onOfferSelected($event)"
+        (itemDeleted)="onItemDelete($event);">
+      </app-order-item>
+      <div class="grid-container">
+        <mat-form-field class="grand-total prefix-70 grid-30">
+          <span matPrefix>GRAND TOTAL</span>
+          <span matSuffix>Php</span>
+          <input matInput value="125 {{total}}" readonly/>
+        </mat-form-field>
+      </div>
     </ng-container>
-</mat-card>
+  </form>
+
+  <mat-divider></mat-divider>
+
+  <div class="toolbar">
+    <span class="spacer"></span>
+    <button mat-raised-button color="primary" (click)="onSave()">
+      <mat-icon>check</mat-icon>
+      <span class="text">Save</span>
+    </button>
+  </div>
+</div>

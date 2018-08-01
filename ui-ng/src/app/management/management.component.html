@@ -1,0 +1,21 @@
+<mat-sidenav-container class="nav-container">
+  <mat-sidenav #sideNav mode="side" opened="true" class="nav">
+    <mat-nav-list>
+      <a mat-list-item routerLink="/management/reports" routerLinkActive="active">
+        <mat-icon>assessment</mat-icon>
+        <span>Reports</span>
+      </a>
+      <a mat-list-item routerLink="/management/user" routerLinkActive="active">
+        <mat-icon>person</mat-icon>
+        <span>Users</span>
+      </a>
+      <a mat-list-item routerLink="/management/group" routerLinkActive="active">
+        <mat-icon>group</mat-icon>
+        <span>Groups</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

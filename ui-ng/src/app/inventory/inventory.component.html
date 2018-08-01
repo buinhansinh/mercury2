@@ -1,0 +1,25 @@
+<mat-sidenav-container class="nav-container">
+  <mat-sidenav #sideNav mode="side" opened="true" class="nav">
+    <mat-nav-list>
+      <a mat-list-item routerLink="/inventory/sales/1/release" routerLinkActive="active">
+        <mat-icon matBadge="8" matBadgePosition="after below" matBadgeColor="accent">inbox</mat-icon>
+        <span>Sales Orders</span>
+      </a>
+      <a mat-list-item routerLink="/inventory/purchase/1/receive" routerLinkActive="active">
+        <mat-icon matBadge="8" matBadgePosition="after below" matBadgeColor="accent">inbox</mat-icon>
+        <span>Purchase Orders</span>
+      </a>
+      <a mat-list-item routerLink="/inventory/location/transfer" routerLinkActive="active">
+        <mat-icon>add_circle_outline</mat-icon>
+        <span>Inventory Transfer</span>
+      </a>
+      <a mat-list-item routerLink="/inventory/location/adjustment" routerLinkActive="active">
+        <mat-icon>add_circle_outline</mat-icon>
+        <span>Inventory Adjustment</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
