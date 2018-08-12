@@ -1,5 +1,5 @@
-const migrate = require('./db/migration/migrate')
-const mock = require('./db/mock/mock')
+const migrate = require('./db/migration')
+const mock = require('./db/mock')
 const schedule = require('node-schedule');
 
 const init = async () => {

@@ -1,26 +1,26 @@
 const migration = (db) => {
     return {
         create: () => {
-            return db.none(`
-                create table if not exists migration (
-                    number serial,
-                    name varchar(128));`)
+          return db.none(`
+            create table if not exists mercury.migration (
+              number serial,
+              name varchar(128));`)
         },
         drop: () => {
             return db.none(`
-                drop table if exists migration`)
+                drop table if exists mercury.migration`)
         },
         exists: (number) => {
             return db.one(`
                 select exists (
                     select 1 
-                    from migration
+                    from mercury.migration
                     where number = $1);`, 
                 number)
         },
         insert: (name) => {
             return db.none(`
-                insert into migration (name)
+                insert into mercury.migration (name)
                     values ($1);`,
                 name)
         }
