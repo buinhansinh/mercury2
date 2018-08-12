@@ -12,7 +12,18 @@ const contact = db => {
   return {
     getAll: async (offset = 0, limit = 10) => {
       return db.any(
-        `SELECT id, name, hidden FROM mercury.contact LIMIT $1 OFFSET $2 ORDER BY name`
+        `SELECT id, name, hidden FROM mercury.contact LIMIT $1 OFFSET $2 ORDER BY name`,
+        [limit, offset]
+      );
+    },
+
+    getById: async id => {
+      return db.any(`
+        SELECT DISTINCT ON (contact_id) contact_id as id, profile 
+          FROM mercury.contact_info
+          WHERE contact_id = id
+          ORDER BY timestamp DESC`,
+        id
       );
     },
 
@@ -28,7 +39,7 @@ const contact = db => {
     },
 
     exists: async name => {
-      return db.one(`select count(id) from mercury.contact where name = $1`, name);
+      return db.one(`select count(id) > 0 from mercury.contact where name = $1`, name);
     },
 
     account: async id => {
@@ -50,7 +61,7 @@ const contact = db => {
             returning id`);
 
         // link the account to the contact
-        const account_id = t.none(QUERY_LINK_CONTACT_ACCOUNT, [account_id, contact_id]);
+        t.none(QUERY_LINK_CONTACT_ACCOUNT, [account_id, contact_id]);
 
         // insert the contact info
         return t.one(`
@@ -62,20 +73,20 @@ const contact = db => {
       });
     },
 
-    update: async (id, contact) => {
+    update: async contact => {
       return db.tx(t => {
         t.none(`
           update mercury.contact set 
-            name = $2, 
-          where id = $1`,
-          [id, contact.name]
+            name = $(name), 
+          where id = $(id)`,
+          contact
         );
 
         return t.one(`
           insert into mercury.contact_info (contact_id, profile) 
-            values($1, $2)
+            values($(id), $(this))
             returning contact_id`,
-          [id, contact]);
+          contact);
       });
     },
 

@@ -1,5 +1,8 @@
 const migration = require("./api/migration");
 const user = require("./api/user");
+const group = require("./api/group");
+const permission = require("./api/permission");
+const contact = require("./api/contact");
 
 const query = db => {
   const table = {
@@ -19,7 +22,8 @@ const query = db => {
     },
 
     exists: tablename => {
-      return db.one(`
+      return db.one(
+        `
         SELECT EXISTS (
         SELECT 1 
         FROM pg_tables
@@ -39,7 +43,10 @@ const query = db => {
   return {
     table: table,
     migration: migration(db),
-    user: user(db)
+    user: user(db),
+    group: group(db),
+    permission: permission(db),
+    contact: contact(db)
   };
 };
 
