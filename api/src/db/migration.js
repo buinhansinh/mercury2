@@ -1,4 +1,4 @@
-const logger = require("../common/log");
+const logger = require("../log");
 const query = require("./query");
 const db = require("./connection");
 const fs = require("fs");

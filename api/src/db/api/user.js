@@ -13,10 +13,17 @@ const user = db => {
 
     getById: async id => {
       return db.one(
-        `SELECT id, name, display_name, activated FROM mercury.user WHERE id = $1 AND deleted = FALSE`,
+        `SELECT id, name, display_name, active FROM mercury.user WHERE id = $1 AND deleted = FALSE`,
         id
       );
     },
+
+    getByName: async name => {
+      return db.one(
+        `SELECT id, name, display_name, active, salt, password FROM mercury.user WHERE name = $1 AND deleted = FALSE`,
+        name
+      );
+    },    
 
     exists: async name => {
       return db.one(QUERY_USER_EXISTS, name);
@@ -88,6 +95,16 @@ const user = db => {
         [userId, groupId]
       );
     },
+
+    permissions: async (userId) => {
+      return db.any(
+        `SELECT p.id, p.name 
+        FROM mercury.user_group ug 
+        LEFT JOIN mercury.group_permission gp ON ug.group_id = gp.group_id
+        LEFT JOIN mercury.permission p ON gp.permission_id = p.id
+        WHERE ug.user_id = $1`
+      );
+    }
   };
 };
 

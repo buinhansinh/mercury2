@@ -18,7 +18,7 @@ router.put("/user", async function(req, res) {
   var salt = bcrypt.genSaltSync(16);
   var hash = bcrypt.hashSync(user.password, salt);
   user["salt"] = salt;
-  user["password"] = password;
+  user["password"] = hash;
   res.json(q(db).user.insert(insert));
 });
 
