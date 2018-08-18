@@ -60,7 +60,7 @@ const migrate = async () => {
       console.log(files);
       const migrations = files.map(f => [f, require("./migration/" + f)]);
       // do migrations
-      for (let [index, m] of migrations.slice(0, 6).entries()) {
+      for (let [index, m] of migrations.entries()) {
         let res = await query(db).migration.exists(index + 1);
         if (!res.exists)
           try {

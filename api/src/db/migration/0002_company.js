@@ -6,7 +6,7 @@ module.exports = () => {
             mercury.contact (
               id              uuid primary key default uuid_generate_v4(),
               name            varchar(256),
-              hidden          boolean default FALSE
+              archived        boolean default FALSE
             );`);
 
     t.none(`create table if not exists 
@@ -33,16 +33,15 @@ module.exports = () => {
     t.none(`create table if not exists
             mercury.offer (
               id              uuid primary key default uuid_generate_v4(),
-              hidden          boolean
+              type            smallint not null default 0,
+              description     varchar(256),
+              archived        boolean
             );`);
 
     t.none(`create table if not exists
             mercury.offer_info (
               id              uuid not null references mercury.offer(id),
               timestamp       timestamp default now(),
-              hidden          boolean,
-              description     varchar(256),
-              type            smallint not null default 0,
               profile         jsonb,
               primary key(id, timestamp)
             );`);
@@ -63,14 +62,14 @@ module.exports = () => {
     t.none(`create table if not exists
             mercury.location (
               id              uuid primary key default uuid_generate_v4(),
-              hidden          boolean
+              name            varchar(64) not null unique,
+              archived        boolean
             );`);
 
     t.none(`create table if not exists
             mercury.location_info (
               id              uuid not null references mercury.location(id),
               timestamp       timestamp default now(),
-              name            varchar(64) not null unique,
               profile         jsonb
             );`);
 

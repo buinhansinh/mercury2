@@ -28,6 +28,7 @@ app.get("/logout", function(req, res) {
 // app.use(express.static(path.join(__dirname, 'dist')));
 // app.use('/api', express.static(path.join(__dirname, 'dist')));
 app.use("/api", require("connect-ensure-login").ensureLoggedIn(), api_route);
+// app.use("/api", api_route);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

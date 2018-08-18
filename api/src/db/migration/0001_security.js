@@ -7,10 +7,10 @@ module.exports = () => {
               id              uuid primary key default uuid_generate_v4(),
               name            char(32) not null,
               display_name    char(64) not null,
-              salt            char(16) not null,
+              salt            char(64) not null,
               password        char(64) not null,
               active          boolean default TRUE,
-              deleted         boolean default FALSE,
+              archived        boolean default FALSE,
               profile         jsonb,
               photo           bytea
             );`);

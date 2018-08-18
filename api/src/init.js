@@ -1,19 +1,23 @@
-const migrate = require('./db/migration')
-const mock = require('./db/mock')
-const schedule = require('node-schedule');
+const migrate = require("./db/migration");
+const mock = require("./db/mock");
+const schedule = require("node-schedule");
 
 const init = async () => {
-    // Do db migrations
-    await migrate()
+  // Do db migrations
+  await migrate();
 
-    // Fill db with test data
-    await mock()
+  // Fill db with test data
+  // await mock()
 
-    // Schedule jobs
+  // init database enums
 
-    // var j = schedule.scheduleJob('42 * * * * *', function(){
-    //   console.log('The answer to life, the universe, and everything!');
-    // });
-}
+  // set default users
+
+  // Schedule jobs
+
+  // var j = schedule.scheduleJob('42 * * * * *', function(){
+  //   console.log('The answer to life, the universe, and everything!');
+  // });
+};
 
 module.exports = init;

@@ -1,0 +1,18 @@
+version: '2'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: api.dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./api:/api
+    depends_on:
+      - postgres
+    env_file: dev.env
+    command: ['npm', 'run', 'test']
+
+  postgres:
+    image: postgres:10.3-alpine
+    env_file: dev.env

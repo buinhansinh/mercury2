@@ -1,47 +1,45 @@
 const DBException = require("../error");
 
-const QUERY_USER_EXISTS = `SELECT count(id) > 0 from mercury.user WHERE name = $1 AND deleted = FALSE`;
+const QUERY_USER_EXISTS = `SELECT count(id) > 0 from mercury.user WHERE name = $1 AND archived = FALSE`;
 
 const user = db => {
   return {
     getAll: async (offset, limit) => {
       return db.any(
-        `SELECT id, name, display_name, active FROM mercury.user WHERE deleted = FALSE ORDER BY name LIMIT $1 OFFSET $2`,
+        `SELECT id, name, display_name, active FROM mercury.user WHERE archived = FALSE ORDER BY name LIMIT $1 OFFSET $2`,
         [limit, offset]
       );
     },
 
     getById: async id => {
       return db.one(
-        `SELECT id, name, display_name, active FROM mercury.user WHERE id = $1 AND deleted = FALSE`,
+        `SELECT id, name, display_name, active FROM mercury.user WHERE id = $1 AND archived = FALSE`,
         id
       );
     },
 
     getByName: async name => {
       return db.one(
-        `SELECT id, name, display_name, active, salt, password FROM mercury.user WHERE name = $1 AND deleted = FALSE`,
+        `SELECT id, name, display_name, active, salt, password FROM mercury.user WHERE name = $1 AND archived = FALSE`,
         name
       );
-    },    
+    },
 
     exists: async name => {
       return db.one(QUERY_USER_EXISTS, name);
     },
 
     insert: async user => {
-      return db.tx(t => {
-        // ensure that username has no duplicate
-        const exists = tx.one(QUERY_USER_EXISTS, user.name);
-        if (!exists) throw new DBException("Username already exists");
+      // ensure that username has no duplicate
+      const exists = db.one(QUERY_USER_EXISTS, user.name);
+      if (!exists) throw new DBException("Username already exists");
 
-        return tx.one(
-          `INSERT INTO mercury.user (name, display_name, salt, password) 
-            values($(name), $(display_name), $(salt), $(password))
-            RETURNING id`,
-          user
-        );
-      });
+      return db.one(
+        `INSERT INTO mercury.user (name, display_name, salt, password) 
+          values($(name), $(display_name), $(salt), $(password))
+          RETURNING id`,
+        user
+      );
     },
 
     update: async user => {
@@ -55,13 +53,13 @@ const user = db => {
       );
     },
 
-    deleteById: async (id) => {
+    deleteById: async id => {
       return db.none(
         `UPDATE mercury.user SET
-          deleted = TRUE
+          archived = TRUE
           WHERE id = $1`,
         id
-      )
+      );
     },
 
     updatePassword: async (id, password) => {
@@ -80,23 +78,7 @@ const user = db => {
       );
     },
 
-    addToGroup: async (userId, groupId) => {
-      return db.none(
-        `INSERT INTO mercury.user_group (user_id, group_id)
-          values($1, $2)`,
-        [userId, groupId]
-      );
-    },
-
-    removeFromGroup: async (userId, groupId) => {
-      return db.none(
-        `DELETE FROM mercury.user_group 
-          WHERE user_id = $1 AND group_id = $2`,
-        [userId, groupId]
-      );
-    },
-
-    permissions: async (userId) => {
+    permissions: async userId => {
       return db.any(
         `SELECT p.id, p.name 
         FROM mercury.user_group ug 

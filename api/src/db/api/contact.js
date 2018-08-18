@@ -12,7 +12,7 @@ const contact = db => {
   return {
     getAll: async (offset = 0, limit = 10) => {
       return db.any(
-        `SELECT id, name, hidden FROM mercury.contact LIMIT $1 OFFSET $2 ORDER BY name`,
+        `SELECT id, name, archived FROM mercury.contact LIMIT $1 OFFSET $2 ORDER BY name`,
         [limit, offset]
       );
     },
@@ -29,7 +29,7 @@ const contact = db => {
 
     search: async name => {
       return db.any(`
-        SELECT DISTINCT ON (contact.id) contact.id as id, contact.hidden as hidden, info.profile as profile
+        SELECT DISTINCT ON (contact.id) contact.id as id, contact.archived as archived, info.profile as profile
         OVER (PARTITION BY contact.id ORDER BY info.timestamp DESC)
         FROM
           (SELECT id FROM mercury.contact WHERE name LIKE %$1:value%) AS contact 

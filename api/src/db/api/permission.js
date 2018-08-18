@@ -15,12 +15,12 @@ const permission = db => {
       return db.one(`SELECT id, name FROM mercury.permission WHERE name = $1`, name);
     },
 
-    insert: async permission => {
+    insert: async (id, name) => {
       return db.one(
         `INSERT INTO mercury.permission (id, name) 
-          values($(id), $(name))
+          values($1, $2)
           RETURNING id`,
-        permission
+        [id, name]
       );
     },
 

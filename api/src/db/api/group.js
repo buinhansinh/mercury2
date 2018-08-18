@@ -41,6 +41,22 @@ const group = db => {
       );
     },
 
+    addUser: async (id, userId) => {
+      return db.none(
+        `INSERT INTO mercury.user_group (user_id, group_id)
+          values($1, $2)`,
+        [userId, id]
+      );
+    },
+
+    removeUser: async (id, userId) => {
+      return db.none(
+        `DELETE FROM mercury.user_group 
+          WHERE user_id = $1 AND group_id = $2`,
+        [userId, id]
+      );
+    },
+
     addPermission: async (groupId, permissionId) => {
       return db.none(
         `INSERT INTO mercury.group_permission (group_id, permission_id)

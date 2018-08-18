@@ -1,4 +1,4 @@
-FROM node:9.10.1-alpine
+FROM node:10.9.0-alpine
 ADD ./api /api
 WORKDIR /api
 CMD ["npm", "run", "start"]
