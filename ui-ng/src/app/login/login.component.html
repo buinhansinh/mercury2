@@ -4,11 +4,11 @@
       <form [formGroup]="loginForm">
         <div class="header">MERCURY</div>
         <mat-form-field>
-          <input matInput placeholder="USERNAME" formControlName="username" >
+          <input matInput placeholder="Username" formControlName="username" >
         </mat-form-field>
       
         <mat-form-field>
-          <input matInput placeholder="PASSWORD" formControlName="password">
+          <input matInput placeholder="Password" formControlName="password">
         </mat-form-field>
         <button mat-raised-button color="primary" (click)="onLogin()" [disabled]="loginForm.invalid">LOGIN</button>
       </form>

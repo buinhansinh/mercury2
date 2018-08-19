@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DiscountFormComponent } from "./discount-form.component";
+import { DiscountFormComponent } from './discount-form.component';
 
-describe("DiscountFormComponent", () => {
+describe('DiscountFormComponent', () => {
   let component: DiscountFormComponent;
   let fixture: ComponentFixture<DiscountFormComponent>;
 
@@ -18,7 +18,7 @@ describe("DiscountFormComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

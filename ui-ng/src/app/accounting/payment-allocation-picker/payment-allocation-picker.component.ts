@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { MatPaginator, MatSort, MatTableDataSource } from "@angular/material";
-import { SelectionModel } from "@angular/cdk/collections";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { SelectionModel } from '@angular/cdk/collections';
 
 export interface Allocatable {
   id: string;
@@ -11,39 +11,39 @@ export interface Allocatable {
 }
 
 const allocatables = [
-  { id: "1", ref_no: "1", type: "invoice", date: new Date(), amount: 100 },
+  { id: '1', ref_no: '1', type: 'invoice', date: new Date(), amount: 100 },
   {
-    id: "1",
-    ref_no: "in-3012",
-    type: "invoice",
+    id: '1',
+    ref_no: 'in-3012',
+    type: 'invoice',
     date: new Date(),
     amount: 300
   },
   {
-    id: "1",
-    ref_no: "pa-1234",
-    type: "invoice",
+    id: '1',
+    ref_no: 'pa-1234',
+    type: 'invoice',
     date: new Date(),
     amount: 200
   },
-  { id: "1", ref_no: "1", type: "invoice", date: new Date(), amount: 100 },
-  { id: "1", ref_no: "1", type: "invoice", date: new Date(), amount: 100 },
-  { id: "1", ref_no: "1", type: "invoice", date: new Date(), amount: 100 },
-  { id: "1", ref_no: "1", type: "invoice", date: new Date(), amount: 100 },
-  { id: "1", ref_no: "1", type: "invoice", date: new Date(), amount: 100 },
-  { id: "1", ref_no: "1", type: "invoice", date: new Date(), amount: 100 }
+  { id: '1', ref_no: '1', type: 'invoice', date: new Date(), amount: 100 },
+  { id: '1', ref_no: '1', type: 'invoice', date: new Date(), amount: 100 },
+  { id: '1', ref_no: '1', type: 'invoice', date: new Date(), amount: 100 },
+  { id: '1', ref_no: '1', type: 'invoice', date: new Date(), amount: 100 },
+  { id: '1', ref_no: '1', type: 'invoice', date: new Date(), amount: 100 },
+  { id: '1', ref_no: '1', type: 'invoice', date: new Date(), amount: 100 }
 ];
 
 /**
  * @title Data table with sorting, pagination, and filtering.
  */
 @Component({
-  selector: "app-payment-allocation-picker",
-  styleUrls: ["./payment-allocation-picker.component.css"],
-  templateUrl: "./payment-allocation-picker.component.html"
+  selector: 'app-payment-allocation-picker',
+  styleUrls: ['./payment-allocation-picker.component.css'],
+  templateUrl: './payment-allocation-picker.component.html'
 })
 export class PaymentAllocationPickerComponent implements OnInit {
-  displayedColumns: string[] = ["ref_no", "type", "date", "amount", "select"];
+  displayedColumns: string[] = ['ref_no', 'type', 'date', 'amount', 'select'];
   dataSource: MatTableDataSource<Allocatable>;
   selection = new SelectionModel<Allocatable>(true, []);
 

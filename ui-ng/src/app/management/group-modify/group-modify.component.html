@@ -20,10 +20,10 @@
   <mat-divider></mat-divider>
   <div class="main-form">
     <section>
-      <form [formGroup]="groupForm">
+      <form [formGroup]="groupForm"  class="d-flex-row">
         <mat-form-field class="w-300px">
           <input type="text" matInput formControlName="groupName"
-            placeholder="GROUP NAME">
+            placeholder="Group Name">
 
         </mat-form-field>
 
@@ -43,16 +43,29 @@
       </div>
     
     <mat-divider></mat-divider>
-    <form [formGroup]="permissionForm">
-        <mat-list>
-          <mat-list-item *ngFor="let permission of permissionsForGroup">
-            <span>{{permission.name}}</span>
-            <span class="spacer"></span>
-            <button mat-button color="warn">
-              <span>Remove</span>
-            </button>
-          </mat-list-item>
-        </mat-list>
-    </form>
-
+    <div class="table">
+        <table class="highlight responsive-table bordered">
+          <thead>
+            <tr class="grid-container header">
+              <th class="grid-70 text-left">
+                Group Name
+              </th>
+              <th class="grid-30">
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr class="grid-container content"  *ngFor="let permission of permissionsForGroup">
+                  <td class="grid-70 text-left">
+                      {{permission.name}}
+                  </td>
+                  <td class="grid-30 text-right">
+                      <button mat-button color="warn">
+                          <span>Remove</span>
+                      </button>
+                  </td>
+                </tr>
+          </tbody>
+        </table>
+    </div>
 </div>

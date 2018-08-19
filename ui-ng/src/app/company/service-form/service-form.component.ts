@@ -1,12 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { Offer, EMPTY_PRODUCT, EMPTY_SERVICE } from "../../db/offer.model";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { clone } from "../../app-common/util";
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Offer, EMPTY_PRODUCT, EMPTY_SERVICE } from '../../db/offer.model';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { clone } from '../../app-common/util';
 
 @Component({
-  selector: "app-service-form",
-  templateUrl: "./service-form.component.html",
-  styleUrls: ["./service-form.component.css"]
+  selector: 'app-service-form',
+  templateUrl: './service-form.component.html',
+  styleUrls: ['./service-form.component.css']
 })
 export class ServiceFormComponent implements OnInit {
   @Input()
@@ -27,7 +27,7 @@ export class ServiceFormComponent implements OnInit {
       )
     );
     console.log(props);
-    this.form.setControl("properties", props);
+    this.form.setControl('properties', props);
   }
 
   onSave() {
@@ -37,7 +37,7 @@ export class ServiceFormComponent implements OnInit {
       id: this.form.value.id,
       type: this.offer.type,
       properties: props,
-      description: Object.values(props).join(" ")
+      description: Object.values(props).join(' ')
     };
 
     this.offerSaved.emit(this.offer);

@@ -5,22 +5,22 @@ import {
   EventEmitter,
   Input,
   SimpleChange
-} from "@angular/core";
-import { Observable, of } from "rxjs";
-import { Offer } from "../../db/offer.model";
-import { FormControl } from "@angular/forms";
+} from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { Offer } from '../../db/offer.model';
+import { FormControl } from '@angular/forms';
 import {
   debounceTime,
   distinctUntilChanged,
   switchMap,
   startWith
-} from "rxjs/operators";
-import { OfferService } from "../../db/offer.service";
+} from 'rxjs/operators';
+import { OfferService } from '../../db/offer.service';
 
 @Component({
-  selector: "app-offer-picker",
-  templateUrl: "./offer-picker.component.html",
-  styleUrls: ["./offer-picker.component.css"]
+  selector: 'app-offer-picker',
+  templateUrl: './offer-picker.component.html',
+  styleUrls: ['./offer-picker.component.css']
 })
 export class OfferPickerComponent implements OnInit {
   @Input()
@@ -49,7 +49,7 @@ export class OfferPickerComponent implements OnInit {
   }
 
   onSearch(terms: string | Offer): Observable<Offer[]> {
-    return typeof terms === "string"
+    return typeof terms === 'string'
       ? this.offerService.search(<string>terms)
       : of([]);
   }

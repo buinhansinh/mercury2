@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
-import { clone } from "../app-common/util";
-import { SearchService } from "./search.service";
-import { CONTACTS } from "./contact.mock";
-import { Contact } from "./contact.model";
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { clone } from '../app-common/util';
+import { SearchService } from './search.service';
+import { CONTACTS } from './contact.mock';
+import { Contact } from './contact.model';
 
 @Injectable()
 export class ContactService implements SearchService<Contact> {
@@ -30,7 +30,7 @@ export class ContactService implements SearchService<Contact> {
       return of([]);
     }
     const results: Contact[] = this.CONTACTS.filter(offer =>
-      terms.split(" ").every((term: string): boolean => this.match(offer, term))
+      terms.split(' ').every((term: string): boolean => this.match(offer, term))
     );
     return of(results.length > 0 ? clone(results) : null);
   }

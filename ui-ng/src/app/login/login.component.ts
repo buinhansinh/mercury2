@@ -1,16 +1,16 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
   FormControl,
   Validators
-} from "@angular/forms";
-import { Router } from "@angular/router";
+} from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: "app-login",
-  templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.css"]
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     if (this.loginForm.valid) {
-      this.router.navigate(["/dashboard"]);
+      this.router.navigate(['/dashboard']);
     }
   }
 }

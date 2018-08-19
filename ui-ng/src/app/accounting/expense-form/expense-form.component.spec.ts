@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ExpenseFormComponent } from "./expense-form.component";
+import { ExpenseFormComponent } from './expense-form.component';
 
-describe("ExpenseFormComponent", () => {
+describe('ExpenseFormComponent', () => {
   let component: ExpenseFormComponent;
   let fixture: ComponentFixture<ExpenseFormComponent>;
 
@@ -18,7 +18,7 @@ describe("ExpenseFormComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

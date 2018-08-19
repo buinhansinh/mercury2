@@ -1,16 +1,16 @@
-import { Component, OnInit } from "@angular/core";
-import { FormGroup } from "@angular/forms";
-import { ActivatedRoute, ParamMap } from "@angular/router";
-import { User, Group, userBelongsTo } from "../../db/user.model";
-import { UserService } from "../../db/user.service";
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { User, Group, userBelongsTo } from '../../db/user.model';
+import { UserService } from '../../db/user.service';
 
-import { Observable } from "rxjs";
-import { switchMap } from "rxjs/operators";
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
-  selector: "app-user",
-  templateUrl: "./user.component.html",
-  styleUrls: ["./user.component.css"]
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
   public form: FormGroup;
@@ -26,10 +26,10 @@ export class UserComponent implements OnInit {
   public userBelongsTo = userBelongsTo;
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get("id");
+    const id = this.route.snapshot.paramMap.get('id');
     const user$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap, index: number) =>
-        this.userService.getById(params.get("id"))
+        this.userService.getById(params.get('id'))
       )
     );
     user$.subscribe((user: User) => {
@@ -37,12 +37,12 @@ export class UserComponent implements OnInit {
       this.oldUsername = user.name;
     });
     this.groups = [
-      [Group.ADMIN, "Admin"],
-      [Group.SALES, "Sales"],
-      [Group.PURCHASING, "Purchasing"],
-      [Group.INVENTORY, "Inventory"],
-      [Group.ACCOUNTING, "Accounting"],
-      [Group.MANAGEMENT, "Management"]
+      [Group.ADMIN, 'Admin'],
+      [Group.SALES, 'Sales'],
+      [Group.PURCHASING, 'Purchasing'],
+      [Group.INVENTORY, 'Inventory'],
+      [Group.ACCOUNTING, 'Accounting'],
+      [Group.MANAGEMENT, 'Management']
     ];
   }
 }

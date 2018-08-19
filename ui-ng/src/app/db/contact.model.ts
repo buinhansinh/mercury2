@@ -11,9 +11,9 @@ export interface Contact {
 export const EMPTY_CONTACT: Contact = {
   id: null,
   name: null,
-  numbers: ["", ""],
-  addresses: ["", ""],
-  emails: [""],
-  links: [""],
+  numbers: ['', ''],
+  addresses: ['', ''],
+  emails: [''],
+  links: [''],
   notes: null
 };

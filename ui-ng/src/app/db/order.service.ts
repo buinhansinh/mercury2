@@ -1,8 +1,8 @@
-import { Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
-import { OrderPricing, OrderItem } from "./order.model";
-import { DocumentType } from "./document.model";
-import { clone } from "../app-common/util";
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { OrderPricing, OrderItem } from './order.model';
+import { DocumentType } from './document.model';
+import { clone } from '../app-common/util';
 
 @Injectable()
 export class OrderService {

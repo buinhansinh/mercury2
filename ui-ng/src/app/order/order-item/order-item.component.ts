@@ -6,25 +6,25 @@ import {
   SimpleChange,
   EventEmitter,
   Output
-} from "@angular/core";
+} from '@angular/core';
 import {
   MatSnackBar,
   MatSnackBarRef,
   MAT_SNACK_BAR_DATA
-} from "@angular/material";
+} from '@angular/material';
 import {
   FormControl,
   FormGroup,
   FormBuilder,
   ValidatorFn,
   AbstractControl
-} from "@angular/forms";
-import { OrderPricing, OrderItem } from "../../db/order.model";
-import { OrderService } from "../../db/order.service";
-import { InventoryService } from "../../db/inventory.service";
-import { Observable, of } from "rxjs";
-import { Stock } from "../../db/inventory.model";
-import { DocumentType } from "../../db/document.model";
+} from '@angular/forms';
+import { OrderPricing, OrderItem } from '../../db/order.model';
+import { OrderService } from '../../db/order.service';
+import { InventoryService } from '../../db/inventory.service';
+import { Observable, of } from 'rxjs';
+import { Stock } from '../../db/inventory.model';
+import { DocumentType } from '../../db/document.model';
 import {
   debounceTime,
   distinctUntilChanged,
@@ -32,16 +32,16 @@ import {
   startWith,
   map,
   filter
-} from "rxjs/operators";
-import { OrderStockInfoComponent } from "../order-stock-info/order-stock-info.component";
-import { OrderPricingInfoComponent } from "../order-pricing-info/order-pricing-info.component";
-import { OfferService } from "../../db/offer.service";
-import { Offer, OfferType } from "../../db/offer.model";
+} from 'rxjs/operators';
+import { OrderStockInfoComponent } from '../order-stock-info/order-stock-info.component';
+import { OrderPricingInfoComponent } from '../order-pricing-info/order-pricing-info.component';
+import { OfferService } from '../../db/offer.service';
+import { Offer, OfferType } from '../../db/offer.model';
 
 @Component({
-  selector: "app-order-item",
-  templateUrl: "./order-item.component.html",
-  styleUrls: ["./order-item.component.css"]
+  selector: 'app-order-item',
+  templateUrl: './order-item.component.html',
+  styleUrls: ['./order-item.component.css']
 })
 export class OrderItemComponent implements OnInit {
   @Input()
@@ -82,10 +82,10 @@ export class OrderItemComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChange) {
     // this.form.patchValue(this.item);
-    const offer = this.form.get("offer").value;
-    if (offer !== null) this.offerPicker.setValue(offer);
-    this.form.get("quantity").valueChanges.subscribe(() => this.updateTotal());
-    this.form.get("price").valueChanges.subscribe(() => this.updateTotal());
+    const offer = this.form.get('offer').value;
+    if (offer !== null) { this.offerPicker.setValue(offer); }
+    this.form.get('quantity').valueChanges.subscribe(() => this.updateTotal());
+    this.form.get('price').valueChanges.subscribe(() => this.updateTotal());
     this.updateTotal();
   }
 
@@ -94,11 +94,11 @@ export class OrderItemComponent implements OnInit {
       return;
     }
 
-    if (this.form.get("offer").value === null) {
+    if (this.form.get('offer').value === null) {
       this.offerSelected.emit(this.index);
     }
 
-    this.form.get("offer").setValue(offer);
+    this.form.get('offer').setValue(offer);
     this.pricing$ = this.orderService.getPricing(
       offer.id,
       this.contactId,
@@ -111,12 +111,12 @@ export class OrderItemComponent implements OnInit {
   }
 
   showCustomize(): boolean {
-    return this.form.get("custom_description").value !== null;
+    return this.form.get('custom_description').value !== null;
   }
 
   toggleCustomize() {
-    const custom = this.form.get("custom_description");
-    custom.setValue(custom.value === null ? "" : null);
+    const custom = this.form.get('custom_description');
+    custom.setValue(custom.value === null ? '' : null);
   }
 
   showSnackBar(type) {
@@ -149,7 +149,7 @@ export class OrderItemComponent implements OnInit {
   }
 
   updateTotal() {
-    this.total = this.form.get("quantity").value * this.form.get("price").value;
+    this.total = this.form.get('quantity').value * this.form.get('price').value;
   }
 
   deleteItem() {

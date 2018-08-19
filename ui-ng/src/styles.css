@@ -107,3 +107,11 @@ input[type="number"]::-webkit-outer-spin-button {
 .mat-row:hover {
   background-color: rgba(242, 242, 242, 0.5);
 }
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}

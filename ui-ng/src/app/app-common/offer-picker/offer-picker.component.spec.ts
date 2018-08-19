@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OfferPickerComponent } from "./offer-picker.component";
+import { OfferPickerComponent } from './offer-picker.component';
 
-describe("OfferPickerComponent", () => {
+describe('OfferPickerComponent', () => {
   let component: OfferPickerComponent;
   let fixture: ComponentFixture<OfferPickerComponent>;
 
@@ -18,7 +18,7 @@ describe("OfferPickerComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LocationTransferFormComponent } from "./location-transfer-form.component";
+import { LocationTransferFormComponent } from './location-transfer-form.component';
 
-describe("LocationTransferFormComponent", () => {
+describe('LocationTransferFormComponent', () => {
   let component: LocationTransferFormComponent;
   let fixture: ComponentFixture<LocationTransferFormComponent>;
 
@@ -18,7 +18,7 @@ describe("LocationTransferFormComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

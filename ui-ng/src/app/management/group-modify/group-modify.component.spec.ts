@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GroupModifyComponent } from "./group-modify.component";
+import { GroupModifyComponent } from './group-modify.component';
 
-describe("GroupModifyComponent", () => {
+describe('GroupModifyComponent', () => {
   let component: GroupModifyComponent;
   let fixture: ComponentFixture<GroupModifyComponent>;
 
@@ -18,7 +18,7 @@ describe("GroupModifyComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

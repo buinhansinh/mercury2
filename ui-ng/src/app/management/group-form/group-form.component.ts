@@ -1,10 +1,10 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: "app-group-form",
-  templateUrl: "./group-form.component.html",
-  styleUrls: ["./group-form.component.css"]
+  selector: 'app-group-form',
+  templateUrl: './group-form.component.html',
+  styleUrls: ['./group-form.component.css']
 })
 export class GroupFormComponent implements OnInit {
   groupForm: FormGroup;

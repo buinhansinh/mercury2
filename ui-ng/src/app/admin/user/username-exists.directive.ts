@@ -1,17 +1,17 @@
-import { Directive, Input } from "@angular/core";
-import { UserService } from "../../db/user.service";
+import { Directive, Input } from '@angular/core';
+import { UserService } from '../../db/user.service';
 import {
   Validator,
   AsyncValidator,
   NG_ASYNC_VALIDATORS,
   AbstractControl,
   ValidationErrors
-} from "@angular/forms";
-import { Observable, of } from "rxjs";
-import { map } from "rxjs/operators";
+} from '@angular/forms';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Directive({
-  selector: "[appUsernameExists]",
+  selector: '[appUsernameExists]',
   providers: [
     {
       provide: NG_ASYNC_VALIDATORS,
@@ -21,7 +21,7 @@ import { map } from "rxjs/operators";
   ]
 })
 export class UsernameExistsDirective implements AsyncValidator {
-  @Input("appUsernameExists")
+  @Input('appUsernameExists')
   formerName: string;
 
   constructor(private userService: UserService) {}
@@ -32,7 +32,7 @@ export class UsernameExistsDirective implements AsyncValidator {
     return this.userService.exists(c.value).pipe(
       map(exists => {
         return exists && c.value !== this.formerName
-          ? { usernameExists: "username already exists" }
+          ? { usernameExists: 'username already exists' }
           : null;
       })
     );

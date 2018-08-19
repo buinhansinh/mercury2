@@ -1,5 +1,5 @@
-import { Offer } from "./offer.model";
-import { Document } from "./document.model";
+import { Offer } from './offer.model';
+import { Document } from './document.model';
 
 export interface Location {
   id: string;

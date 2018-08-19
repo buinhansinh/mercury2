@@ -5,22 +5,22 @@ import {
   EventEmitter,
   Input,
   SimpleChange
-} from "@angular/core";
-import { Observable, of } from "rxjs";
-import { FormControl } from "@angular/forms";
+} from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { FormControl } from '@angular/forms';
 import {
   debounceTime,
   distinctUntilChanged,
   switchMap,
   startWith
-} from "rxjs/operators";
-import { Contact } from "../../db/contact.model";
-import { ContactService } from "../../db/contact.service";
+} from 'rxjs/operators';
+import { Contact } from '../../db/contact.model';
+import { ContactService } from '../../db/contact.service';
 
 @Component({
-  selector: "app-contact-picker",
-  templateUrl: "./contact-picker.component.html",
-  styleUrls: ["./contact-picker.component.css"]
+  selector: 'app-contact-picker',
+  templateUrl: './contact-picker.component.html',
+  styleUrls: ['./contact-picker.component.css']
 })
 export class ContactPickerComponent implements OnInit {
   @Input()
@@ -51,7 +51,7 @@ export class ContactPickerComponent implements OnInit {
   }
 
   onSearch(terms: string | Contact): Observable<Contact[]> {
-    return typeof terms === "string"
+    return typeof terms === 'string'
       ? this.contactService.search(<string>terms)
       : of([]);
   }

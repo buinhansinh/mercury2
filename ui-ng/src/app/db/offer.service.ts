@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
-import { Offer, OfferType } from "./offer.model";
-import { OFFERS } from "./offer.mock";
-import { clone } from "../app-common/util";
-import { SearchService } from "./search.service";
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { Offer, OfferType } from './offer.model';
+import { OFFERS } from './offer.mock';
+import { clone } from '../app-common/util';
+import { SearchService } from './search.service';
 
 @Injectable()
 export class OfferService implements SearchService<Offer> {
@@ -30,7 +30,7 @@ export class OfferService implements SearchService<Offer> {
       return of([]);
     }
     const results: Offer[] = this.OFFERS.filter(offer =>
-      terms.split(" ").every((term: string): boolean => this.match(offer, term))
+      terms.split(' ').every((term: string): boolean => this.match(offer, term))
     );
     return of(results.length > 0 ? clone(results) : null);
   }

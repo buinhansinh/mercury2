@@ -1,6 +1,6 @@
-import { OfferType, Offer } from "./offer.model";
-import { Contact } from "./contact.model";
-import { Document } from "./document.model";
+import { OfferType, Offer } from './offer.model';
+import { Contact } from './contact.model';
+import { Document } from './document.model';
 
 export interface OrderItem {
   offer: Offer;

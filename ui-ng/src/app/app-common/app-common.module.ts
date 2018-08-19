@@ -1,8 +1,8 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-import { BrowserModule } from "@angular/platform-browser";
+import { BrowserModule } from '@angular/platform-browser';
 
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {
   // nvaigation
@@ -38,13 +38,13 @@ import {
   MatNativeDateModule,
   MatPaginatorModule,
   MatSortModule
-} from "@angular/material";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { OfferPickerComponent } from "./offer-picker/offer-picker.component";
-import { CommonModule } from "@angular/common";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { SelectOnFocusDirective } from "./select-on-focus.directive";
-import { ContactPickerComponent } from "./contact-picker/contact-picker.component";
+} from '@angular/material';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { OfferPickerComponent } from './offer-picker/offer-picker.component';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SelectOnFocusDirective } from './select-on-focus.directive';
+import { ContactPickerComponent } from './contact-picker/contact-picker.component';
 
 const ngModules: any = [
   CommonModule,

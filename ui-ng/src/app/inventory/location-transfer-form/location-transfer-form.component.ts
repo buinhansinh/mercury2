@@ -1,10 +1,10 @@
-import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, FormArray } from "@angular/forms";
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 
 @Component({
-  selector: "app-location-transfer-form",
-  templateUrl: "./location-transfer-form.component.html",
-  styleUrls: ["./location-transfer-form.component.css"]
+  selector: 'app-location-transfer-form',
+  templateUrl: './location-transfer-form.component.html',
+  styleUrls: ['./location-transfer-form.component.css']
 })
 export class LocationTransferFormComponent implements OnInit {
   form: FormGroup;
@@ -27,6 +27,6 @@ export class LocationTransferFormComponent implements OnInit {
 
     this.items = this.formBuilder.array([locationItem]);
 
-    this.form.setControl("items", this.items);
+    this.form.setControl('items', this.items);
   }
 }

@@ -23,15 +23,15 @@
       <form [formGroup]="userForm" class="form">
         <mat-form-field>
           <input type="text" matInput formControlName="username"
-            placeholder="USERNAME">
+            placeholder="Username">
 
         </mat-form-field>
         <mat-form-field>
           <input type="text" matInput formControlName="fullname"
-            placeholder="PASSWORD">
+            placeholder="Password">
         </mat-form-field>
         <div class="save-button">
-          <button mat-flat-button>Save</button>
+          <button mat-flat-button>Update</button>
         </div>
       </form>
 
@@ -41,12 +41,12 @@
       <form [formGroup]="passwordForm" class="form">
         <mat-form-field>
           <input type="text" matInput formControlName="password"
-            placeholder="PASSWORD">
+            placeholder="Password">
 
         </mat-form-field>
         <mat-form-field>
           <input type="text" matInput formControlName="passwordVerify"
-            placeholder="PASSWORD VERIFY">
+            placeholder="Password Verify">
         </mat-form-field>
         <div class="save-button">
           <button mat-flat-button>Update</button>
@@ -62,27 +62,29 @@
       </mat-form-field>
     </div>
     <mat-divider></mat-divider>
-    <div class="group-list">
-      <table mat-table [dataSource]="groups$ | async">
-          <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef> Group </th>
-              <td mat-cell *matCellDef="let group" class="text-left"> {{group.name}} </td>
-            </ng-container>
-    
-            <!-- Name Column -->
-            <ng-container matColumnDef="toolbar">
-              <th mat-header-cell *matHeaderCellDef> </th>
-              <td mat-cell *matCellDef="let group" class="text-right">
-                <button mat-button color="warn">
-                  <span>Remove</span>
-                </button></td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="groupColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: groupColumns;"></tr>
-      </table>
-       
-      
+    <div class="table">
+        <table class="highlight responsive-table bordered">
+          <thead>
+            <tr class="grid-container header">
+              <th class="grid-70 text-left">
+                Group Name
+              </th>
+              <th class="grid-30">
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr class="grid-container content"  *ngFor="let group of (groups$ | async)">
+                  <td class="grid-70 text-left">
+                      {{group.name}}
+                  </td>
+                  <td class="grid-30 text-right">
+                      <button mat-button color="warn">
+                          <span>Remove</span>
+                      </button>
+                  </td>
+                </tr>
+          </tbody>
+        </table>
     </div>
-
-
   </div>

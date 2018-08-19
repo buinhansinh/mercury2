@@ -1,17 +1,17 @@
-<h3 mat-dialog-title>User Create</h3>
+<h3 mat-dialog-title>Create User</h3>
 <form [formGroup]="userForm" class="user-form">
   <mat-form-field>
-      <input type="text" matInput formControlName="username" placeholder="USER NAME">
+      <input type="text" matInput formControlName="username" placeholder="Username">
   </mat-form-field>
   <mat-form-field>
-      <input type="text" matInput formControlName="fullname" placeholder="FULL NAME">
+      <input type="text" matInput formControlName="fullname" placeholder="Full Name">
   </mat-form-field>
   <div formGroupName="passwordGroup" class="user-form">
       <mat-form-field>
-          <input type="text" matInput formControlName="password" placeholder="PASSWORD" >
+          <input type="text" matInput formControlName="password" placeholder="Password" >
       </mat-form-field>
       <mat-form-field>
-          <input type="text" matInput formControlName="passwordVerify" placeholder="PASSWORD VERIFY">
+          <input type="text" matInput formControlName="passwordVerify" placeholder="Password Verify">
       </mat-form-field>
   </div>
   <button mat-flat-button [disabled]="userForm.invalid" mat-dialog-close>Create</button>

@@ -1,12 +1,12 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
-import { LoginComponent } from "./login/login.component";
-import { DashboardComponent } from "./dashboard/dashboard.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { LoginComponent } from './login/login.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   {
-    path: "login",
+    path: 'login',
     component: LoginComponent
   },
   // {
@@ -18,16 +18,16 @@ const routes: Routes = [
   //     loadChildren: './sales/sales.module#SalesModule'
   // },
   {
-    path: "dashboard",
+    path: 'dashboard',
     component: DashboardComponent
   },
   {
-    path: "",
-    redirectTo: "/login",
-    pathMatch: "full"
+    path: '',
+    redirectTo: '/login',
+    pathMatch: 'full'
   },
   {
-    path: "**",
+    path: '**',
     component: PageNotFoundComponent
   }
 ];
