@@ -27,7 +27,15 @@ app.get("/logout", function(req, res) {
 // Some stuff for including angular
 // app.use(express.static(path.join(__dirname, 'dist')));
 // app.use('/api', express.static(path.join(__dirname, 'dist')));
-app.use("/api", require("connect-ensure-login").ensureLoggedIn(), api_route);
+app.use("/api", (req, res, next) => {
+  if (req.isAuthenticated()) {
+    next();
+  } else {
+    const err = new Error("Unauthorized");
+    err.status = 401;
+    next(err);
+  }
+}, api_route);
 // app.use("/api", api_route);
 
 // catch 404 and forward to error handler
@@ -44,7 +52,7 @@ app.use(function(err, req, res, next) {
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
   // render the error page
-  res.status(err.status || 500);
+  res.status(err.status || 500).send(`${err.status}: ${err.message}`);
   res.render("error");
 });
 

@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const q = require("../db/query");
 const db = require("../db/connection");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 //------------------------------------------------------------------------------
 
@@ -16,7 +16,7 @@ router.get("/user", async function(req, res) {
 // USER - CREATE
 router.post("/user", async function(req, res) {
   const user = req.body;
-  var salt = bcrypt.genSaltSync(16);
+  var salt = bcrypt.genSaltSync(10);
   var hash = bcrypt.hashSync(user.password, salt);
   user["salt"] = salt;
   user["password"] = hash;
