@@ -19,16 +19,18 @@
 
   <mat-divider></mat-divider>
   <div class="main-form">
-    <section>
-      <form [formGroup]="groupForm"  class="d-flex-row">
-        <mat-form-field class="w-300px">
+    <section class="w-300px">
+      <form [formGroup]="groupForm"  class="d-flex-column">
+        <mat-form-field>
           <input type="text" matInput formControlName="groupName"
             placeholder="Group Name">
 
         </mat-form-field>
-
+        <div class="d-flex-row-align-end">
+            <button mat-flat-button>Save</button>
+        </div>
+     
       </form>
-      <button mat-flat-button>Save</button>
     </section>
     <div class="toolbar">
         <span class="title">Permission</span>
