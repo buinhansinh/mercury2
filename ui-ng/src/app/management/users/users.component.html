@@ -2,15 +2,20 @@
     <div class="toolbar">
       <span class="title">User Management</span>
       <span class="spacer"></span>
-      <mat-form-field class="search-field">
-          <input type="text" matInput placeholder="Search">
-          <mat-icon matSuffix>search</mat-icon>
-          
-      </mat-form-field>
-      <button mat-flat-button (click)="onOpenAddUserForm()">
-          <mat-icon>add</mat-icon>
-          <span>Add User</span>
-        </button>
+      <div class="d-flex-row-align-end h-100">
+          <mat-form-field class="search-field">
+              <input type="text" matInput placeholder="Search">
+              <mat-icon matSuffix>search</mat-icon>
+              
+          </mat-form-field>
+          <mat-form-field class="no-underline">
+              <input type="text" matInput placeholder="Search" style="display:none">
+              <button matSuffix mat-flat-button (click)="onOpenAddUserForm()" class="mb-0">
+                  <mat-icon>add</mat-icon>
+                  <span>Add User</span>
+              </button>
+          </mat-form-field>
+      </div>
     </div>
   
     <mat-divider></mat-divider>

@@ -20,16 +20,18 @@
   <mat-divider></mat-divider>
   <div class="main-form">
     <section class="w-300px">
-      <form [formGroup]="groupForm"  class="d-flex-column">
+      <form [formGroup]="groupForm"  class="d-flex-row-align-end">
         <mat-form-field>
           <input type="text" matInput formControlName="groupName"
             placeholder="Group Name">
 
         </mat-form-field>
-        <div class="d-flex-row-align-end">
-            <button mat-flat-button>Save</button>
-        </div>
-     
+        <mat-form-field class="no-underline ml-24px">
+            <input type="text" matInput placeholder="Search" style="display:none">
+            <button matSuffix mat-flat-button (click)="onOpenAddUserForm()" class="mb-0">
+                <span>Update</span>
+            </button>
+        </mat-form-field>
       </form>
     </section>
     <div class="toolbar">

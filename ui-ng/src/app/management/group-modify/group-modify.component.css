@@ -20,16 +20,8 @@ section {
     padding-right : 12px;
 }
 
-.d-flex-column{
+.d-flex-row{
     display: flex;
-    flex-direction: column;
 }
 
-.d-flex-row-align-end{
-    display: flex;
-    justify-content: flex-end;
-}
 
-.flex-end{
-    justify-content: flex-end;
-}
