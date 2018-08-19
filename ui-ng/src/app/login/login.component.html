@@ -10,7 +10,10 @@
         <mat-form-field>
           <input matInput placeholder="Password" formControlName="password">
         </mat-form-field>
-        <button mat-raised-button color="primary" (click)="onLogin()" [disabled]="loginForm.invalid">LOGIN</button>
+        <div class="d-flex">
+          <div class="spacer"></div>
+          <button mat-raised-button color="primary" (click)="onLogin()" [disabled]="loginForm.invalid">LOGIN</button>
+        </div>
       </form>
     </mat-card-content>
   </mat-card>

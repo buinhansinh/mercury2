@@ -14,5 +14,9 @@
           <input type="text" matInput formControlName="passwordVerify" placeholder="Password Verify">
       </mat-form-field>
   </div>
-  <button mat-flat-button [disabled]="userForm.invalid" mat-dialog-close>Create</button>
+ 
 </form>
+<mat-dialog-actions>
+  <div class="spacer"></div>
+    <button mat-flat-button [disabled]="userForm.invalid" mat-dialog-close>Create</button>
+</mat-dialog-actions>
