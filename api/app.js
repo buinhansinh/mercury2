@@ -19,11 +19,16 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Login and logout
-app.post("/login", passport.authenticate("local"),  function(req, res) {
-  return res.json({
-    userId: req.user.id
-  });
-});
+app.post(
+  "/login",
+  passport.authenticate("local", { failWithError: false }),
+  function(req, res) {
+    return res.json({
+      user: req.user
+    });
+  }
+);
+
 app.get("/logout", function(req, res) {
   req.logout();
 });
@@ -31,15 +36,19 @@ app.get("/logout", function(req, res) {
 // Some stuff for including angular
 // app.use(express.static(path.join(__dirname, 'dist')));
 // app.use('/api', express.static(path.join(__dirname, 'dist')));
-app.use("/api", (req, res, next) => {
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    const err = new Error("Unauthorized");
-    err.status = 401;
-    next(err);
-  }
-}, api_route);
+app.use(
+  "/api",
+  (req, res, next) => {
+    if (req.isAuthenticated()) {
+      next();
+    } else {
+      const err = new Error("Unauthorized");
+      err.status = 401;
+      next(err);
+    }
+  },
+  api_route
+);
 // app.use("/api", api_route);
 
 // catch 404 and forward to error handler
@@ -57,7 +66,6 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500).send(`${err.status}: ${err.message}`);
-  res.render("error");
 });
 
 module.exports = app;

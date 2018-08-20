@@ -3,6 +3,7 @@ const Strategy = require("passport-local").Strategy;
 const query = require("./db/query");
 const bcrypt = require("bcryptjs");
 const db = require("./db/connection");
+
 // Configure the local strategy for use by Passport.
 //
 // The local strategy require a `verify` function which receives the credentials
@@ -11,19 +12,24 @@ const db = require("./db/connection");
 // will be set at `req.user` in route handlers after authentication.
 passport.use(
   new Strategy(async function(username, password, cb) {
+    var user = false;
+    var err = new Error("Unauthorized");
+    err.status = 401;
+    
     try {
-      const user = await query(db).user.getByName(username);
-      const passCorrect = bcrypt.compareSync(password, user.password);
-      console.log(user.id);
-      if (passCorrect) {
-        user.permissions = await query(db).user.permissions(user.id);
-        return cb(null, user);
-      } else {
-        return cb(null, false);
-      }
+      user = await query(db).user.getByName(username);
+      if (bcrypt.compareSync(password, user.password)) {
+        const permissions = await query(db).user.permissions(user.id);
+        delete user.salt;
+        delete user.password;
+        user.permissions = permissions.map(p => p.id);
+        err = null;
+      } 
     } catch (e) {
-      cb(e);
+      user = false;
     }
+
+    return cb(err, user);
   })
 );
 
@@ -40,8 +46,8 @@ passport.serializeUser(function(user, cb) {
 
 passport.deserializeUser(async function(id, cb) {
   try {
-    const user = await query.user.getById(id);
-    user.permissions = await query.user.permissions(id);
+    const user = await query(db).user.getById(id);
+    user.permissions = await query(db).user.permissions(id);
     return cb(null, user);
   } catch (e) {
     return cb(null, e);

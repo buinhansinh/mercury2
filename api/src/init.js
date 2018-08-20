@@ -4,7 +4,7 @@ const schedule = require("node-schedule");
 
 const init = async () => {
   // Do db migrations
-  await migrate();
+  // await migrate();
 
   // Fill db with test data
   // await mock()
