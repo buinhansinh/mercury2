@@ -18,9 +18,16 @@ import { User } from '../db/user.model';
 export class LoginComponent implements OnInit {
   errorMessage: string;
   loginForm: FormGroup;
-  constructor(private router: Router, private formBuilder: FormBuilder, private authService: AuthenticationService) {}
+  constructor(
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private authService: AuthenticationService
+  ) {}
 
   ngOnInit() {
+    if (this.authService.isAuthenticated) {
+      this.router.navigate(['']);
+    }
     this.loginForm = this.formBuilder.group({
       username: [null, Validators.required],
       password: [null, Validators.required]
@@ -28,14 +35,17 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
-    this.errorMessage = "";
+    this.errorMessage = '';
     if (this.loginForm.valid) {
       const loginData = this.loginForm.value;
-      this.authService.login(loginData.username, loginData.password).subscribe((user: User) => {
-        this.router.navigate(['/dashboard']);
-      }, (error: any) => {
-        this.errorMessage = "Invalid username or password!";
-      });
+      this.authService.login(loginData.username, loginData.password).subscribe(
+        (user: User) => {
+          this.router.navigate(['']);
+        },
+        (error: any) => {
+          this.errorMessage = 'Invalid username or password!';
+        }
+      );
     }
   }
 }

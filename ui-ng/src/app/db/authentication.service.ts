@@ -8,19 +8,28 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthenticationService {
-
-  constructor(private http: HttpClient) { }
-
-  public login(username: string, password: string) : Observable<User>{
-    return this.http.post('/api/login', {
-      username: username,
-      password: password
-    }).pipe(tap((user : User) => {
-      localStorage.setItem("userId",user.id);
-    }));
+  constructor(private http: HttpClient) {
+    console.log('only once');
   }
 
-  public logout(){
+  public login(username: string, password: string): Observable<User> {
+    return this.http
+      .post('/api/login', {
+        username: username,
+        password: password
+      })
+      .pipe(
+        tap((user: any) => {
+          localStorage.setItem('userId', user.userId);
+        })
+      );
+  }
+
+  public logout() {
     localStorage.clear();
+  }
+
+  public isAuthenticated() {
+    return !!localStorage.getItem('userId');
   }
 }

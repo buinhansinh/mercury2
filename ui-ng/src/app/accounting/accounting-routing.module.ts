@@ -9,7 +9,7 @@ import { InvoicesComponent } from './invoices/invoices.component';
 
 const routes: Routes = [
   {
-    path: 'accounting',
+    path: '',
     component: AccountingComponent,
     children: [
       {

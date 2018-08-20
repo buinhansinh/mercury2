@@ -1,9 +1,5 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-import { BrowserModule } from '@angular/platform-browser';
-
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import {
   // nvaigation
   MatToolbarModule,
@@ -45,16 +41,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SelectOnFocusDirective } from './select-on-focus.directive';
 import { ContactPickerComponent } from './contact-picker/contact-picker.component';
-import { HttpClientModule } from '@angular/common/http';
+import { ModuleWithProviders } from '@angular/compiler/src/core';
 
-const ngModules: any = [
-  CommonModule,
-  BrowserModule,
-  BrowserAnimationsModule,
-  FormsModule,
-  ReactiveFormsModule,
-  HttpClientModule
-];
+const ngModules: any = [CommonModule, FormsModule, ReactiveFormsModule];
 
 const materialModules: any = [
   // navigation
@@ -115,4 +104,10 @@ const exports_ = []
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
   ]
 })
-export class AppCommonModule {}
+export class AppCommonModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: AppCommonModule
+    };
+  }
+}

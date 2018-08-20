@@ -59,7 +59,7 @@ export class HttpUserService {
 
 @Injectable()
 export class UserService extends HttpUserService {
-  constructor(http: HttpClient){
+  constructor(http: HttpClient) {
     super(http);
   }
 }
