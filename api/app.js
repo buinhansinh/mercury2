@@ -19,7 +19,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Login and logout
-app.post("/login", passport.authenticate("local"));
+app.post("/login", passport.authenticate("local"),  function(req, res) {
+  return res.json({
+    userId: req.user.id
+  });
+});
 app.get("/logout", function(req, res) {
   req.logout();
 });

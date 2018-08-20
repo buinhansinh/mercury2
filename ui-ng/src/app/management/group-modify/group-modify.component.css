@@ -1,0 +1,27 @@
+.main-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.w-300px {
+  width: 300px;
+}
+
+section {
+  padding: 24px;
+}
+
+.spacer {
+  flex: 1 1 10%;
+}
+
+.table{
+    padding: 14px;
+    padding-right : 12px;
+}
+
+.d-flex-row{
+    display: flex;
+}
+
+

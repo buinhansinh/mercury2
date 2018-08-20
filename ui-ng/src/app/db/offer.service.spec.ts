@@ -8,7 +8,10 @@ describe('ProductService', () => {
     });
   });
 
-  it('should be created', inject([ContactService], (service: ContactService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should be created', inject(
+    [ContactService],
+    (service: ContactService) => {
+      expect(service).toBeTruthy();
+    }
+  ));
 });

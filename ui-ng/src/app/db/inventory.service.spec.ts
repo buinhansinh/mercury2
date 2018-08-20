@@ -9,7 +9,10 @@ describe('InventoryService', () => {
     });
   });
 
-  it('should be created', inject([InventoryService], (service: InventoryService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should be created', inject(
+    [InventoryService],
+    (service: InventoryService) => {
+      expect(service).toBeTruthy();
+    }
+  ));
 });

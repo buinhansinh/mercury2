@@ -2,7 +2,7 @@ const passport = require("passport");
 const Strategy = require("passport-local").Strategy;
 const query = require("./db/query");
 const bcrypt = require("bcryptjs");
-
+const db = require("./db/connection");
 // Configure the local strategy for use by Passport.
 //
 // The local strategy require a `verify` function which receives the credentials
@@ -12,10 +12,11 @@ const bcrypt = require("bcryptjs");
 passport.use(
   new Strategy(async function(username, password, cb) {
     try {
-      const user = await query.user.getByName(username);
+      const user = await query(db).user.getByName(username);
       const passCorrect = bcrypt.compareSync(password, user.password);
+      console.log(user.id);
       if (passCorrect) {
-        user.permissions = await query.user.permissions(user.id);
+        user.permissions = await query(db).user.permissions(user.id);
         return cb(null, user);
       } else {
         return cb(null, false);

@@ -4,12 +4,10 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
   selector: '[appSelectOnFocus]'
 })
 export class SelectOnFocusDirective {
+  constructor(private el: ElementRef) {}
 
-  constructor(private el: ElementRef) { 
+  @HostListener('focus')
+  onfocus() {
+    this.el.nativeElement.select();
   }
-
-  @HostListener('focus') onfocus() {
-      this.el.nativeElement.select();
-  }
-
 }

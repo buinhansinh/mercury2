@@ -84,7 +84,8 @@ const user = db => {
         FROM mercury.user_group ug 
         LEFT JOIN mercury.group_permission gp ON ug.group_id = gp.group_id
         LEFT JOIN mercury.permission p ON gp.permission_id = p.id
-        WHERE ug.user_id = $1`
+        WHERE ug.user_id = $1`,
+        userId
       );
     }
   };

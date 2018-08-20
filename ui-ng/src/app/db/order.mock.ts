@@ -1,14 +1,14 @@
-import { Order, OrderStatus } from "./order.model";
-import { CONTACTS } from "./contact.mock";
-import { OFFERS } from "./offer.mock";
-import { DocumentType } from "./document.model";
+import { Order, OrderStatus } from './order.model';
+import { CONTACTS } from './contact.mock';
+import { OFFERS } from './offer.mock';
+import { DocumentType } from './document.model';
 
 export const ORDERS: Order[] = [
   {
-    id: "1",
+    id: '1',
     status: 1,
     contact: CONTACTS[0],
-    ref_no: "1234",
+    ref_no: '1234',
     date: new Date(2018, 2, 14),
     items: [
       {
@@ -19,7 +19,7 @@ export const ORDERS: Order[] = [
       },
       {
         offer: OFFERS[1],
-        custom_description: "this is a custom description",
+        custom_description: 'this is a custom description',
         quantity: 22,
         price: 222
       }

@@ -1,19 +1,19 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { SalesComponent } from "./sales.component";
-import { SalesOrderComponent } from "./sales-order/sales-order.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { SalesComponent } from './sales.component';
+import { SalesOrderComponent } from './sales-order/sales-order.component';
 
 const routes: Routes = [
   {
-    path: "sales",
+    path: 'sales',
     component: SalesComponent,
     children: [
       {
-        path: "order",
+        path: 'order',
         component: SalesOrderComponent
       },
       {
-        path: "order/:id",
+        path: 'order/:id',
         component: SalesOrderComponent
       }
     ]

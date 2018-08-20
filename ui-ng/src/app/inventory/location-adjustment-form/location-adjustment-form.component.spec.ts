@@ -8,9 +8,8 @@ describe('LocationAdjustmentFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LocationAdjustmentFormComponent ]
-    })
-    .compileComponents();
+      declarations: [LocationAdjustmentFormComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

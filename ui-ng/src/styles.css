@@ -107,3 +107,32 @@ input[type="number"]::-webkit-outer-spin-button {
 .mat-row:hover {
   background-color: rgba(242, 242, 242, 0.5);
 }
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.mat-form-field.no-underline .mat-form-field-underline{
+  display: none;
+}
+
+.mb-0{
+  margin-bottom: 0px !important;
+}
+
+.ml-24px{
+  margin-left: 24px !important;
+}
+
+.d-flex-row-align-end{
+  display: flex;
+  align-items: flex-end;
+}
+
+.h-100{
+  height: 100% !important;
+}

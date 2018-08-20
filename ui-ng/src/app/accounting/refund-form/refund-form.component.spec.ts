@@ -8,9 +8,8 @@ describe('RefundFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RefundFormComponent ]
-    })
-    .compileComponents();
+      declarations: [RefundFormComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

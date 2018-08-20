@@ -1,3 +1,21 @@
-<p>
-  login works!
-</p>
+<div class="login-form">
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="loginForm">
+        <div class="header">MERCURY</div>
+        <mat-form-field>
+          <input matInput placeholder="Username" formControlName="username" >
+        </mat-form-field>
+      
+        <mat-form-field>
+          <input matInput placeholder="Password" formControlName="password">
+        </mat-form-field>
+        <div class="error">{{errorMessage}}</div>
+        <div class="d-flex">
+          <div class="spacer"></div>
+          <button mat-raised-button color="primary" (click)="onLogin()" [disabled]="loginForm.invalid">Login</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

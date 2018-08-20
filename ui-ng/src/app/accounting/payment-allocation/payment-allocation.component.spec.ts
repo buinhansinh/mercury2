@@ -8,9 +8,8 @@ describe('PaymentAllocationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PaymentAllocationComponent ]
-    })
-    .compileComponents();
+      declarations: [PaymentAllocationComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

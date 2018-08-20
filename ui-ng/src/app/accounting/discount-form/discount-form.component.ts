@@ -6,14 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./discount-form.component.css']
 })
 export class DiscountFormComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
+  ngOnInit() {}
 
-  ngOnInit() {
-  }
-
-  resetDiscountType() {
-
-  }
-
+  resetDiscountType() {}
 }

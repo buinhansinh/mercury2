@@ -4,17 +4,16 @@ import { User } from '../db/user.model';
 import { Observable } from 'rxjs';
 
 @Component({
-    selector: 'app-admin',
-    templateUrl: './admin.component.html',
-    styleUrls: ['./admin.component.css']
+  selector: 'app-admin',
+  templateUrl: './admin.component.html',
+  styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
+  public users$: Observable<User[]>;
 
-    public users$: Observable<User[]>;
+  constructor(private userService: UserService) {}
 
-    constructor(private userService: UserService) { }
-
-    ngOnInit() {
-        this.users$ = this.userService.getAll();
-    }
+  ngOnInit() {
+    this.users$ = this.userService.getAll();
+  }
 }

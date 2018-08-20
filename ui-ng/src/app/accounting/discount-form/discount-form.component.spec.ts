@@ -8,9 +8,8 @@ describe('DiscountFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DiscountFormComponent ]
-    })
-    .compileComponents();
+      declarations: [DiscountFormComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

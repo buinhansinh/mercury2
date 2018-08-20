@@ -9,23 +9,16 @@ import { OrderPricingInfoComponent } from './order-pricing-info/order-pricing-in
 import { OrderStockInfoComponent } from './order-stock-info/order-stock-info.component';
 
 @NgModule({
-    imports: [
-        AppCommonModule,
-    ],
-    declarations: [
-        OrderItemComponent,
-        // OrderServiceComponent,
-        OrderFormComponent,
-        OrderPricingInfoComponent,
-        OrderStockInfoComponent,
-    ],
-    providers: [OrderService, InventoryService],
-    exports: [
-        OrderFormComponent,
-    ],
-    entryComponents: [
-        OrderPricingInfoComponent,
-        OrderStockInfoComponent,
-    ]
+  imports: [AppCommonModule],
+  declarations: [
+    OrderItemComponent,
+    // OrderServiceComponent,
+    OrderFormComponent,
+    OrderPricingInfoComponent,
+    OrderStockInfoComponent
+  ],
+  providers: [OrderService, InventoryService],
+  exports: [OrderFormComponent],
+  entryComponents: [OrderPricingInfoComponent, OrderStockInfoComponent]
 })
-export class OrderModule { }
+export class OrderModule {}
