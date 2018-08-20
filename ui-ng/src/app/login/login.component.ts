@@ -16,6 +16,7 @@ import { User } from '../db/user.model';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  errorMessage: string;
   loginForm: FormGroup;
   constructor(private router: Router, private formBuilder: FormBuilder, private authService: AuthenticationService) {}
 
@@ -27,10 +28,13 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
+    this.errorMessage = "";
     if (this.loginForm.valid) {
       const loginData = this.loginForm.value;
       this.authService.login(loginData.username, loginData.password).subscribe((user: User) => {
         this.router.navigate(['/dashboard']);
+      }, (error: any) => {
+        this.errorMessage = "Invalid username or password!";
       });
     }
   }

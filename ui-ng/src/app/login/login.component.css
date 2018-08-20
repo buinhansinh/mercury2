@@ -25,3 +25,8 @@
   display: flex;
   flex-direction: row;
 }
+
+.error{
+  color: red;
+  height: 1.5em;
+}
