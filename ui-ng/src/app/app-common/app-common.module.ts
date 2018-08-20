@@ -99,15 +99,15 @@ const exports_ = []
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: declarations_,
   imports: imports_,
-  exports: exports_,
-  providers: [
-    { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
-  ]
+  exports: exports_
 })
 export class AppCommonModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: AppCommonModule
+      ngModule: AppCommonModule,
+      providers: [
+        { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
+      ]
     };
   }
 }
