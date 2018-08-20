@@ -37,25 +37,29 @@ export class HttpUserService {
   constructor(private http: HttpClient) {}
 
   getById(id: string): Observable<User> {
-    return this.http.get<User>(`api/admin/user/${id}`);
+    return this.http.get<User>(`api/security/user/${id}`);
   }
 
   getAll(): Observable<User[]> {
-    return this.http.get<User[]>(`api/admin/user/`);
+    return this.http.get<User[]>(`api/security/user/`);
   }
 
   put(user: User): Observable<User> {
-    return this.http.put<User>(`api/admin/user/`, user);
+    return this.http.put<User>(`api/security/user/`, user);
   }
 
   delete(user: User): Observable<User> {
-    return this.http.delete<User>(`api/admin/user/${user.id}`);
+    return this.http.delete<User>(`api/security/user/${user.id}`);
   }
 
   exists(name: string): Observable<boolean> {
-    return this.http.get<boolean>(`api/admin/user/exists/${name}`);
+    return this.http.get<boolean>(`api/security/user/exists/${name}`);
   }
 }
 
 @Injectable()
-export class UserService extends MockUserService {}
+export class UserService extends HttpUserService {
+  constructor(http: HttpClient){
+    super(http);
+  }
+}

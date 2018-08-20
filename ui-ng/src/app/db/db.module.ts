@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { PermissionService } from './permission.service';
 
 @NgModule({
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule],
   providers: [
     UserService,
     OfferService,

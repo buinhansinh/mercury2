@@ -45,13 +45,15 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SelectOnFocusDirective } from './select-on-focus.directive';
 import { ContactPickerComponent } from './contact-picker/contact-picker.component';
+import { HttpClientModule } from '@angular/common/http';
 
 const ngModules: any = [
   CommonModule,
   BrowserModule,
   BrowserAnimationsModule,
   FormsModule,
-  ReactiveFormsModule
+  ReactiveFormsModule,
+  HttpClientModule
 ];
 
 const materialModules: any = [
