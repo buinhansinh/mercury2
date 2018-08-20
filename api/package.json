@@ -5,6 +5,7 @@
   "scripts": {
     "start": "nodemon ./bin/www.js",
     "start:dev": "nodemon ./bin/www.js",
+    "db:migrate": "node ./bin/db.js",
     "test": "mocha './**/*.spec.js'"
   },
   "private": true,
