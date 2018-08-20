@@ -1,5 +1,5 @@
-import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, FormArray } from "@angular/forms";
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-expense-form',
@@ -17,7 +17,7 @@ export class ExpenseFormComponent implements OnInit {
       date: null,
       category: null,
       amount: null,
-      description: null,
+      description: null
     });
   }
 }

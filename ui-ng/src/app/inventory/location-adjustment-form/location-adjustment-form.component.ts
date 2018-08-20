@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 
 @Component({
-  selector: "app-location-adjustment-form",
-  templateUrl: "./location-adjustment-form.component.html",
-  styleUrls: ["./location-adjustment-form.component.css"]
+  selector: 'app-location-adjustment-form',
+  templateUrl: './location-adjustment-form.component.html',
+  styleUrls: ['./location-adjustment-form.component.css']
 })
 export class LocationAdjustmentFormComponent implements OnInit {
   form: FormGroup;
@@ -27,6 +27,6 @@ export class LocationAdjustmentFormComponent implements OnInit {
 
     this.items = this.formBuilder.array([locationItem]);
 
-    this.form.setControl("items", this.items);
+    this.form.setControl('items', this.items);
   }
 }

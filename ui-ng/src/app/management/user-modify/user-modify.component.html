@@ -1,0 +1,90 @@
+<div class="container">
+  <div class="toolbar">
+    <span class="title">User Modify</span>
+    <span class="spacer"></span>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+      <span></span>
+    </button>
+    <mat-menu #menu="matMenu" yPosition="below" xPosition="before"
+      [overlapTrigger]="false">
+      <div mat-menu-item>
+        <button mat-flat-button color="warn">
+          <mat-icon>delete</mat-icon>
+          <span>Delete</span>
+        </button>
+      </div>
+    </mat-menu>
+  </div>
+
+  <mat-divider></mat-divider>
+  <div class="main-form">
+    <div class="form-w-350px">
+      <form [formGroup]="userForm" class="form">
+        <mat-form-field>
+          <input type="text" matInput formControlName="username"
+            placeholder="Username">
+
+        </mat-form-field>
+        <mat-form-field>
+          <input type="text" matInput formControlName="fullname"
+            placeholder="Password">
+        </mat-form-field>
+        <div class="save-button">
+          <button mat-flat-button>Update</button>
+        </div>
+      </form>
+
+    </div>
+    <mat-divider></mat-divider>
+    <div class="form-w-350px">
+      <form [formGroup]="passwordForm" class="form">
+        <mat-form-field>
+          <input type="text" matInput formControlName="password"
+            placeholder="Password">
+
+        </mat-form-field>
+        <mat-form-field>
+          <input type="text" matInput formControlName="passwordVerify"
+            placeholder="Password Verify">
+        </mat-form-field>
+        <div class="save-button">
+          <button mat-flat-button>Update</button>
+        </div>
+      </form>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="form form-w-350px">
+      <mat-form-field>
+        <mat-select placeholder="Add Group To User">
+          <mat-option *ngFor="let group of (groups$ | async)">{{group.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="table">
+        <table class="highlight responsive-table bordered">
+          <thead>
+            <tr class="grid-container header">
+              <th class="grid-70 text-left">
+                Group Name
+              </th>
+              <th class="grid-30">
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr class="grid-container content"  *ngFor="let group of (groups$ | async)">
+                  <td class="grid-70 text-left">
+                      {{group.name}}
+                  </td>
+                  <td class="grid-30 text-right">
+                      <button mat-button color="warn">
+                          <span>Remove</span>
+                      </button>
+                  </td>
+                </tr>
+          </tbody>
+        </table>
+    </div>
+  </div>

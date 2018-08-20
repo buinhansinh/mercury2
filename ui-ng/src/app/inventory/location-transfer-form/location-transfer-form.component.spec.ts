@@ -8,9 +8,8 @@ describe('LocationTransferFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LocationTransferFormComponent ]
-    })
-    .compileComponents();
+      declarations: [LocationTransferFormComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

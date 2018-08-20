@@ -8,7 +8,7 @@ module.exports = () => {
               name            char(32) not null,
               display_name    char(64) not null,
               salt            char(64) not null,
-              password        char(64) not null,
+              password        char(60) not null,
               active          boolean default TRUE,
               archived        boolean default FALSE,
               profile         jsonb,

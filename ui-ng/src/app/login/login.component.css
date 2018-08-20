@@ -1,0 +1,32 @@
+.login-form {
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  position: absolute;
+  top: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.header {
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.d-flex{
+  display: flex;
+  flex-direction: row;
+}
+
+.error{
+  color: red;
+  height: 1.5em;
+}

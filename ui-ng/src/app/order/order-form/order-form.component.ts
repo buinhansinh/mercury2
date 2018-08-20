@@ -1,18 +1,19 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { OrderItem, Order } from "../../db/order.model";
-import { range } from "../../app-common/util";
-import { OfferType } from "../../db/offer.model";
-import { Contact } from "../../db/contact.model";
-import { FormControl, FormBuilder, FormGroup, FormArray } from "@angular/forms";
-import { ORDERS } from "../../db/order.mock";
+import { Component, OnInit, Input } from '@angular/core';
+import { OrderItem, Order } from '../../db/order.model';
+import { range } from '../../app-common/util';
+import { OfferType } from '../../db/offer.model';
+import { Contact } from '../../db/contact.model';
+import { FormControl, FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { ORDERS } from '../../db/order.mock';
 
 @Component({
-  selector: "app-order-form",
-  templateUrl: "./order-form.component.html",
-  styleUrls: ["./order-form.component.css"]
+  selector: 'app-order-form',
+  templateUrl: './order-form.component.html',
+  styleUrls: ['./order-form.component.css']
 })
 export class OrderFormComponent implements OnInit {
-  @Input() order: Order;
+  @Input()
+  order: Order;
 
   form: FormGroup;
   item_array: FormArray;
@@ -38,7 +39,7 @@ export class OrderFormComponent implements OnInit {
     );
 
     this.item_array = this.formBuilder.array(item_groups);
-    this.form.setControl("items", this.item_array);
+    this.form.setControl('items', this.item_array);
 
     // add an empty item at the start
     this.appendEmptyItem();
@@ -61,7 +62,7 @@ export class OrderFormComponent implements OnInit {
   }
 
   onOfferSelected(index: number) {
-    console.log("onOfferSelected", index);
+    console.log('onOfferSelected', index);
     if (index === this.item_array.length - 1) {
       this.appendEmptyItem();
     }
@@ -70,7 +71,7 @@ export class OrderFormComponent implements OnInit {
   onItemDelete(index: number) {
     if (
       index === this.item_array.length - 1 &&
-      this.item_array.at(index).get("offer").value === null
+      this.item_array.at(index).get('offer').value === null
     ) {
     } else {
       this.item_array.removeAt(index);

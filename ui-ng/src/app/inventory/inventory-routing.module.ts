@@ -1,37 +1,39 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { InventoryComponent } from "./inventory.component";
-import { OrderTransferFormComponent } from "./order-transfer-form/order-transfer-form.component";
-import { LocationTransferFormComponent } from "./location-transfer-form/location-transfer-form.component";
-import { LocationAdjustmentFormComponent } from "./location-adjustment-form/location-adjustment-form.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { InventoryComponent } from './inventory.component';
+import { OrderTransferFormComponent } from './order-transfer-form/order-transfer-form.component';
+import { LocationTransferFormComponent } from './location-transfer-form/location-transfer-form.component';
+import { LocationAdjustmentFormComponent } from './location-adjustment-form/location-adjustment-form.component';
+import { AuthGuard } from '../guards/auth-guard';
 
 const routes: Routes = [
   {
-    path: "inventory",
+    path: '',
+    canActivate: [AuthGuard],
     component: InventoryComponent,
     children: [
       {
-        path: "sales/:id/release",
+        path: 'sales/:id/release',
         component: OrderTransferFormComponent
       },
       {
-        path: "sales/:id/return",
+        path: 'sales/:id/return',
         component: OrderTransferFormComponent
       },
       {
-        path: "purchase/:id/receive",
+        path: 'purchase/:id/receive',
         component: OrderTransferFormComponent
       },
       {
-        path: "purchase/:id/return",
+        path: 'purchase/:id/return',
         component: OrderTransferFormComponent
       },
       {
-        path: "location/transfer",
+        path: 'location/transfer',
         component: LocationTransferFormComponent
       },
       {
-        path: "location/adjustment",
+        path: 'location/adjustment',
         component: LocationAdjustmentFormComponent
       }
     ]

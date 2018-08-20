@@ -8,9 +8,8 @@ describe('OrderTransferFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OrderTransferFormComponent ]
-    })
-    .compileComponents();
+      declarations: [OrderTransferFormComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

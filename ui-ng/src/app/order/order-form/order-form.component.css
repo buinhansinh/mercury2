@@ -1,4 +1,4 @@
-@import "../order-item/order-item.component.css";
+@import '../order-item/order-item.component.css';
 
 mat-form-field.grand-total {
   text-align: right;

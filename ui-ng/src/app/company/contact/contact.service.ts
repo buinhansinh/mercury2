@@ -3,7 +3,5 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class ContactService {
-
-    constructor() { }
-
+  constructor() {}
 }

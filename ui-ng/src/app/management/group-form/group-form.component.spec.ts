@@ -8,9 +8,8 @@ describe('GroupFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GroupFormComponent ]
-    })
-    .compileComponents();
+      declarations: [GroupFormComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
