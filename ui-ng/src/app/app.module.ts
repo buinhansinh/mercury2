@@ -18,6 +18,7 @@ import { AccountingModule } from './accounting/accounting.module';
 import { ManagementModule } from './management/management.module';
 import { AuthGuard } from './guards/auth-guard';
 import { LayoutWrapperComponent } from './layout-wrapper/layout-wrapper.component';
+import { NotificationDisplayerComponent } from './notification-displayer/notification-displayer.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { LayoutWrapperComponent } from './layout-wrapper/layout-wrapper.componen
     DashboardComponent,
     PageNotFoundComponent,
     LoginComponent,
-    LayoutWrapperComponent
+    LayoutWrapperComponent,
+    NotificationDisplayerComponent
   ],
   imports: [
     BrowserModule,

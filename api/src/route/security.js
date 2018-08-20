@@ -15,12 +15,16 @@ router.get("/user", async function(req, res) {
 
 // USER - CREATE
 router.post("/user", async function(req, res) {
-  const user = req.body;
-  var salt = bcrypt.genSaltSync(10);
-  var hash = bcrypt.hashSync(user.password, salt);
-  user["salt"] = salt;
-  user["password"] = hash;
-  res.json(q(db).user.insert(insert));
+  try{
+    const user = req.body;
+    var salt = bcrypt.genSaltSync(10);
+    var hash = bcrypt.hashSync(user.password, salt);
+    user["salt"] = salt;
+    user["password"] = hash;
+    res.json(q(db).user.insert(user));
+  }catch(e){
+    console.log(e);
+  }
 });
 
 // USER - GET BY ID

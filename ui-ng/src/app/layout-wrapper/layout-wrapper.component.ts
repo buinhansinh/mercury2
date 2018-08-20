@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material';
 import { ContactFormComponent } from '../company/contact-form/contact-form.component';
 import { ProductFormComponent } from '../company/product-form/product-form.component';
 import { ServiceFormComponent } from '../company/service-form/service-form.component';
+import { AuthenticationService } from '../db/authentication.service';
 
 @Component({
   selector: 'app-layout-wrapper',
@@ -13,7 +14,7 @@ import { ServiceFormComponent } from '../company/service-form/service-form.compo
 export class LayoutWrapperComponent {
   title = 'app';
 
-  constructor(private router: Router, private dialog: MatDialog) {
+  constructor(private router: Router, private dialog: MatDialog, private authService: AuthenticationService) {
     this.router = router;
   }
 
@@ -56,5 +57,9 @@ export class LayoutWrapperComponent {
   routeTo(path) {
     // alert(path);
     this.router.navigate([{ outlets: { primary: path, toolbar: path } }]);
+  }
+
+  onLogout(){
+    this.authService.logout();
   }
 }

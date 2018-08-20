@@ -54,9 +54,14 @@
     <div class="divider"></div>
     <router-outlet name="toolbar"></router-outlet>
     <span class="spacer"></span>
-    <button mat-icon-button>
+    <button mat-button [matMenuTriggerFor]="userMenu">
       <mat-icon>account_circle</mat-icon>
     </button>
+    <mat-menu #userMenu="matMenu" yPosition="below" [overlapTrigger]="false" >
+      <a mat-menu-item (click)="onLogout()" class="button">
+        <span>Log out</span>
+      </a>
+    </mat-menu>
   </mat-toolbar>
   <mat-sidenav-container class="nav-container">
     <mat-sidenav #sideNav mode="over" opened="false" class="nav">

@@ -1,0 +1,9 @@
+<div class="notification-container">
+  <div class="notification" *ngIf="!!notification" >
+    {{notification}}
+  </div>
+  
+  <div class="notification error" *ngIf="!!error" >
+    {{error}}
+  </div>
+</div>

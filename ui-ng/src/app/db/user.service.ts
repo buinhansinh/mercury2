@@ -1,9 +1,10 @@
 import { Injectable, Inject } from '@angular/core';
 import { User, Group } from './user.model';
 import { USERS } from './user.mock';
-import { of, Observable } from 'rxjs';
+import { of, Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { clone } from '../app-common/util';
+import { tap, map } from 'rxjs/operators';
 
 export class MockUserService {
   private USERS: User[] = USERS;
@@ -34,6 +35,7 @@ export class MockUserService {
 }
 
 export class HttpUserService {
+  private dataUpdateEvent: Subject<boolean> = new Subject();
   constructor(private http: HttpClient) {}
 
   getById(id: string): Observable<User> {
@@ -44,8 +46,8 @@ export class HttpUserService {
     return this.http.get<User[]>(`api/security/user/`);
   }
 
-  put(user: User): Observable<User> {
-    return this.http.put<User>(`api/security/user/`, user);
+  create(user: User): Observable<User> {
+    return this.http.post<User>(`api/security/user/`, user).pipe(tap(() =>  this.notifyChanges()));
   }
 
   delete(user: User): Observable<User> {
@@ -55,11 +57,22 @@ export class HttpUserService {
   exists(name: string): Observable<boolean> {
     return this.http.get<boolean>(`api/security/user/exists/${name}`);
   }
+
+  private notifyChanges(){
+    this.dataUpdateEvent.next(true);
+  }
+
+  public getDataUpdateEvent(): Observable<boolean>{
+    return this.dataUpdateEvent;
+  }
 }
 
 @Injectable()
 export class UserService extends HttpUserService {
+  
   constructor(http: HttpClient) {
     super(http);
   }
+
+ 
 }
