@@ -20,7 +20,7 @@ export class AuthenticationService {
       })
       .pipe(
         tap((user: any) => {
-          localStorage.setItem('userId', user.userId);
+          localStorage.setItem('userId', user.user.id);
         })
       );
   }

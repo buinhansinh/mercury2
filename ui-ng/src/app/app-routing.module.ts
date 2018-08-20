@@ -14,7 +14,6 @@ const routes: Routes = [
 
   {
     path: '',
-    canActivate: [AuthGuard],
     component: LayoutWrapperComponent,
     children: [
       {
