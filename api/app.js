@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const passport = require("./src/passport");
 const api_init = require("./src/init");
 const api_route = require("./src/route");
+const session = require('express-session')
 
 api_init();
 
@@ -13,7 +14,17 @@ const app = express();
 app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: "false" }));
-
+app.use(
+  session({
+    secret: "test-secret",
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 // 1 day
+    },
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false }
+  })
+);
 // Authentication via passport.js
 app.use(passport.initialize());
 app.use(passport.session());
@@ -31,6 +42,7 @@ app.post(
 
 app.get("/logout", function(req, res) {
   req.logout();
+  res.json();
 });
 
 // Some stuff for including angular

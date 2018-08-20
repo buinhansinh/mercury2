@@ -11,7 +11,7 @@ services:
     depends_on:
       - postgres
     env_file: dev.env
-    command: ['npm', 'run', 'test']
+    command: /bin/sh -c "npm run db:migrate && npm run test"
 
   postgres:
     image: postgres:10.3-alpine

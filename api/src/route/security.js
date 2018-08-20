@@ -20,7 +20,8 @@ router.post("/user", async function(req, res) {
   var hash = bcrypt.hashSync(user.password, salt);
   user["salt"] = salt;
   user["password"] = hash;
-  res.json(q(db).user.insert(insert));
+  const ret = await q(db).user.insert(user);
+  res.json(ret);
 });
 
 // USER - GET BY ID
@@ -32,28 +33,32 @@ router.get("/user/:id", async function(req, res) {
 // USER - UPDATE
 // update name and displayname
 router.put("/user/:id", async function(req, res) {
-  const ret = q(db).user.update(req.params.id, req.body);
+  const ret = await q(db).user.update(req.params.id, req.body);
   res.json(ret);
 });
 
 // USER - DELETE
 router.delete("/user/:id", async function(req, res) {
-  res.json(q(db).user.deleteById(req.params.id));
+  const ret = await q(db).user.deleteById(req.params.id);
+  res.json(ret);
 });
 
 // USER - UPDATE PASSWORD
 router.put("/user/:id/password", async function(req, res) {
-  res.json(q(db).user.updatePassword(req.params.id, req.body));
+  const ret = await q(db).user.updatePassword(req.params.id, req.body);
+  res.json(ret);
 });
 
 // USER - GROUPS
 router.get("/user/:id/group", async function(req, res) {
-  res.json(q(db).user.groups(req.params.id));
+  const ret = await q(db).user.groups(req.params.id);
+  res.json(ret);
 });
 
 // USER - PERMISSIONS
 router.get("/user/:id/permission", async function(req, res) {
-  res.json(q(db).user.permissions(req.params.id));
+  const ret = await q(db).user.permissions(req.params.id);
+  res.json(ret);
 });
 
 // USER - EXISTS?
@@ -74,40 +79,50 @@ router.get("/group", async function(req, res) {
 
 // GROUP - CREATE
 router.post("/group", async function(req, res) {
-  res.json(q(db).group.insert(req.body));
+  const ret = await q(db).group.insert(req.body);
+  res.json(ret);
 });
 
 // GROUP - UPDATE
 router.put("/group/:id", async function(req, res) {
-  const ret = q(db).group.update(req.params.id, req.body);
+  const ret = await q(db).group.update(req.params.id, req.body);
   res.json(ret);
 });
 
 // GROUP - DELETE
 router.delete("/group/:id", async function(req, res) {
-  res.json(q(db).group.deleteById(req.params.id));
+  const ret = await q(db).group.deleteById(req.params.id);
+  res.json(ret);
 });
 
 // GROUP - ADD USER
 router.put("/group/:id/user/:userId", async function(req, res) {
-  res.json(q(db).user.addUser(req.params.id, req.params.userId));
+  const ret = await q(db).user.addUser(req.params.id, req.params.userId);
+  res.json(ret);
 });
 
 // GROUP - REMOVE USER
 router.delete("/group/:id/user/:userId", async function(req, res) {
-  res.json(q(db).group.removeUser(req.params.id, req.params.userId));
+  const ret = await q(db).group.removeUser(req.params.id, req.params.userId);
+  res.json(ret);
 });
 
 // GROUP - ADD PERMISSION
 router.put("/group/:id/permission/:permissionId", async function(req, res) {
-  res.json(q(db).group.addPermission(req.params.id, req.params.permissionId));
+  const ret = await q(db).group.addPermission(
+    req.params.id,
+    req.params.permissionId
+  );
+  res.json(ret);
 });
 
 // GROUP - REMOVE PERMISSION
 router.delete("/group/:id/permission/:permissionId", async function(req, res) {
-  res.json(
-    q(db).group.removePermission(req.params.id, req.params.permissionId)
+  const ret = q(db).group.removePermission(
+    req.params.id,
+    req.params.permissionId
   );
+  res.json(ret);
 });
 
 //------------------------------------------------------------------------------
