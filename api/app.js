@@ -23,10 +23,6 @@ app.use(
 );
 app.use(logger('dev'));
 app.use(bodyParser.json());
-<<<<<<< HEAD
-app.use(bodyParser.urlencoded({ extended: 'false' }));
-
-=======
 app.use(bodyParser.urlencoded({ extended: "false" }));
 app.use(
   session({
@@ -39,7 +35,6 @@ app.use(
     cookie: { secure: false }
   })
 );
->>>>>>> mercury2/master
 // Authentication via passport.js
 app.use(passport.initialize());
 app.use(passport.session());
