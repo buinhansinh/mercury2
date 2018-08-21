@@ -1,11 +1,11 @@
-const express = require('express');
-const session = require('express-session');
-const path = require('path');
-const logger = require('morgan');
-const bodyParser = require('body-parser');
-const passport = require('./src/passport');
-const api_init = require('./src/init');
-const api_route = require('./src/route');
+const express = require("express");
+const path = require("path");
+const logger = require("morgan");
+const bodyParser = require("body-parser");
+const passport = require("./src/passport");
+const api_init = require("./src/init");
+const api_route = require("./src/route");
+const session = require('express-session')
 
 api_init();
 
@@ -23,8 +23,23 @@ app.use(
 );
 app.use(logger('dev'));
 app.use(bodyParser.json());
+<<<<<<< HEAD
 app.use(bodyParser.urlencoded({ extended: 'false' }));
 
+=======
+app.use(bodyParser.urlencoded({ extended: "false" }));
+app.use(
+  session({
+    secret: "test-secret",
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 // 1 day
+    },
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false }
+  })
+);
+>>>>>>> mercury2/master
 // Authentication via passport.js
 app.use(passport.initialize());
 app.use(passport.session());
@@ -42,6 +57,7 @@ app.post(
 
 app.get('/logout', function(req, res) {
   req.logout();
+  res.json();
 });
 
 // Some stuff for including angular
