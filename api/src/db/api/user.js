@@ -11,6 +11,12 @@ const user = db => {
       );
     },
 
+    getAllCount: async () => {
+      return db.one(
+        `SELECT COUNT(id) FROM mercury.user WHERE archived = FALSE`
+      );
+    },
+
     getById: async id => {
       return db.one(
         `SELECT id, name, display_name, active FROM mercury.user WHERE id = $1 AND archived = FALSE`,
@@ -42,10 +48,10 @@ const user = db => {
       );
     },
 
-    update: async user => {
+    update: async (id, user) => {
       return db.none(
         `UPDATE mercury.user SET
-          name = $(name), 
+          name = $(name),
           display_name = $(display_name),
           active = $(active)
         WHERE id = $(id)`,

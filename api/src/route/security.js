@@ -10,7 +10,11 @@ router.get("/user", async function(req, res) {
   var offset, limit;
   var { offset = 0, limit = 10 } = req.query;
   const users = await q(db).user.getAll(offset, limit);
-  res.json(users);
+  const total = await q(db).user.getAllCount();
+  res.json({
+    users: users,
+    total: total.count
+  });
 });
 
 // USER - CREATE
@@ -30,8 +34,7 @@ router.get("/user/:id", async function(req, res) {
   res.json(ret);
 });
 
-// USER - UPDATE
-// update name and displayname
+// USER - UPDATE NAME
 router.put("/user/:id", async function(req, res) {
   const ret = await q(db).user.update(req.params.id, req.body);
   res.json(ret);
@@ -118,7 +121,7 @@ router.put("/group/:id/permission/:permissionId", async function(req, res) {
 
 // GROUP - REMOVE PERMISSION
 router.delete("/group/:id/permission/:permissionId", async function(req, res) {
-  const ret = q(db).group.removePermission(
+  const ret = await q(db).group.removePermission(
     req.params.id,
     req.params.permissionId
   );
