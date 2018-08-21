@@ -5,6 +5,7 @@
     z-index: 9999;
     display: flex;
     flex-direction: column;
+    background: transparent;
 }
 .notification{
     padding: 20px 16px;
