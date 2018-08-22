@@ -43,10 +43,10 @@
         <mat-form-field>
           <input type="text" matInput formControlName="passwordVerify"
             placeholder="Password Verify">
-            <mat-hint *ngIf="!!passwordForm.get('password').value && passwordForm.hasError('notMatching')">Password does not match!</mat-hint>
+            <mat-hint class="error" *ngIf="!!passwordForm.get('password').value && passwordForm.hasError('notMatching')">Password does not match!</mat-hint>
         </mat-form-field>
         <div class="save-button">
-          <button mat-flat-button [disabled]="passwordForm.invaid" (click)="onUpdatePassword()">Update</button>
+          <button mat-flat-button [disabled]="passwordForm.invalid" (click)="onUpdatePassword()">Update</button>
         </div>
       </form>
     </div>

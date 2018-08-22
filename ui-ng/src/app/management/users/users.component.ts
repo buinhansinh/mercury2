@@ -13,7 +13,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class UsersComponent implements OnInit, OnDestroy {
   users$: Observable<User[]>;
-  displayedColumns = ['name', 'display_name', 'toolbox'];
+  displayedColumns = ['name', 'display_name'];
   destroy$: Subject<any> = new Subject();
   constructor(private userSerice: UserService, private dialog: MatDialog) {}
 
