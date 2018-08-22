@@ -44,10 +44,8 @@ describe("Login with right user and wrong password", function() {
   });
 });
 
-describe("Security API requests", function() {
-  const api = request.agent(app);
-
-  it("login should return 200", function(done) {
+function login(api) {
+  return function(done) {
     api
       .post("/login")
       .type("form")
@@ -57,6 +55,80 @@ describe("Security API requests", function() {
       })
       .expect(200)
       .end(done);
+  };
+}
+
+function logout(api) {
+  return function(done) {
+    api
+      .get("/logout")
+      .expect(200)
+      .end(done);
+  };
+}
+
+describe("Get Users", function() {
+  const api = request.agent(app);
+  before(login(api));
+  after(logout(api));
+
+  it("should return a list of users", function(done) {
+    api
+      .get("/api/security/user")
+      .expect(200)
+      .expect("Content-Type", /json/)
+      .end((err, res) => {
+        if (err) return done(err);
+        console.log(res.body);
+        done();
+      });
+  });
+});
+
+describe("Update User", function() {
+  const api = request.agent(app);
+  var userId = null;
+
+  // login
+  before(login(api));
+
+  // insert a user
+  before(function(done) {
+    api
+      .post("/api/security/user")
+      .type("form")
+      .send({
+        name: "someuser",
+        display_name: "Some User",
+        password: "somepassword"
+      })
+      .expect(200)
+      .expect("Content-Type", /json/)
+      .end((err, res) => {
+        if (err) return done(err);
+        console.log(res.body);
+        userId = res.body.id;
+        done();
+      });
+  });
+
+  // update the user
+  it("should return 200", function(done) {
+    api
+      .put(`/api/security/user/${userId}`)
+      .type("form")
+      .send({
+        id: userId,
+        name: "someupdateduser",
+        display_name: "Some Updated User",
+        active: "False"
+      })
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+        console.log(res.body);
+        done();
+      });
   });
 
   it("should return a list of users", function(done) {
@@ -64,7 +136,6 @@ describe("Security API requests", function() {
       .get("/api/security/user")
       .expect(200)
       .expect("Content-Type", /json/)
-      .expect("Content-Length", "185")
       .end((err, res) => {
         if (err) return done(err);
         console.log(res.body);
@@ -72,17 +143,11 @@ describe("Security API requests", function() {
       });
   });
 
-  it("should return a user id", function(done) {
+  // delete the user
+  after(function(done) {
     api
-      .post("/api/security/user")
-      .type("form")
-      .send({
-        name: "someuser",
-        display_name: "Some User",
-        password: "somepassword",
-      })
+      .delete(`/api/security/user/${userId}`)
       .expect(200)
-      .expect("Content-Type", /json/)
       .end((err, res) => {
         if (err) return done(err);
         console.log(res.body);
@@ -90,10 +155,6 @@ describe("Security API requests", function() {
       });
   });
 
-  it("logout should return 200", function(done) {
-    api
-      .get("/logout")
-      .expect(200)
-      .end(done);
-  });  
+  // logout
+  after(logout(api));  
 });
