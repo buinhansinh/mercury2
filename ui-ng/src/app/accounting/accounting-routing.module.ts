@@ -6,11 +6,14 @@ import { RefundFormComponent } from './refund-form/refund-form.component';
 import { PaymentAllocationComponent } from './payment-allocation/payment-allocation.component';
 import { ExpenseFormComponent } from './expense-form/expense-form.component';
 import { InvoicesComponent } from './invoices/invoices.component';
+import { AuthGuard } from '../guards/auth-guard';
 
 const routes: Routes = [
   {
-    path: 'accounting',
+    path: '',
     component: AccountingComponent,
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     children: [
       {
         path: 'receivables',

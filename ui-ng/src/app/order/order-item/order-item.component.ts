@@ -83,7 +83,9 @@ export class OrderItemComponent implements OnInit {
   ngOnChanges(changes: SimpleChange) {
     // this.form.patchValue(this.item);
     const offer = this.form.get('offer').value;
-    if (offer !== null) { this.offerPicker.setValue(offer); }
+    if (offer !== null) {
+      this.offerPicker.setValue(offer);
+    }
     this.form.get('quantity').valueChanges.subscribe(() => this.updateTotal());
     this.form.get('price').valueChanges.subscribe(() => this.updateTotal());
     this.updateTotal();

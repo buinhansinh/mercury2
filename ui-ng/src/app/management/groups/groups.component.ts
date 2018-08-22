@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { GroupService } from '../../db/group.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Group } from '../../db/group.model';
 import { MatDialog } from '@angular/material';
 import { GroupFormComponent } from '../group-form/group-form.component';
+import { take, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-groups',
@@ -12,12 +13,24 @@ import { GroupFormComponent } from '../group-form/group-form.component';
   styleUrls: ['./groups.component.css']
 })
 export class GroupsComponent implements OnInit {
-  groups$: Observable<Group[]>;
-
+  destroy$: Subject<any> = new Subject();
+  groups: Group[];
+  displayedColumns = ['name','toolbox'];
   constructor(private groupSerice: GroupService, private dialog: MatDialog) {}
 
   ngOnInit() {
-    this.groups$ = this.groupSerice.getGroups();
+    this.refreshData();
+    this.subscribeToDataChanged();
+  }
+
+  private refreshData(){
+    this.groupSerice.getGroups().pipe(take(1)).subscribe(groups => this.groups = groups);
+  }
+
+  private subscribeToDataChanged(){
+    this.groupSerice.getDataUpdateEvent().pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.refreshData();
+    });
   }
 
   onOpenAddGroupForm() {
@@ -28,4 +41,14 @@ export class GroupsComponent implements OnInit {
       width: '400px'
     });
   }
+
+  onDeleteGroup(group: any){
+    this.groupSerice.deleteGroup(group).subscribe();
+  }
+
+  ngOnDestroy(){
+    this.destroy$.next("");
+    this.destroy$.unsubscribe();
+  }
+
 }

@@ -10,8 +10,18 @@ const session = require('express-session')
 api_init();
 
 const app = express();
-
-app.use(logger("dev"));
+app.use(
+  session({
+    secret: 'test-secret',
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
+    },
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false }
+  })
+);
+app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: "false" }));
 app.use(
@@ -31,8 +41,8 @@ app.use(passport.session());
 
 // Login and logout
 app.post(
-  "/login",
-  passport.authenticate("local", { failWithError: false }),
+  '/login',
+  passport.authenticate('local', { failWithError: false }),
   function(req, res) {
     return res.json({
       user: req.user
@@ -40,7 +50,7 @@ app.post(
   }
 );
 
-app.get("/logout", function(req, res) {
+app.get('/logout', function(req, res) {
   req.logout();
   res.json();
 });
@@ -49,12 +59,12 @@ app.get("/logout", function(req, res) {
 // app.use(express.static(path.join(__dirname, 'dist')));
 // app.use('/api', express.static(path.join(__dirname, 'dist')));
 app.use(
-  "/api",
+  '/api',
   (req, res, next) => {
     if (req.isAuthenticated()) {
       next();
     } else {
-      const err = new Error("Unauthorized");
+      const err = new Error('Unauthorized');
       err.status = 401;
       next(err);
     }
@@ -65,7 +75,7 @@ app.use(
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error("Not Found");
+  var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
@@ -74,7 +84,7 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
   res.status(err.status || 500).send(`${err.status}: ${err.message}`);

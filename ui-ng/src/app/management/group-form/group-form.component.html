@@ -8,5 +8,6 @@
 
 <div mat-dialog-actions>
     <div class="spacer"></div>
-    <button mat-flat-button [disabled]="groupForm.invalid" mat-dialog-close>Create</button>
+    <button mat-stroked-button  mat-dialog-close class="close-button">Cancel</button>
+    <button mat-flat-button [disabled]="groupForm.invalid" (click)="onCreateGroup()">Create</button>
 </div>

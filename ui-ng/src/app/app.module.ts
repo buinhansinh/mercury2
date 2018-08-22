@@ -1,4 +1,8 @@
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -12,27 +16,30 @@ import { CompanyModule } from './company/company.module';
 import { InventoryModule } from './inventory/inventory.module';
 import { AccountingModule } from './accounting/accounting.module';
 import { ManagementModule } from './management/management.module';
+import { AuthGuard } from './guards/auth-guard';
+import { LayoutWrapperComponent } from './layout-wrapper/layout-wrapper.component';
+import { NotificationDisplayerComponent } from './notification-displayer/notification-displayer.component';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     PageNotFoundComponent,
-    LoginComponent
+    LoginComponent,
+    LayoutWrapperComponent,
+    NotificationDisplayerComponent,
   ],
   imports: [
-    AppCommonModule,
-    DbModule,
-    CompanyModule,
-    SalesModule,
-    InventoryModule,
-    AccountingModule,
-    ManagementModule,
-    AdminModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    AppCommonModule.forRoot(),
+    DbModule.forRoot(),
     AppRoutingModule
   ],
   exports: [],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

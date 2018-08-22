@@ -10,10 +10,13 @@ import { LocationsComponent } from './locations/locations.component';
 import { ReportsComponent } from './reports/reports.component';
 import { GroupModifyComponent } from './group-modify/group-modify.component';
 import { UserModifyComponent } from './user-modify/user-modify.component';
+import { AuthGuard } from '../guards/auth-guard';
 
 const routes: Routes = [
   {
-    path: 'management',
+    path: '',
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     component: ManagementComponent,
     children: [
       {

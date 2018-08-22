@@ -39,7 +39,6 @@ const user = db => {
       // ensure that username has no duplicate
       const exists = db.one(QUERY_USER_EXISTS, user.name);
       if (!exists) throw new DBException("Username already exists");
-
       return db.one(
         `INSERT INTO mercury.user (name, display_name, salt, password) 
           values($(name), $(display_name), $(salt), $(password))

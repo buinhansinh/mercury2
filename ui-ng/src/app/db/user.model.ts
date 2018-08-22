@@ -9,10 +9,11 @@ export enum Group {
 }
 
 export interface User {
-  id: string;
+  id?: string;
   name: string;
   display_name: string;
-  groups: number;
+  groups?: number;
+  password?: string;
 }
 
 export function userBelongsTo(user: User, group: Group): boolean {

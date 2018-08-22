@@ -1,55 +1,41 @@
-<div class="container">
-    <div class="toolbar">
-      <span class="title">User Management</span>
-      <span class="spacer"></span>
-      <div class="d-flex-row-align-end h-100">
-          <mat-form-field class="search-field">
-              <input type="text" matInput placeholder="Search">
-              <mat-icon matSuffix>search</mat-icon>
-              
-          </mat-form-field>
-          <mat-form-field class="no-underline">
-              <input type="text" matInput placeholder="Search" style="display:none">
-              <button matSuffix mat-flat-button (click)="onOpenAddUserForm()" class="mb-0">
-                  <mat-icon>add</mat-icon>
-                  <span>Add User</span>
-              </button>
-          </mat-form-field>
-      </div>
-    </div>
-  
-    <mat-divider></mat-divider>
-    <div class="table">
-        <table class="highlight responsive-table bordered">
-          <thead>
-            <tr class="grid-container header">
-              <th class="grid-40 text-left">
-                Username
-              </th>
-              <th class="grid-40 text-left">
-                Full Name
-              </th>
-              <th class="grid-20">
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-              <tr class="grid-container content" *ngFor="let user of (users$ | async)" >
-                  <td class="grid-40 text-left">
-                      {{user.name}}
-                  </td>
-                  <td class="grid-40 text-left">
-                      {{user.display_name}}
-                  </td>
-                  <td class="grid-20 text-right">
-                      <button mat-icon-button   [disableRipple]="'true'" [routerLink]="['../user', user.id]"> 
-                        <mat-icon>edit</mat-icon>
-                    </button>
-                    <button mat-icon-button   [disableRipple]="'true'"> 
-                        <mat-icon>delete</mat-icon>
-                    </button>
-                  </td>
-                </tr>
-          </tbody>
-        </table>
-  </div>
+<app-page>
+    <app-page-header title="User Management">
+        <button matSuffix mat-flat-button (click)="onOpenAddUserForm()"
+            class="mb-0">
+            <mat-icon>add</mat-icon>
+            <span>Add User</span>
+        </button>
+    </app-page-header>
+    <app-page-content>
+            <mat-form-field class="search-field">
+                    <input type="text" matInput placeholder="Search">
+                    <mat-icon matSuffix>search</mat-icon>
+        
+                </mat-form-field>
+                <mat-table [dataSource]="users$ | async">
+                    <ng-container matColumnDef="name">
+                        <mat-header-cell *matHeaderCellDef class="text-left">Username</mat-header-cell>
+                        <mat-cell
+                         *matCellDef="let user" class="text-left">{{user.name}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="display_name">
+                        <mat-header-cell *matHeaderCellDef class="text-left">Full Name</mat-header-cell>
+                        <mat-cell
+                         *matCellDef="let user" class="text-left">{{user.display_name}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="toolbox">
+                        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                        <mat-cell
+                         *matCellDef="let user" class="align-right">
+                            <button mat-icon-button [disableRipple]="'true'"
+                                [routerLink]="['../user', user.id]">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <app-delete-button (onDelete)="onDeleteUser(user)"></app-delete-button>
+                        </mat-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="displayedColumns;"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+    </app-page-content>
+</app-page>

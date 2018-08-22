@@ -4,10 +4,13 @@ import { InventoryComponent } from './inventory.component';
 import { OrderTransferFormComponent } from './order-transfer-form/order-transfer-form.component';
 import { LocationTransferFormComponent } from './location-transfer-form/location-transfer-form.component';
 import { LocationAdjustmentFormComponent } from './location-adjustment-form/location-adjustment-form.component';
+import { AuthGuard } from '../guards/auth-guard';
 
 const routes: Routes = [
   {
-    path: 'inventory',
+    path: '',
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     component: InventoryComponent,
     children: [
       {

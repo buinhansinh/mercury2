@@ -3,7 +3,6 @@ const Strategy = require("passport-local").Strategy;
 const query = require("./db/query");
 const bcrypt = require("bcryptjs");
 const db = require("./db/connection");
-
 // Configure the local strategy for use by Passport.
 //
 // The local strategy require a `verify` function which receives the credentials

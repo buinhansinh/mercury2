@@ -8,15 +8,17 @@
   </mat-form-field>
   <div formGroupName="passwordGroup" class="user-form">
       <mat-form-field>
-          <input type="text" matInput formControlName="password" placeholder="Password" >
+          <input type="password" matInput formControlName="password" placeholder="Password" >
       </mat-form-field>
       <mat-form-field>
-          <input type="text" matInput formControlName="passwordVerify" placeholder="Password Verify">
+          <input type="password" matInput formControlName="passwordVerify" placeholder="Password Verify">
+          <mat-hint *ngIf="!!userForm.get('passwordGroup').get('password').value && userForm.get('passwordGroup').hasError('notMatching')" >Password does not match!</mat-hint>
       </mat-form-field>
   </div>
  
 </form>
 <mat-dialog-actions>
   <div class="spacer"></div>
-    <button mat-flat-button [disabled]="userForm.invalid" mat-dialog-close>Create</button>
+    <button mat-stroked-button  class="close-button" mat-dialog-close>Cancel</button>
+    <button mat-flat-button [disabled]="userForm.invalid" (click)="onCreateUser()">Create</button>
 </mat-dialog-actions>
