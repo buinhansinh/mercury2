@@ -18,14 +18,23 @@ router.get("/user", async function(req, res) {
 });
 
 // USER - CREATE
-router.post("/user", async function(req, res) {
+router.post("/user", async function(req, res, next) {
   const user = req.body;
-  var salt = bcrypt.genSaltSync(10);
-  var hash = bcrypt.hashSync(user.password, salt);
-  user["salt"] = salt;
-  user["password"] = hash;
-  const ret = await q(db).user.insert(user);
-  res.json(ret);
+  // check for usename duplicate. 
+  // since it's not a transaction, it might cause race conditions.
+  const exists = await q(db).user.exists(user.name);
+  if (exists) {
+    const e = new Error("Username already exists");
+    e.status = 409;
+    next(e);
+  } else {
+    var salt = bcrypt.genSaltSync(10);
+    var hash = bcrypt.hashSync(user.password, salt);
+    user["salt"] = salt;
+    user["password"] = hash;
+    const ret = await q(db).user.insert(user);
+    res.json(ret);
+  }
 });
 
 // USER - GET BY ID
@@ -35,9 +44,18 @@ router.get("/user/:id", async function(req, res) {
 });
 
 // USER - UPDATE NAME
-router.put("/user/:id", async function(req, res) {
-  const ret = await q(db).user.update(req.params.id, req.body);
-  res.json(ret);
+router.put("/user/:id", async function(req, res, next) {
+  // check for usename duplicate. 
+  // since it's not a transaction, it might cause race conditions.
+  const exists = await q(db).user.exists(req.body.name);
+  if (exists) {
+    const e = new Error("Username already exists");
+    e.status = 409;
+    next(e);
+  } else {
+    const ret = await q(db).user.update(req.params.id, req.body);
+    res.json(ret);
+  }
 });
 
 // USER - DELETE
@@ -133,7 +151,7 @@ router.delete("/group/:id/permission/:permissionId", async function(req, res) {
 // PERMISSION - LIST
 router.get("/permission", async function(req, res) {
   var offset, limit;
-  var { offset = 0, limit = 10 } = req.query;
+  var { offset = 0, limit = null } = req.query;
   const permissions = await q(db).permission.getAll(offset, limit);
   res.json(permissions);
 });

@@ -10,23 +10,23 @@ export class GroupService {
   constructor(private http: HttpClient) {}
 
   getGroupById(id: string): Observable<Group> {
-    return this.http.get<Group>(`api/security/Group/${id}`);
+    return this.http.get<Group>(`api/security/group/${id}`);
   }
 
   getGroups(): Observable<Group[]> {
-    return this.http.get<Group[]>(`api/security/Group/`);
+    return this.http.get<Group[]>(`api/security/group/`);
   }
 
   createGroup(group: Group): Observable<Group> {
-    return this.http.post<Group>(`api/security/Group/`, group).pipe(tap(() =>  this.notifyChanges()));
+    return this.http.post<Group>(`api/security/group/`, group).pipe(tap(() =>  this.notifyChanges()));
   }
 
   deleteGroup(group: Group): Observable<Group> {
-    return this.http.delete<Group>(`api/security/Group/${group.id}`).pipe(tap(() => this.notifyChanges()));
+    return this.http.delete<Group>(`api/security/group/${group.id}`).pipe(tap(() => this.notifyChanges()));
   }
 
   existGroup(name: string): Observable<boolean> {
-    return this.http.get<boolean>(`api/security/Group/exists/${name}`);
+    return this.http.get<boolean>(`api/security/group/exists/${name}`);
   }
 
   private notifyChanges(){

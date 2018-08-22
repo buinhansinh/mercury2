@@ -1,6 +1,6 @@
 
 <app-page>
-  <app-page-header title="Group Management">
+  <app-page-header title="Groups">
       <button mat-flat-button (click)="onOpenAddGroupForm()">
           <mat-icon>add</mat-icon>
           <span>Add Group</span>
@@ -9,7 +9,7 @@
   <app-page-content>
       <mat-table [dataSource]="groups">
         <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef>Group Name</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
            <mat-cell *matCellDef="let group">{{group.name}}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="toolbox">

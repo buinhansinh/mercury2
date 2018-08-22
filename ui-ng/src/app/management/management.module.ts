@@ -25,6 +25,6 @@ import { UserModifyComponent } from './user-modify/user-modify.component';
     ReportsComponent,
     GroupModifyComponent,
     UserModifyComponent
-  ]
+  ],
 })
 export class ManagementModule {}

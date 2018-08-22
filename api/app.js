@@ -41,7 +41,11 @@ app.use(passport.session());
 
 // Login and logout
 app.post(
+<<<<<<< HEAD
   '/login',
+=======
+  '/api/login',
+>>>>>>> mercury2/master
   passport.authenticate('local', { failWithError: false }),
   function(req, res) {
     return res.json({
@@ -50,7 +54,11 @@ app.post(
   }
 );
 
+<<<<<<< HEAD
 app.get('/logout', function(req, res) {
+=======
+app.get('/api/logout', function(req, res) {
+>>>>>>> mercury2/master
   req.logout();
   res.json();
 });

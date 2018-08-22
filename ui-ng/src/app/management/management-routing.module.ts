@@ -41,7 +41,7 @@ const routes: Routes = [
       },
       {
         path: 'group/:id',
-        component: GroupModifyComponent
+        component: GroupModifyComponent,
       },
       {
         path: 'locations',
