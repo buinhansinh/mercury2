@@ -4,8 +4,9 @@
 .form {
   display: flex;
   flex-direction: column;
-  padding: 24px;
   box-sizing: border-box;
+  padding-bottom: 18px;
+  padding-top: 18px;
 }
 
 .form-w-350px {

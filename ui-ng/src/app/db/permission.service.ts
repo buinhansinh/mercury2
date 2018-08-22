@@ -1,27 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Permission } from './permission.model';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class PermissionService {
+  constructor(private http: HttpClient){}
   public getPermissions(): Observable<Permission[]> {
-    return of([
-      {
-        id: '1',
-        name: 'CONTACT_CREATE'
-      },
-      {
-        id: '2',
-        name: 'CONTACT_DELETE'
-      },
-      {
-        id: '3',
-        name: 'CONTACT_UPDATE'
-      },
-      {
-        id: '4',
-        name: 'CONTACT_READ'
-      }
-    ]);
+    return this.http.get<Permission[]>('api/security/permission');
   }
 }

@@ -156,3 +156,15 @@ input[type="number"]::-webkit-outer-spin-button {
   color: #333333;
 
 }
+
+.mat-icon-button .mat-button-focus-overlay {
+  display: none;
+}
+
+.form-title {
+  font-size: 1.3rem;
+}
+
+.pl-1 {
+  padding-left: 8px !important;
+}

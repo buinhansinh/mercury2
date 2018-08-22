@@ -29,6 +29,10 @@ export class GroupService {
     return this.http.get<boolean>(`api/security/group/exists/${name}`);
   }
 
+  addUserToGroup(userId: string, groupId: string): Observable<any>{
+    return this.http.put(`api/security/group/${groupId}/user/${userId}`,{});
+  }
+
   private notifyChanges(){
     this.dataUpdateEvent.next(true);
   }

@@ -4,6 +4,15 @@ import { UserService } from '../../db/user.service';
 import { MatDialogRef } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 
+export const  passwordMatchValidator = (group: FormGroup) =>  {
+  if (group) {
+    if (group.get("password").value !==group.get("passwordVerify").value) {
+      return { notMatching : true };
+    }
+  }
+  return null;
+}
+
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
@@ -21,19 +30,10 @@ export class UserFormComponent implements OnInit {
       passwordGroup: this.formBuilder.group({
         password: [null, Validators.required],
         passwordVerify: [null, Validators.required]
-      }, { validator: this.passwordMatchValidator})
+      }, { validator: passwordMatchValidator})
     });
   }
 
-  private passwordMatchValidator(group: FormGroup): any {
-    if (group) {
-      if (group.get("password").value !==group.get("passwordVerify").value) {
-        return { notMatching : true };
-      }
-    }
-   
-    return null;
-  }
 
   onCreateUser(){
     if(this.isProcessing) return;

@@ -11,6 +11,8 @@ import { ReportsComponent } from './reports/reports.component';
 import { GroupModifyComponent } from './group-modify/group-modify.component';
 import { UserModifyComponent } from './user-modify/user-modify.component';
 import { AuthGuard } from '../guards/auth-guard';
+import { GroupResolver } from './group-modify/group.resolve';
+import { UserResolver } from './user-modify/user.resolve';
 
 const routes: Routes = [
   {
@@ -29,7 +31,10 @@ const routes: Routes = [
       },
       {
         path: 'user/:id',
-        component: UserModifyComponent
+        component: UserModifyComponent,
+        resolve: {
+          data: UserResolver
+        }
       },
       {
         path: 'groups',
@@ -42,6 +47,9 @@ const routes: Routes = [
       {
         path: 'group/:id',
         component: GroupModifyComponent,
+        resolve: {
+          data: GroupResolver
+        }
       },
       {
         path: 'locations',
