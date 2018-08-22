@@ -41,7 +41,7 @@ app.use(passport.session());
 
 // Login and logout
 app.post(
-  '/login',
+  '/api/login',
   passport.authenticate('local', { failWithError: false }),
   function(req, res) {
     return res.json({
@@ -50,7 +50,7 @@ app.post(
   }
 );
 
-app.get('/logout', function(req, res) {
+app.get('/api/logout', function(req, res) {
   req.logout();
   res.json();
 });

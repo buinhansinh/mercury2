@@ -1,6 +1,6 @@
 const DBException = require("../error");
 
-const QUERY_USER_EXISTS = `SELECT count(id) > 0 from mercury.user WHERE name = $1 AND archived = FALSE`;
+const QUERY_USER_EXISTS = `SELECT count(id) > 0 as exists from mercury.user WHERE name = $1 AND archived = FALSE`;
 
 const user = db => {
   return {
@@ -32,13 +32,11 @@ const user = db => {
     },
 
     exists: async name => {
-      return db.one(QUERY_USER_EXISTS, name);
+      const ret = await db.one(QUERY_USER_EXISTS, name);
+      return ret.exists;
     },
 
     insert: async user => {
-      // ensure that username has no duplicate
-      const exists = db.one(QUERY_USER_EXISTS, user.name);
-      if (!exists) throw new DBException("Username already exists");
       return db.one(
         `INSERT INTO mercury.user (name, display_name, salt, password) 
           values($(name), $(display_name), $(salt), $(password))

@@ -18,7 +18,7 @@ describe("Login in with wrong user and password", function() {
   const api = request(app);
   it("should return 401", function(done) {
     api
-      .post("/login")
+      .post("/api/login")
       .type("form")
       .send({
         username: "adminxx",
@@ -33,7 +33,7 @@ describe("Login with right user and wrong password", function() {
   const api = request(app);
   it("should return 401", function(done) {
     api
-      .post("/login")
+      .post("/api/login")
       .type("form")
       .send({
         username: "admin",
@@ -47,7 +47,7 @@ describe("Login with right user and wrong password", function() {
 function login(api) {
   return function(done) {
     api
-      .post("/login")
+      .post("/api/login")
       .type("form")
       .send({
         username: "admin",
@@ -61,7 +61,7 @@ function login(api) {
 function logout(api) {
   return function(done) {
     api
-      .get("/logout")
+      .get("/api/logout")
       .expect(200)
       .end(done);
   };
@@ -112,7 +112,26 @@ describe("Update User", function() {
       });
   });
 
-  // update the user
+  // update the user with the same name
+  it("should return 409", function(done) {
+    api
+      .put(`/api/security/user/${userId}`)
+      .type("form")
+      .send({
+        id: userId,
+        name: "admin",
+        display_name: "Some Updated User",
+        active: "False"
+      })
+      .expect(409)
+      .end((err, res) => {
+        if (err) return done(err);
+        console.log(res.body);
+        done();
+      });
+  });
+
+  // update the user agin
   it("should return 200", function(done) {
     api
       .put(`/api/security/user/${userId}`)
@@ -131,7 +150,7 @@ describe("Update User", function() {
       });
   });
 
-  it("should return a list of users", function(done) {
+  it("should return 2 users", function(done) {
     api
       .get("/api/security/user")
       .expect(200)
@@ -157,4 +176,23 @@ describe("Update User", function() {
 
   // logout
   after(logout(api));  
+});
+
+
+describe("Get Permissions", function() {
+  const api = request.agent(app);
+  before(login(api));
+  after(logout(api));
+
+  it("should return a list of permissions", function(done) {
+    api
+      .get("/api/security/permission")
+      .expect(200)
+      .expect("Content-Type", /json/)
+      .end((err, res) => {
+        if (err) return done(err);
+        console.log(res.body);
+        done();
+      });
+  });
 });
