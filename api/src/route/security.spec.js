@@ -1,3 +1,5 @@
+const db = require("../db/connection");
+const q = require("../db/query");
 const app = require("../../app");
 const request = require("supertest");
 const chai = require("chai");
@@ -178,6 +180,71 @@ describe("Update User", function() {
   after(logout(api));  
 });
 
+describe("Get group by id", function() {
+  const api = request.agent(app);
+  var adminId = null;
+
+  before(login(api));
+  before(function(done) {
+    api
+      .get("/api/security/group/name/Admin")
+      .expect(200)
+      .expect("Content-Type", /json/)
+      .end((err, res) => {
+        if (err) return done(err);
+        console.log(res.body);
+        adminId = res.body.id;
+        done();
+      });
+  });
+
+  after(logout(api));
+
+  it("should return a list of permissions", function(done) {
+    api
+      .get(`/api/security/group/${adminId}`)
+      .expect(200)
+      .expect("Content-Type", /json/)
+      .end((err, res) => {
+        if (err) return done(err);
+        console.log(res.body);
+        done();
+      });
+  });
+});
+
+describe("Get Group Permissions", function() {
+  const api = request.agent(app);
+  var adminId = null;
+
+  before(login(api));
+  before(function(done) {
+    api
+      .get("/api/security/group/name/Admin")
+      .expect(200)
+      .expect("Content-Type", /json/)
+      .end((err, res) => {
+        if (err) return done(err);
+        console.log(res.body);
+        adminId = res.body.id;
+        done();
+      });
+  });
+
+  after(logout(api));
+
+  it("should return a list of permissions", function(done) {
+    api
+      .get(`/api/security/group/${adminId}/permission`)
+      .expect(200)
+      .expect("Content-Type", /json/)
+      .end((err, res) => {
+        if (err) return done(err);
+        console.log(res.body);
+        done();
+      });
+  });
+});
 
 describe("Get Permissions", function() {
   const api = request.agent(app);

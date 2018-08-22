@@ -83,10 +83,9 @@ const user = db => {
 
     permissions: async userId => {
       return db.any(
-        `SELECT p.id, p.name 
+        `SELECT gp.permission_id
         FROM mercury.user_group ug 
         LEFT JOIN mercury.group_permission gp ON ug.group_id = gp.group_id
-        LEFT JOIN mercury.permission p ON gp.permission_id = p.id
         WHERE ug.user_id = $1`,
         userId
       );
