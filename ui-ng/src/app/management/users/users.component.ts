@@ -41,4 +41,8 @@ export class UsersComponent implements OnInit, OnDestroy {
       width: '400px'
     });
   }
+
+  onDeleteUser(user: User){
+    this.userSerice.delete(user).subscribe();
+  }
 }

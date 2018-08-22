@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../../db/user.service';
+import { MatDialogRef } from '@angular/material';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-form',
@@ -9,7 +11,8 @@ import { UserService } from '../../db/user.service';
 })
 export class UserFormComponent implements OnInit {
   userForm: FormGroup;
-  constructor(private formBuilder: FormBuilder, private userService: UserService) {}
+  private isProcessing = false;
+  constructor(private formBuilder: FormBuilder, private userService: UserService, private matDialogRef: MatDialogRef<UserFormComponent>) {}
 
   ngOnInit() {
     this.userForm = this.formBuilder.group({
@@ -33,11 +36,13 @@ export class UserFormComponent implements OnInit {
   }
 
   onCreateUser(){
+    if(this.isProcessing) return;
+    this.isProcessing = true;
     const data = this.userForm.value;
     this.userService.create({
       name: data.username,
       display_name: data.fullname,
       password: data.passwordGroup.password
-    }).subscribe(() => {console.log('success')});
+    }).pipe(finalize(() => this.isProcessing = false)).subscribe(() => { this.matDialogRef.close()});
   }
 }

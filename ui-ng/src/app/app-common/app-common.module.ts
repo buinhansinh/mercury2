@@ -41,6 +41,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SelectOnFocusDirective } from './select-on-focus.directive';
 import { ContactPickerComponent } from './contact-picker/contact-picker.component';
 import { ModuleWithProviders } from '@angular/compiler/src/core';
+import { PageComponent } from '../page/page.component';
+import { PageHeaderComponent } from '../page/page-header/page-header.component';
+import { PageContentComponent } from '../page/page-content/page-content.component';
+import { PageFooterComponent } from '../page/page-footer/page-footer.component';
+import { DeleteButtonComponent } from '../delete-button/delete-button.component';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 const ngModules: any = [CommonModule, FormsModule, ReactiveFormsModule];
 
@@ -84,7 +90,13 @@ const materialModules: any = [
 const commonComponents: any = [
   ContactPickerComponent,
   OfferPickerComponent,
-  SelectOnFocusDirective
+  SelectOnFocusDirective,
+  PageComponent,
+  PageHeaderComponent,
+  PageContentComponent,
+  PageFooterComponent,
+  DeleteButtonComponent,
+  ConfirmDialogComponent
 ];
 
 const declarations_ = [].concat(commonComponents);
@@ -98,7 +110,8 @@ const exports_ = []
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: declarations_,
   imports: imports_,
-  exports: exports_
+  exports: exports_,
+  entryComponents: [   ConfirmDialogComponent]
 })
 export class AppCommonModule {
   static forRoot(): ModuleWithProviders {

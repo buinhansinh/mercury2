@@ -43,7 +43,7 @@ export class HttpUserService {
   }
 
   getAll(): Observable<User[]> {
-    return this.http.get<User[]>(`api/security/user/`);
+    return this.http.get(`api/security/user/`).pipe(map((res : any) => res.users));
   }
 
   create(user: User): Observable<User> {
@@ -51,7 +51,7 @@ export class HttpUserService {
   }
 
   delete(user: User): Observable<User> {
-    return this.http.delete<User>(`api/security/user/${user.id}`);
+    return this.http.delete<User>(`api/security/user/${user.id}`).pipe(tap(() => this.notifyChanges()));
   }
 
   exists(name: string): Observable<boolean> {

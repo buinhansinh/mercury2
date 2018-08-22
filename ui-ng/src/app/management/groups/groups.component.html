@@ -1,40 +1,28 @@
-<div class="container">
-    <div class="toolbar">
-      <span class="title">Group Management</span>
-      <span class="spacer"></span>
+
+<app-page>
+  <app-page-header title="Group Management">
       <button mat-flat-button (click)="onOpenAddGroupForm()">
-        <mat-icon>add</mat-icon>
-        <span>Add Group</span>
-      </button>
-    </div>
-  
-    <mat-divider></mat-divider>
-    <div class="table">
-        <table class="highlight responsive-table bordered">
-          <thead>
-            <tr class="grid-container header">
-              <th class="grid-70 text-left">
-                Group Name
-              </th>
-              <th class="grid-30">
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-              <tr class="grid-container content"  *ngFor="let group of (groups$ | async)"  >
-                  <td class="grid-70 text-left">
-                      {{group.name}}
-                  </td>
-                  <td class="grid-30 text-right">
-                      <button mat-icon-button   [disableRipple]="'true'" [routerLink]="['../group', group.id]"> 
-                        <mat-icon>edit</mat-icon>
-                    </button>
-                    <button mat-icon-button   [disableRipple]="'true'"> 
-                        <mat-icon>delete</mat-icon>
-                    </button>
-                  </td>
-                </tr>
-          </tbody>
-        </table>
-    </div>
-  </div>
+          <mat-icon>add</mat-icon>
+          <span>Add Group</span>
+        </button>
+  </app-page-header>
+  <app-page-content>
+      <mat-table [dataSource]="groups">
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef>Group Name</mat-header-cell>
+           <mat-cell *matCellDef="let group">{{group.name}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="toolbox">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let group" class="align-right">
+              <button mat-icon-button   [disableRipple]="'true'" [routerLink]="['../group', group.id]"> 
+                <mat-icon>edit</mat-icon>
+            </button>
+           <app-delete-button (onDelete)="onDeleteGroup(group)"></app-delete-button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns;"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+  </app-page-content>
+</app-page>
