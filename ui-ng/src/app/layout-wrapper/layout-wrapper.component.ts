@@ -14,7 +14,11 @@ import { AuthenticationService } from '../db/authentication.service';
 export class LayoutWrapperComponent {
   title = 'app';
 
-  constructor(private router: Router, private dialog: MatDialog, private authService: AuthenticationService) {
+  constructor(
+    private router: Router,
+    private dialog: MatDialog,
+    private authService: AuthenticationService
+  ) {
     this.router = router;
   }
 
@@ -59,7 +63,7 @@ export class LayoutWrapperComponent {
     this.router.navigate([{ outlets: { primary: path, toolbar: path } }]);
   }
 
-  onLogout(){
+  onLogout() {
     this.authService.logout();
   }
 }

@@ -18,26 +18,34 @@ export class GroupService {
   }
 
   createGroup(group: Group): Observable<Group> {
-    return this.http.post<Group>(`api/security/group/`, group).pipe(tap(() =>  this.notifyChanges()));
+    return this.http
+      .post<Group>(`api/security/group/`, group)
+      .pipe(tap(() => this.notifyChanges()));
   }
 
   deleteGroup(group: Group): Observable<Group> {
-    return this.http.delete<Group>(`api/security/group/${group.id}`).pipe(tap(() => this.notifyChanges()));
+    return this.http
+      .delete<Group>(`api/security/group/${group.id}`)
+      .pipe(tap(() => this.notifyChanges()));
   }
 
   existGroup(name: string): Observable<boolean> {
     return this.http.get<boolean>(`api/security/group/exists/${name}`);
   }
 
-  addUserToGroup(userId: string, groupId: string): Observable<any>{
-    return this.http.put(`api/security/group/${groupId}/user/${userId}`,{});
+  addUserToGroup(userId: string, groupId: string): Observable<any> {
+    return this.http.put(`api/security/group/${groupId}/user/${userId}`, {});
   }
 
-  private notifyChanges(){
+  removeUserFromGroup(userId: string, groupId: string): Observable<any> {
+    return this.http.delete(`api/security/group/${groupId}/user/${userId}`, {});
+  }
+
+  private notifyChanges() {
     this.dataUpdateEvent.next(true);
   }
 
-  public getDataUpdateEvent(): Observable<boolean>{
+  public getDataUpdateEvent(): Observable<boolean> {
     return this.dataUpdateEvent;
   }
 }

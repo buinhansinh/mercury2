@@ -20,8 +20,6 @@ import { AuthGuard } from './guards/auth-guard';
 import { LayoutWrapperComponent } from './layout-wrapper/layout-wrapper.component';
 import { NotificationDisplayerComponent } from './notification-displayer/notification-displayer.component';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +27,7 @@ import { NotificationDisplayerComponent } from './notification-displayer/notific
     PageNotFoundComponent,
     LoginComponent,
     LayoutWrapperComponent,
-    NotificationDisplayerComponent,
+    NotificationDisplayerComponent
   ],
   imports: [
     BrowserModule,

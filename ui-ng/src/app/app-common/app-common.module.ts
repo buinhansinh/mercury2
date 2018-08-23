@@ -111,7 +111,7 @@ const exports_ = []
   declarations: declarations_,
   imports: imports_,
   exports: exports_,
-  entryComponents: [   ConfirmDialogComponent]
+  entryComponents: [ConfirmDialogComponent]
 })
 export class AppCommonModule {
   static forRoot(): ModuleWithProviders {

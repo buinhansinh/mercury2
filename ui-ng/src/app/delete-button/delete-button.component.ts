@@ -8,21 +8,22 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
   styleUrls: ['./delete-button.component.css']
 })
 export class DeleteButtonComponent {
-
   @Output()
   public readonly onDelete = new EventEmitter<boolean>();
   constructor(public dialog: MatDialog) {}
 
-  onShowConfirm(){
-    this.dialog.open(ConfirmDialogComponent, {
-      position : {
-        top: '200px'
-      }
-    }).afterClosed().subscribe((confirm: string) => {
-      if(confirm === 'confirm'){
-        this.onDelete.emit(true);
-      }
-    });
+  onShowConfirm() {
+    this.dialog
+      .open(ConfirmDialogComponent, {
+        position: {
+          top: '200px'
+        }
+      })
+      .afterClosed()
+      .subscribe((confirm: string) => {
+        if (confirm === 'confirm') {
+          this.onDelete.emit(true);
+        }
+      });
   }
-
 }

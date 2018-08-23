@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class PermissionService {
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient) {}
   public getPermissions(): Observable<Permission[]> {
     return this.http.get<Permission[]>('api/security/permission');
   }

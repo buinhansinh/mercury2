@@ -7,10 +7,7 @@
     <mat-menu #menu="matMenu" yPosition="below" xPosition="before"
       [overlapTrigger]="false">
       <div mat-menu-item>
-        <button mat-flat-button color="warn">
-          <mat-icon>delete</mat-icon>
-          <span>Delete</span>
-        </button>
+        <app-delete-button (onDelete)="onDeleteUser()">Delete</app-delete-button>
       </div>
     </mat-menu>
   </app-page-header>
@@ -27,21 +24,21 @@
             placeholder="Full Name">
         </mat-form-field>
         <div class="save-button">
-          <button mat-flat-button [disabled]="userForm.invalid" (click)="onUpdateUserInfo()">Update</button>
+          <button mat-flat-button [disabled]="userForm.invalid || dataNotChanged" (click)="onUpdateUserInfo()">Update</button>
         </div>
       </form>
 
     </div>
     <mat-divider></mat-divider>
     <div class="form-w-350px">
-      <form [formGroup]="passwordForm" class="form">
+      <form [formGroup]="passwordForm" class="form" #f="ngForm">
         <mat-form-field>
-          <input type="text" matInput formControlName="password"
+          <input type="password" matInput formControlName="password"
             placeholder="Password">
          
         </mat-form-field>
         <mat-form-field>
-          <input type="text" matInput formControlName="passwordVerify"
+          <input type="password" matInput formControlName="passwordVerify"
             placeholder="Password Verify">
             <mat-hint class="error" *ngIf="!!passwordForm.get('password').value && passwordForm.hasError('notMatching')">Password does not match!</mat-hint>
         </mat-form-field>
@@ -61,13 +58,13 @@
     </div>
     <mat-table [dataSource]="userGroups">
       <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef class="pl-1">Name</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef class="pl-1">Group</mat-header-cell>
         <mat-cell *matCellDef="let group" class="pl-1">{{group.name}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="toolbox">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let group" class="align-right">
-          <app-delete-button></app-delete-button>
+          <app-delete-button (onDelete)="onDeleteGroup(group)"></app-delete-button>
         </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="['name','toolbox'];"></mat-header-row>

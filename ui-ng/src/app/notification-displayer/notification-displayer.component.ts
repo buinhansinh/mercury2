@@ -14,21 +14,34 @@ export class NotificationDisplayerComponent implements OnInit, OnDestroy {
   error: string;
   errorClearer = new Subject<boolean>();
 
-  constructor(private notifService: NotificationService) { }
+  constructor(private notifService: NotificationService) {}
 
   ngOnInit() {
-    this.notifService.getNotifications().pipe(takeUntil(this.destroy$)).subscribe(message => {
-      this.notification = message;
-    });
-    this.notifService.getErrors().pipe(tap(() => {
-      this.errorClearer.next(true);
-    }),takeUntil(this.destroy$)).subscribe(error => this.error = error);
-    this.errorClearer.pipe(debounceTime(5000),takeUntil(this.destroy$)).subscribe(() => this.error = "");
+    this.notifService
+      .getNotifications()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(message => {
+        this.notification = message;
+      });
+    this.notifService
+      .getErrors()
+      .pipe(
+        tap(() => {
+          this.errorClearer.next(true);
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(error => (this.error = error));
+    this.errorClearer
+      .pipe(
+        debounceTime(5000),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(() => (this.error = ''));
   }
 
-  ngOnDestroy(){
-    this.destroy$.next("");
+  ngOnDestroy() {
+    this.destroy$.next('');
     this.destroy$.unsubscribe();
   }
-
 }

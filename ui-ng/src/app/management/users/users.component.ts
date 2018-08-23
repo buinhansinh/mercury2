@@ -19,17 +19,20 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.updateUserList();
-    this.userSerice.getDataUpdateEvent().pipe(takeUntil(this.destroy$)).subscribe(() => {
-      this.updateUserList();
-    });
+    this.userSerice
+      .getDataUpdateEvent()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.updateUserList();
+      });
   }
 
-  ngOnDestroy(){
-    this.destroy$.next("");
+  ngOnDestroy() {
+    this.destroy$.next('');
     this.destroy$.unsubscribe();
   }
 
-  private updateUserList(){
+  private updateUserList() {
     this.users$ = this.userSerice.getAll();
   }
 
@@ -42,7 +45,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     });
   }
 
-  onDeleteUser(user: User){
+  onDeleteUser(user: User) {
     this.userSerice.delete(user).subscribe();
   }
 }

@@ -38,9 +38,11 @@ export class GroupModifyComponent implements OnInit {
       });
   }
 
-  private loadGroupInformation(){
-    this.groupService.getGroupById(this.route.snapshot.paramMap.get('id')).subscribe((group: Group) => {
-      console.log(group);
-    });
+  private loadGroupInformation() {
+    this.groupService
+      .getGroupById(this.route.snapshot.paramMap.get('id'))
+      .subscribe((group: Group) => {
+        console.log(group);
+      });
   }
 }

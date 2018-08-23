@@ -68,7 +68,7 @@ const user = db => {
     updatePassword: async (id, password) => {
       return db.none(
         `UPDATE mercury.user SET
-          password = $1, 
+          password = $1 
         WHERE id = $2`,
         [password, id]
       );

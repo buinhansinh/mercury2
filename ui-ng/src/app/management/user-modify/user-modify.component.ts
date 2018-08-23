@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Group } from '../../db/group.model';
 import { GroupService } from '../../db/group.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../db/user.model';
 import { UserService } from '../../db/user.service';
 import { passwordMatchValidator } from '../user-form/user-form.component';
@@ -20,71 +20,109 @@ export class UserModifyComponent implements OnInit {
   userGroups: Group[];
   user: User;
   groupColumns = ['name', 'toolbar'];
+  @ViewChild('f')
+  passwordNgForm: NgForm;
+  dataNotChanged = true;
   constructor(
     private formBuilder: FormBuilder,
     private groupService: GroupService,
     private route: ActivatedRoute,
     private userService: UserService,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.setUpForms();
     this.loadData();
-    
   }
 
-  loadData(){
+  loadData() {
     const data = this.route.snapshot.data.data;
     this.allGroups = data.allGroups;
-    this.userGroups = this.getDetails(data.allGroups,data.userGroups);
+    this.userGroups = this.getDetails(data.allGroups, data.userGroups);
     this.user = data.user;
     this.updateForm(this.user);
   }
 
-  private getDetails(allGroups: Group[], userGroups: any[]): Group[]{
+  private getDetails(allGroups: Group[], userGroups: any[]): Group[] {
     const groupIds = new Set<string>(userGroups.map(group => group.group_id));
     return this.allGroups.filter(group => groupIds.has(group.id));
   }
 
-  private updateForm(user: User){
+  private updateForm(user: User) {
     this.userForm.get('username').setValue(user.name);
     this.userForm.get('fullname').setValue(user.display_name);
   }
 
-  setUpForms(){
+  setUpForms() {
     this.userForm = this.formBuilder.group({
       username: [null, Validators.required],
       fullname: [null, Validators.required]
     });
-    this.passwordForm = this.formBuilder.group({
-      password: [null, Validators.required],
-      passwordVerify: [null, Validators.required]
-    }, { validator: passwordMatchValidator});
+    this.passwordForm = this.formBuilder.group(
+      {
+        password: [null, Validators.required],
+        passwordVerify: [null, Validators.required]
+      },
+      { validator: passwordMatchValidator }
+    );
+    this.userForm.valueChanges.subscribe(values => {
+      this.dataNotChanged =
+        values.username === this.user.name &&
+        values.fullname === this.user.display_name;
+    });
   }
 
-  onUpdateUserInfo(){
-    this.userService.updateUser({
-      ...this.user,
-      name: this.userForm.value.username,
-      display_name: this.userForm.value.fullname
-    }).subscribe();
+  onUpdateUserInfo() {
+    this.userService
+      .updateUser({
+        ...this.user,
+        name: this.userForm.value.username,
+        display_name: this.userForm.value.fullname
+      })
+      .subscribe(() => {
+        this.userService
+          .getUserById(this.user.id)
+          .subscribe(user => (this.user = user));
+      });
   }
 
-  onUpdatePassword(){
-    this.userService.updatePassword({
-      ...this.user,
-      name: this.userForm.value.username,
-      display_name: this.userForm.value.fullname
-    }).subscribe();
+  onUpdatePassword() {
+    this.userService
+      .updatePassword({
+        ...this.user,
+        password: this.passwordForm.value.password
+      })
+      .subscribe(() => {
+        this.passwordNgForm.resetForm();
+      });
   }
 
-  onAddGroup(group: Group){
-    this.groupService.addUserToGroup(this.user.id,group.id).subscribe(() => {
+  onAddGroup(group: Group) {
+    this.groupService.addUserToGroup(this.user.id, group.id).subscribe(() => {
       this.refreshGroups();
     });
   }
 
-  private refreshGroups(){
-    this.userService.getGroupForUser(this.user.id).subscribe(groups => this.userGroups = groups);
+  onDeleteGroup(group: Group) {
+    this.groupService
+      .removeUserFromGroup(this.user.id, group.id)
+      .subscribe(() => {
+        this.refreshGroups();
+      });
+  }
+
+  onDeleteUser() {
+    this.userService.delete(this.user).subscribe(() => {
+      this.router.navigate(['../../users'], { relativeTo: this.route });
+    });
+  }
+
+  private refreshGroups() {
+    this.userService
+      .getGroupForUser(this.user.id)
+      .subscribe(
+        groups => (this.userGroups = this.getDetails(this.allGroups, groups))
+      );
   }
 }

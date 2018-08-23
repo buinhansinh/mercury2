@@ -7,19 +7,19 @@ export class NotificationService {
   private notifications: Subject<string> = new Subject();
   private errors: Subject<string> = new Subject();
 
-  public getNotifications(){
+  public getNotifications() {
     return this.notifications;
   }
 
-  public notify(message: string){
+  public notify(message: string) {
     this.notifications.next(message);
   }
 
-  public notifyError(error: string){
+  public notifyError(error: string) {
     this.errors.next(error);
   }
 
-  public getErrors(){
+  public getErrors() {
     return this.errors;
   }
 }

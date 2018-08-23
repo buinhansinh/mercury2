@@ -7,14 +7,11 @@ import { MatDialogRef } from '@angular/material';
   styleUrls: ['./confirm-dialog.component.css']
 })
 export class ConfirmDialogComponent implements OnInit {
+  constructor(private dialogRef: MatDialogRef<ConfirmDialogComponent>) {}
 
-  constructor(private dialogRef: MatDialogRef<ConfirmDialogComponent>) { }
+  ngOnInit() {}
 
-  ngOnInit() {
+  onDelete() {
+    this.dialogRef.close('confirm');
   }
-
-  onDelete(){
-    this.dialogRef.close("confirm");
-  }
-
 }
