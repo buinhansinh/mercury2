@@ -18,14 +18,14 @@ const user = db => {
     },
 
     getById: async id => {
-      return db.one(
+      return db.oneOrNone(
         `SELECT id, name, display_name, active FROM mercury.user WHERE id = $1 AND archived = FALSE`,
         id
       );
     },
 
     getByName: async name => {
-      return db.one(
+      return db.oneOrNone(
         `SELECT id, name, display_name, active, salt, password FROM mercury.user WHERE name = $1 AND archived = FALSE`,
         name
       );
@@ -34,6 +34,14 @@ const user = db => {
     exists: async name => {
       const ret = await db.one(QUERY_USER_EXISTS, name);
       return ret.exists;
+    },
+
+    search: async (name, limit, offset) => {
+      console.log(name, limit, offset);
+      return db.any(
+        `SELECT id, name, display_name, active FROM mercury.user WHERE name LIKE '%$1#%' LIMIT $2 OFFSET $3`,
+        [ name, limit, offset ]
+      );
     },
 
     insert: async user => {
@@ -65,12 +73,19 @@ const user = db => {
       );
     },
 
-    updatePassword: async (id, password) => {
+    updatePassword: async (id, salt, password) => {
       return db.none(
         `UPDATE mercury.user SET
+<<<<<<< HEAD
           password = $1 
         WHERE id = $2`,
         [password, id]
+=======
+          salt = $1,
+          password = $2
+        WHERE id = $3`,
+        [salt, password, id]
+>>>>>>> mercury2/master
       );
     },
 
