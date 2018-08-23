@@ -17,6 +17,18 @@ router.get("/user", async function(req, res) {
   });
 });
 
+// USER -SEARCH
+router.get("/user/search/:name", async function(req, res) {
+  var offset, limit;
+  var { offset = 0, limit = null } = req.query;
+  const users = await q(db).user.search(req.params.name, limit, offset);
+  const total = users.length > 0 ? users[0].count : 0;
+  res.json({
+    users: users,
+    total: total
+  });
+});
+
 // USER - CREATE
 router.post("/user", async function(req, res, next) {
   const user = req.body;
@@ -28,8 +40,8 @@ router.post("/user", async function(req, res, next) {
     e.status = 409;
     next(e);
   } else {
-    var salt = bcrypt.genSaltSync(10);
-    var hash = bcrypt.hashSync(user.password, salt);
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(user.password, salt);
     user["salt"] = salt;
     user["password"] = hash;
     const ret = await q(db).user.insert(user);
@@ -47,8 +59,9 @@ router.get("/user/:id", async function(req, res) {
 router.put("/user/:id", async function(req, res, next) {
   // check for usename duplicate. 
   // since it's not a transaction, it might cause race conditions.
-  const exists = await q(db).user.exists(req.body.name);
-  if (exists) {
+  const user = req.body;
+  const userDb = await q(db).user.getByName(user.name);
+  if (userDb && userDb.id === req.params.id) {
     const e = new Error("Username already exists");
     e.status = 409;
     next(e);
@@ -66,7 +79,9 @@ router.delete("/user/:id", async function(req, res) {
 
 // USER - UPDATE PASSWORD
 router.put("/user/:id/password", async function(req, res) {
-  const ret = await q(db).user.updatePassword(req.params.id, req.body.password);
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(req.body.password, salt);
+  const ret = await q(db).user.updatePassword(req.params.id, salt, hash);
   res.json(ret);
 });
 

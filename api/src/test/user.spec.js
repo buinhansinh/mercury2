@@ -3,71 +3,11 @@ const q = require("../db/query");
 const app = require("../../app");
 const request = require("supertest");
 const chai = require("chai");
+
 chai.use(require("chai-http"));
 expect = chai.expect;
 
-describe("Requests without login", function() {
-  const api = request(app);
-  it("should return 401", function(done) {
-    api
-      .get("/api/security/user")
-      .expect(401)
-      .end(done);
-  });
-});
-
-describe("Login in with wrong user and password", function() {
-  const api = request(app);
-  it("should return 401", function(done) {
-    api
-      .post("/api/login")
-      .type("form")
-      .send({
-        username: "adminxx",
-        password: "somepassword"
-      })
-      .expect(401)
-      .end(done);
-  });
-});
-
-describe("Login with right user and wrong password", function() {
-  const api = request(app);
-  it("should return 401", function(done) {
-    api
-      .post("/api/login")
-      .type("form")
-      .send({
-        username: "admin",
-        password: "somepassword"
-      })
-      .expect(401)
-      .end(done);
-  });
-});
-
-function login(api) {
-  return function(done) {
-    api
-      .post("/api/login")
-      .type("form")
-      .send({
-        username: "admin",
-        password: "admin"
-      })
-      .expect(200)
-      .end(done);
-  };
-}
-
-function logout(api) {
-  return function(done) {
-    api
-      .get("/api/logout")
-      .expect(200)
-      .end(done);
-  };
-}
+const { login, logout } = require("./auth.spec");
 
 describe("Get Users", function() {
   const api = request.agent(app);
@@ -121,7 +61,7 @@ describe("Update User", function() {
       .type("form")
       .send({
         id: userId,
-        name: "admin",
+        name: "someuser",
         display_name: "Some Updated User",
         active: "False"
       })
@@ -177,32 +117,27 @@ describe("Update User", function() {
   });
 
   // logout
-  after(logout(api));  
+  after(logout(api));
 });
 
-describe("Get group by id", function() {
+describe("Update user password", function() {
   const api = request.agent(app);
-  var adminId = null;
+  var admin = null;
 
   before(login(api));
-  before(function(done) {
-    api
-      .get("/api/security/group/name/Admin")
-      .expect(200)
-      .expect("Content-Type", /json/)
-      .end((err, res) => {
-        if (err) return done(err);
-        console.log(res.body);
-        adminId = res.body.id;
-        done();
-      });
+  before(async () => {
+    admin = await q(db).user.getByName("admin");
   });
 
   after(logout(api));
 
-  it("should return a list of permissions", function(done) {
+  it("should return 200", function(done) {
     api
-      .get(`/api/security/group/${adminId}`)
+      .put(`/api/security/user/${admin.id}/password`)
+      .type("form")
+      .send({
+        password: "differentpassword"
+      })
       .expect(200)
       .expect("Content-Type", /json/)
       .end((err, res) => {
@@ -211,31 +146,14 @@ describe("Get group by id", function() {
         done();
       });
   });
-});
 
-describe("Get Group Permissions", function() {
-  const api = request.agent(app);
-  var adminId = null;
-
-  before(login(api));
-  before(function(done) {
+  it("should return 200", function(done) {
     api
-      .get("/api/security/group/name/Admin")
-      .expect(200)
-      .expect("Content-Type", /json/)
-      .end((err, res) => {
-        if (err) return done(err);
-        console.log(res.body);
-        adminId = res.body.id;
-        done();
-      });
-  });
-
-  after(logout(api));
-
-  it("should return a list of permissions", function(done) {
-    api
-      .get(`/api/security/group/${adminId}/permission`)
+      .put(`/api/security/user/${admin.id}/password`)
+      .type("form")
+      .send({
+        password: "admin"
+      })
       .expect(200)
       .expect("Content-Type", /json/)
       .end((err, res) => {
@@ -246,14 +164,15 @@ describe("Get Group Permissions", function() {
   });
 });
 
-describe("Get Permissions", function() {
+describe("Search user", function() {
   const api = request.agent(app);
+
   before(login(api));
   after(logout(api));
 
-  it("should return a list of permissions", function(done) {
+  it("should return 200", function(done) {
     api
-      .get("/api/security/permission")
+      .get(`/api/security/user/search/adm`)
       .expect(200)
       .expect("Content-Type", /json/)
       .end((err, res) => {
