@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
@@ -8,6 +8,9 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
   styleUrls: ['./delete-button.component.css']
 })
 export class DeleteButtonComponent {
+  @Input()
+  public color: string;
+
   @Output()
   public readonly onDelete = new EventEmitter<boolean>();
   constructor(public dialog: MatDialog) {}

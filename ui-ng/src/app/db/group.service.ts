@@ -17,6 +17,10 @@ export class GroupService {
     return this.http.get<Group[]>(`api/security/group/`);
   }
 
+  updateGroup(group: Group): Observable<any> {
+    return this.http.put(`api/security/group/${group.id}`, group);
+  }
+
   createGroup(group: Group): Observable<Group> {
     return this.http
       .post<Group>(`api/security/group/`, group)
@@ -39,6 +43,27 @@ export class GroupService {
 
   removeUserFromGroup(userId: string, groupId: string): Observable<any> {
     return this.http.delete(`api/security/group/${groupId}/user/${userId}`, {});
+  }
+
+  addPermissionToGroup(groupId: string, permissionId: string): Observable<any> {
+    return this.http.put(
+      `api/security/group/${groupId}/permission/${permissionId}`,
+      {}
+    );
+  }
+
+  getPermissionForGroup(groupId: string): Observable<any> {
+    return this.http.get(`api/security/group/${groupId}/permission`);
+  }
+
+  removePermissionFromGroup(
+    groupId: string,
+    permissionId: number
+  ): Observable<any> {
+    return this.http.delete(
+      `api/security/group/${groupId}/permission/${permissionId}`,
+      {}
+    );
   }
 
   private notifyChanges() {

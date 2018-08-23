@@ -15,7 +15,7 @@ import { take, takeUntil } from 'rxjs/operators';
 export class GroupsComponent implements OnInit {
   destroy$: Subject<any> = new Subject();
   groups: Group[];
-  displayedColumns = ['name', 'toolbox'];
+  displayedColumns = ['name'];
   constructor(private groupSerice: GroupService, private dialog: MatDialog) {}
 
   ngOnInit() {

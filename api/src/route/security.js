@@ -118,7 +118,7 @@ router.post("/group", async function(req, res) {
 
 // GROUP - UPDATE
 router.put("/group/:id", async function(req, res) {
-  const ret = await q(db).group.update(req.params.id, req.body);
+  const ret = await q(db).group.update(req.body);
   res.json(ret);
 });
 

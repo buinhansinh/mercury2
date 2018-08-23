@@ -7,7 +7,7 @@
     <mat-menu #menu="matMenu" yPosition="below" xPosition="before"
       [overlapTrigger]="false">
       <div mat-menu-item>
-        <app-delete-button (onDelete)="onDeleteUser()">Delete</app-delete-button>
+        <app-delete-button (onDelete)="onDeleteUser()" color="warn">Delete</app-delete-button>
       </div>
     </mat-menu>
   </app-page-header>
@@ -52,7 +52,7 @@
       <div class="form-title">Add User To Group</div>
       <mat-form-field>
         <mat-select placeholder="" (selectionChange)="onAddGroup($event.value)">
-          <mat-option *ngFor="let group of allGroups" [value]="group">{{group.name}}</mat-option>
+          <mat-option *ngFor="let group of availableGroups" [value]="group">{{group.name}}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>

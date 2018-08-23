@@ -34,7 +34,7 @@ const group = db => {
     update: async group => {
       return db.none(
         `UPDATE mercury.group SET
-          name = $(name), 
+          name = $(name)
         WHERE id = $(id)`,
         group
       );

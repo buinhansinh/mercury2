@@ -19,10 +19,16 @@ export class GroupResolver implements Resolve<Observable<any>> {
   ) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const groupId = route.paramMap.get('id');
     return zip(
       this.permissionService.getPermissions(),
-      this.groupService.getGroupById(route.paramMap.get('id')),
-      (permissions, group) => ({ permissions, group })
+      this.groupService.getGroupById(groupId),
+      this.groupService.getPermissionForGroup(groupId),
+      (permissions, group, permissionsForGroup) => ({
+        permissions,
+        group,
+        permissionsForGroup
+      })
     );
   }
 }

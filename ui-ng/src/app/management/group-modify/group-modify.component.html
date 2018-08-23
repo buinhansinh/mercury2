@@ -1,7 +1,6 @@
-<div class="container">
-  <div class="toolbar">
-    <span class="title">Group Modify</span>
-    <span class="spacer"></span>
+
+<app-page>
+  <app-page-header title="{{group.name}} - Modify">
     <button mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon>more_vert</mat-icon>
       <span></span>
@@ -9,67 +8,58 @@
     <mat-menu #menu="matMenu" yPosition="below" xPosition="before"
       [overlapTrigger]="false">
       <div mat-menu-item>
-        <button mat-flat-button color="warn">
-          <mat-icon>delete</mat-icon>
-          <span>Delete</span>
-        </button>
+        <app-delete-button (onDelete)="onDeleteGroup()" color="warn"> Delete
+        </app-delete-button>
       </div>
     </mat-menu>
-  </div>
+  </app-page-header>
+  <app-page-content>
+    <div class="main-form">
+      <section class="w-300px">
+        <form [formGroup]="groupForm" class="d-flex-row-align-end">
+          <mat-form-field>
+            <input type="text" matInput formControlName="groupName"
+              placeholder="Group Name">
 
-  <mat-divider></mat-divider>
-  <div class="main-form">
-    <section class="w-300px">
-      <form [formGroup]="groupForm"  class="d-flex-row-align-end">
-        <mat-form-field>
-          <input type="text" matInput formControlName="groupName"
-            placeholder="Group Name">
-
-        </mat-form-field>
-        <mat-form-field class="no-underline ml-24px">
-            <input type="text" matInput placeholder="Search" style="display:none">
-            <button matSuffix mat-flat-button (click)="onOpenAddUserForm()" class="mb-0">
-                <span>Update</span>
+          </mat-form-field>
+          <mat-form-field class="no-underline ml-24px">
+            <input type="text" matInput placeholder="Search"
+              style="display:none">
+            <button matSuffix mat-flat-button (click)="onUpdateGroup()"
+              class="mb-0" [disabled]="groupForm.invalid || dataNotChanged">
+              <span>Update</span>
             </button>
-        </mat-form-field>
-      </form>
-    </section>
-    <div class="toolbar">
-        <span class="title">Permission</span>
-        <span class="spacer"></span>
-        <mat-form-field class="w-300px">
-            <mat-select placeholder="Add Permission">
-                <mat-option *ngFor="let permission of (permissions$ | async)">
+          </mat-form-field>
+        </form>
+      </section>
+      <app-page-header>
+        <span class="form-title"> Add Permission</span>
+        <form [formGroup]="permissionForm">
+            <mat-form-field class="w-300px">
+                <mat-select placeholder="" formControlName="permission">
+                  <mat-option *ngFor="let permission of availablePermissions"
+                    [value]="permission">
                     {{permission.name}}
-                </mat-option>
-              </mat-select>
-        </mat-form-field>
-      </div>
-    
-    <mat-divider></mat-divider>
-    <div class="table">
-        <table class="highlight responsive-table bordered">
-          <thead>
-            <tr class="grid-container header">
-              <th class="grid-70 text-left">
-                Group Name
-              </th>
-              <th class="grid-30">
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-              <tr class="grid-container content"  *ngFor="let permission of permissionsForGroup">
-                  <td class="grid-70 text-left">
-                      {{permission.name}}
-                  </td>
-                  <td class="grid-30 text-right">
-                      <button mat-button color="warn">
-                          <span>Remove</span>
-                      </button>
-                  </td>
-                </tr>
-          </tbody>
-        </table>
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+        </form>
+      </app-page-header>
+      <mat-divider></mat-divider>
+      <mat-table [dataSource]="permissionsForGroup">
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef>Permission</mat-header-cell>
+          <mat-cell *matCellDef="let permission">{{permission.name}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="toolbox" class="align-right">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let permission" class="align-right">
+            <app-delete-button (onDelete)="onDeletePermission(permission)"></app-delete-button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="['name','toolbox'];"></mat-header-row>
+        <mat-row *matRowDef="let permission; columns: ['name','toolbox']"></mat-row>
+      </mat-table>
     </div>
-</div>
+  </app-page-content>
+</app-page>

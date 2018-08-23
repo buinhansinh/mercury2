@@ -21,12 +21,12 @@
   flex: 1 1 auto;
 }
 
-.d-flex{
+.d-flex {
   display: flex;
   flex-direction: row;
 }
 
-.error{
+.error {
   color: red;
   height: 1.5em;
 }

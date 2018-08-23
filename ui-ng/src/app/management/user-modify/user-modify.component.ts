@@ -17,6 +17,7 @@ export class UserModifyComponent implements OnInit {
   userForm: FormGroup;
   passwordForm: FormGroup;
   allGroups: Group[];
+  availableGroups: Group[];
   userGroups: Group[];
   user: User;
   groupColumns = ['name', 'toolbar'];
@@ -39,14 +40,17 @@ export class UserModifyComponent implements OnInit {
   loadData() {
     const data = this.route.snapshot.data.data;
     this.allGroups = data.allGroups;
-    this.userGroups = this.getDetails(data.allGroups, data.userGroups);
+    this.updateGroupsView(data.allGroups, data.userGroups);
     this.user = data.user;
     this.updateForm(this.user);
   }
 
-  private getDetails(allGroups: Group[], userGroups: any[]): Group[] {
+  private updateGroupsView(allGroups: Group[], userGroups: any[]) {
     const groupIds = new Set<string>(userGroups.map(group => group.group_id));
-    return this.allGroups.filter(group => groupIds.has(group.id));
+    this.userGroups = this.allGroups.filter(group => groupIds.has(group.id));
+    this.availableGroups = this.allGroups.filter(
+      group => !groupIds.has(group.id)
+    );
   }
 
   private updateForm(user: User) {
@@ -81,9 +85,10 @@ export class UserModifyComponent implements OnInit {
         display_name: this.userForm.value.fullname
       })
       .subscribe(() => {
-        this.userService
-          .getUserById(this.user.id)
-          .subscribe(user => (this.user = user));
+        this.userService.getUserById(this.user.id).subscribe(user => {
+          this.user = user;
+          this.dataNotChanged = true;
+        });
       });
   }
 
@@ -119,10 +124,8 @@ export class UserModifyComponent implements OnInit {
   }
 
   private refreshGroups() {
-    this.userService
-      .getGroupForUser(this.user.id)
-      .subscribe(
-        groups => (this.userGroups = this.getDetails(this.allGroups, groups))
-      );
+    this.userService.getGroupForUser(this.user.id).subscribe(groups => {
+      this.updateGroupsView(this.allGroups, groups);
+    });
   }
 }
