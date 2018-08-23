@@ -11,6 +11,13 @@ const group = db => {
       return db.one(`SELECT id, name FROM mercury.group WHERE id = $1`, id);
     },
 
+    getByName: async name => {
+      return db.one(
+        `SELECT id, name FROM mercury.group WHERE name = $1`,
+        name
+      );
+    },
+
     exists: async name => {
       return db.one(`SELECT id, name FROM mercury.group WHERE name = $1`, name);
     },
@@ -54,6 +61,13 @@ const group = db => {
         `DELETE FROM mercury.user_group 
           WHERE user_id = $1 AND group_id = $2`,
         [userId, id]
+      );
+    },
+
+    permissions: async id => {
+      return db.any(
+        `SELECT permission_id FROM mercury.group_permission WHERE group_id = $1`,
+        id
       );
     },
 

@@ -66,7 +66,7 @@ router.delete("/user/:id", async function(req, res) {
 
 // USER - UPDATE PASSWORD
 router.put("/user/:id/password", async function(req, res) {
-  const ret = await q(db).user.updatePassword(req.params.id, req.body);
+  const ret = await q(db).user.updatePassword(req.params.id, req.body.password);
   res.json(ret);
 });
 
@@ -79,7 +79,7 @@ router.get("/user/:id/group", async function(req, res) {
 // USER - PERMISSIONS
 router.get("/user/:id/permission", async function(req, res) {
   const ret = await q(db).user.permissions(req.params.id);
-  res.json(ret);
+  res.json(ret.map(r => r.permission_id));
 });
 
 // USER - EXISTS?
@@ -96,6 +96,18 @@ router.get("/group", async function(req, res) {
   var { offset = 0, limit = 10 } = req.query;
   const groups = await q(db).group.getAll(offset, limit);
   res.json(groups);
+});
+
+// GROUP - GET BY ID
+router.get("/group/:id", async function(req, res) {
+  const ret = await q(db).group.getById(req.params.id);
+  res.json(ret);
+});
+
+// GROUP - GET BY NAME
+router.get("/group/name/:name", async function(req, res) {
+  const ret = await q(db).group.getByName(req.params.name);
+  res.json(ret);
 });
 
 // GROUP - CREATE
@@ -118,7 +130,7 @@ router.delete("/group/:id", async function(req, res) {
 
 // GROUP - ADD USER
 router.put("/group/:id/user/:userId", async function(req, res) {
-  const ret = await q(db).user.addUser(req.params.id, req.params.userId);
+  const ret = await q(db).group.addUser(req.params.id, req.params.userId);
   res.json(ret);
 });
 
@@ -126,6 +138,12 @@ router.put("/group/:id/user/:userId", async function(req, res) {
 router.delete("/group/:id/user/:userId", async function(req, res) {
   const ret = await q(db).group.removeUser(req.params.id, req.params.userId);
   res.json(ret);
+});
+
+// GROUP - PERMISSIONS
+router.get("/group/:id/permission", async function(req, res) {
+  const ret = await q(db).group.permissions(req.params.id);
+  res.json(ret.map(r => r.permission_id));
 });
 
 // GROUP - ADD PERMISSION

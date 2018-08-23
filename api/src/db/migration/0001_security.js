@@ -5,9 +5,9 @@ module.exports = () => {
     t.none(`create table if not exists 
             mercury.user (
               id              uuid primary key default uuid_generate_v4(),
-              name            char(32) not null,
-              display_name    char(64) not null,
-              salt            char(64) not null,
+              name            varchar(32) not null,
+              display_name    varchar(22) not null,
+              salt            varchar(64) not null,
               password        char(60) not null,
               active          boolean default TRUE,
               archived        boolean default FALSE,
@@ -18,13 +18,13 @@ module.exports = () => {
     t.none(`create table if not exists 
             mercury.group (
               id              uuid primary key default uuid_generate_v4(),
-              name            char(64) not null unique
+              name            varchar(64) not null unique
             );`);
 
     t.none(`create table if not exists 
             mercury.permission (
               id              smallint primary key,
-              name            char(64) not null unique
+              name            varchar(64) not null unique
             );`);
 
     t.none(`create table if not exists 
