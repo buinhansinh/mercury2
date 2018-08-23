@@ -130,7 +130,7 @@ export class HttpUserService {
     const dataSource = new UserDataSource(
       this,
       pageSize,
-      (offset, limit, words) => {
+      (offset, limit) => {
         return this.http
           .get(`api/security/user/search/${keyword}`, {
             params: new HttpParams()
