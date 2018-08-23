@@ -12,7 +12,11 @@ import { finalize } from 'rxjs/operators';
 export class GroupFormComponent implements OnInit {
   private isProcessing = false;
   groupForm: FormGroup;
-  constructor(private formBuilder: FormBuilder, private groupService: GroupService, private matDialog: MatDialogRef<GroupFormComponent>) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private groupService: GroupService,
+    private matDialog: MatDialogRef<GroupFormComponent>
+  ) {}
 
   ngOnInit() {
     this.groupForm = this.formBuilder.group({
@@ -21,13 +25,17 @@ export class GroupFormComponent implements OnInit {
   }
 
   onCreateGroup() {
-    if(this.groupForm.invalid || this.isProcessing) return;
+    if (this.groupForm.invalid || this.isProcessing) return;
     this.isProcessing = true;
-    this.groupService.createGroup( {
-      name: this.groupForm.value.groupName
-    }).pipe(finalize(() => {
-      this.isProcessing = false;
-    })).subscribe(() => this.matDialog.close());
-
+    this.groupService
+      .createGroup({
+        name: this.groupForm.value.groupName
+      })
+      .pipe(
+        finalize(() => {
+          this.isProcessing = false;
+        })
+      )
+      .subscribe(() => this.matDialog.close());
   }
 }

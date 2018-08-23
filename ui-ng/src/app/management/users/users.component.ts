@@ -13,23 +13,26 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class UsersComponent implements OnInit, OnDestroy {
   users$: Observable<User[]>;
-  displayedColumns = ['name', 'display_name', 'toolbox'];
+  displayedColumns = ['name', 'display_name'];
   destroy$: Subject<any> = new Subject();
   constructor(private userSerice: UserService, private dialog: MatDialog) {}
 
   ngOnInit() {
     this.updateUserList();
-    this.userSerice.getDataUpdateEvent().pipe(takeUntil(this.destroy$)).subscribe(() => {
-      this.updateUserList();
-    });
+    this.userSerice
+      .getDataUpdateEvent()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.updateUserList();
+      });
   }
 
-  ngOnDestroy(){
-    this.destroy$.next("");
+  ngOnDestroy() {
+    this.destroy$.next('');
     this.destroy$.unsubscribe();
   }
 
-  private updateUserList(){
+  private updateUserList() {
     this.users$ = this.userSerice.getAll();
   }
 
@@ -42,7 +45,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     });
   }
 
-  onDeleteUser(user: User){
+  onDeleteUser(user: User) {
     this.userSerice.delete(user).subscribe();
   }
 }

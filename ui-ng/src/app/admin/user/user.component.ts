@@ -29,7 +29,7 @@ export class UserComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     const user$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap, index: number) =>
-        this.userService.getById(params.get('id'))
+        this.userService.getUserById(params.get('id'))
       )
     );
     user$.subscribe((user: User) => {

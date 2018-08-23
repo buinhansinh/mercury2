@@ -1,5 +1,5 @@
 <app-page>
-    <app-page-header title="User Management">
+    <app-page-header title="Users">
         <button matSuffix mat-flat-button (click)="onOpenAddUserForm()"
             class="mb-0">
             <mat-icon>add</mat-icon>
@@ -23,19 +23,8 @@
                         <mat-cell
                          *matCellDef="let user" class="text-left">{{user.display_name}}</mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="toolbox">
-                        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                        <mat-cell
-                         *matCellDef="let user" class="align-right">
-                            <button mat-icon-button [disableRipple]="'true'"
-                                [routerLink]="['../user', user.id]">
-                                <mat-icon>edit</mat-icon>
-                            </button>
-                            <app-delete-button (onDelete)="onDeleteUser(user)"></app-delete-button>
-                        </mat-cell>
-                    </ng-container>
                     <mat-header-row *matHeaderRowDef="displayedColumns;"></mat-header-row>
-                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                    <mat-row *matRowDef="let user; columns: displayedColumns;"      [routerLink]="['../user', user.id]"></mat-row>
                 </mat-table>
     </app-page-content>
 </app-page>

@@ -15,7 +15,7 @@ import { take, takeUntil } from 'rxjs/operators';
 export class GroupsComponent implements OnInit {
   destroy$: Subject<any> = new Subject();
   groups: Group[];
-  displayedColumns = ['name','toolbox'];
+  displayedColumns = ['name'];
   constructor(private groupSerice: GroupService, private dialog: MatDialog) {}
 
   ngOnInit() {
@@ -23,14 +23,20 @@ export class GroupsComponent implements OnInit {
     this.subscribeToDataChanged();
   }
 
-  private refreshData(){
-    this.groupSerice.getGroups().pipe(take(1)).subscribe(groups => this.groups = groups);
+  private refreshData() {
+    this.groupSerice
+      .getGroups()
+      .pipe(take(1))
+      .subscribe(groups => (this.groups = groups));
   }
 
-  private subscribeToDataChanged(){
-    this.groupSerice.getDataUpdateEvent().pipe(takeUntil(this.destroy$)).subscribe(() => {
-      this.refreshData();
-    });
+  private subscribeToDataChanged() {
+    this.groupSerice
+      .getDataUpdateEvent()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.refreshData();
+      });
   }
 
   onOpenAddGroupForm() {
@@ -42,13 +48,12 @@ export class GroupsComponent implements OnInit {
     });
   }
 
-  onDeleteGroup(group: any){
+  onDeleteGroup(group: any) {
     this.groupSerice.deleteGroup(group).subscribe();
   }
 
-  ngOnDestroy(){
-    this.destroy$.next("");
+  ngOnDestroy() {
+    this.destroy$.next('');
     this.destroy$.unsubscribe();
   }
-
 }

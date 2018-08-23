@@ -37,7 +37,7 @@ export class DbModule {
           useClass: HttpSessionInterceptor,
           multi: true
         },
-     
+
         UserService,
         OfferService,
         ContactService,

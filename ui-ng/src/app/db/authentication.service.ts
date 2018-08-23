@@ -27,18 +27,22 @@ export class AuthenticationService {
   }
 
   public logout() {
-  
-    this.http.get('/api/logout').pipe(finalize(() => {
-      localStorage.clear();
-      this.router.navigate(['/login']);
-    })).subscribe();
+    this.http
+      .get('/api/logout')
+      .pipe(
+        finalize(() => {
+          localStorage.clear();
+          this.router.navigate(['/login']);
+        })
+      )
+      .subscribe();
   }
 
   public isAuthenticated() {
     return !!localStorage.getItem('userId');
   }
 
-  public clearSession(){
+  public clearSession() {
     localStorage.clear();
   }
 }

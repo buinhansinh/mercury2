@@ -11,6 +11,8 @@ import { ManagementRoutingModule } from './management-routing.module';
 import { ReportsComponent } from './reports/reports.component';
 import { GroupModifyComponent } from './group-modify/group-modify.component';
 import { UserModifyComponent } from './user-modify/user-modify.component';
+import { GroupResolver } from './group-modify/group.resolve';
+import { UserResolver } from './user-modify/user.resolve';
 
 @NgModule({
   imports: [AppCommonModule, ManagementRoutingModule],
@@ -25,6 +27,7 @@ import { UserModifyComponent } from './user-modify/user-modify.component';
     ReportsComponent,
     GroupModifyComponent,
     UserModifyComponent
-  ]
+  ],
+  providers: [GroupResolver, UserResolver]
 })
 export class ManagementModule {}
