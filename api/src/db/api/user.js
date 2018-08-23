@@ -76,16 +76,10 @@ const user = db => {
     updatePassword: async (id, salt, password) => {
       return db.none(
         `UPDATE mercury.user SET
-<<<<<<< HEAD
-          password = $1 
-        WHERE id = $2`,
-        [password, id]
-=======
           salt = $1,
           password = $2
         WHERE id = $3`,
         [salt, password, id]
->>>>>>> mercury2/master
       );
     },
 
