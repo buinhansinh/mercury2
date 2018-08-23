@@ -9,4 +9,9 @@ export class PermissionService {
   public getPermissions(): Observable<Permission[]> {
     return this.http.get<Permission[]>('api/security/permission');
   }
+
+  getPermissionsForCurrentUser(){
+    const currentUserId = localStorage.getItem("userId") || "invalidId";
+    return this.http.get(`api/security/user/${currentUserId}/permission`);
+  }
 }

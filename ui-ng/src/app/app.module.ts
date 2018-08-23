@@ -19,6 +19,7 @@ import { ManagementModule } from './management/management.module';
 import { AuthGuard } from './guards/auth-guard';
 import { LayoutWrapperComponent } from './layout-wrapper/layout-wrapper.component';
 import { NotificationDisplayerComponent } from './notification-displayer/notification-displayer.component';
+import { PermissionResolver } from './app.resolve';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { NotificationDisplayerComponent } from './notification-displayer/notific
     AppRoutingModule
   ],
   exports: [],
-  providers: [AuthGuard],
+  providers: [AuthGuard, PermissionResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

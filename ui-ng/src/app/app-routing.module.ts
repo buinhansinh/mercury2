@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './guards/auth-guard';
 import { LayoutWrapperComponent } from './layout-wrapper/layout-wrapper.component';
+import { PermissionResolver } from './app.resolve';
 
 const routes: Routes = [
   {
@@ -14,6 +15,10 @@ const routes: Routes = [
 
   {
     path: '',
+    canActivate: [AuthGuard],
+    resolve: {
+      permissions: PermissionResolver
+    },
     component: LayoutWrapperComponent,
     children: [
       {
