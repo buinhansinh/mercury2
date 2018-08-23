@@ -7,24 +7,29 @@
         </button>
     </app-page-header>
     <app-page-content>
-            <mat-form-field class="search-field">
-                    <input type="text" matInput placeholder="Search">
-                    <mat-icon matSuffix>search</mat-icon>
-        
-                </mat-form-field>
-                <mat-table [dataSource]="users$ | async">
-                    <ng-container matColumnDef="name">
-                        <mat-header-cell *matHeaderCellDef class="text-left">Username</mat-header-cell>
-                        <mat-cell
-                         *matCellDef="let user" class="text-left">{{user.name}}</mat-cell>
-                    </ng-container>
-                    <ng-container matColumnDef="display_name">
-                        <mat-header-cell *matHeaderCellDef class="text-left">Full Name</mat-header-cell>
-                        <mat-cell
-                         *matCellDef="let user" class="text-left">{{user.display_name}}</mat-cell>
-                    </ng-container>
-                    <mat-header-row *matHeaderRowDef="displayedColumns;"></mat-header-row>
-                    <mat-row *matRowDef="let user; columns: displayedColumns;"      [routerLink]="['../user', user.id]"></mat-row>
-                </mat-table>
+        <mat-form-field class="search-field">
+            <input type="text" matInput placeholder="Search"
+                [(ngModel)]="keyword" (keyup.enter)="searchUser()">
+            <mat-icon (click)="searchUser()" matSuffix>search</mat-icon>
+        </mat-form-field>
+        <mat-table [dataSource]="userDataSource?.items | async">
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef class="text-left">Username</mat-header-cell>
+                <mat-cell
+                    *matCellDef="let user" class="text-left">{{user.name}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="display_name">
+                <mat-header-cell *matHeaderCellDef class="text-left">Full Name</mat-header-cell>
+                <mat-cell
+                    *matCellDef="let user" class="text-left">{{user.display_name}}</mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns;"></mat-header-row>
+            <mat-row *matRowDef="let user; columns: displayedColumns;"
+                [routerLink]="['../user', user.id]"></mat-row>
+        </mat-table>
+        <mat-paginator [length]="userDataSource?.totalItems | async"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="[5, 10, 25, 100]" (page)="onPageChange($event)">
+        </mat-paginator>
     </app-page-content>
 </app-page>
