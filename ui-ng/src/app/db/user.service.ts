@@ -1,11 +1,42 @@
 import { Injectable, Inject } from '@angular/core';
 import { User, Group } from './user.model';
 import { USERS } from './user.mock';
-import { of, Observable, Subject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { of, Observable, Subject, BehaviorSubject } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { clone } from '../app-common/util';
-import { tap, map } from 'rxjs/operators';
+import { tap, map, take } from 'rxjs/operators';
 import { Permission } from './permission.model';
+import {
+  PaginationDataSource,
+  DataProvider,
+  Result
+} from '../app-common/pagination-data-source';
+
+export class UserDataSource implements PaginationDataSource<User> {
+  public readonly totalItems = new BehaviorSubject<number>(0);
+  public readonly items: BehaviorSubject<User[]> = new BehaviorSubject<User[]>(
+    []
+  );
+  constructor(
+    private userService: UserService,
+    private pageSize = 10,
+    private dataProvider: DataProvider<User>
+  ) {}
+
+  setCurrentPage(pageIndex: number) {
+    const offset = (pageIndex < 0 ? 0 : pageIndex) * this.pageSize;
+    this.dataProvider(offset, this.pageSize)
+      .pipe(take(1))
+      .subscribe(result => {
+        this.totalItems.next(result.total);
+        this.items.next(result.items);
+      });
+  }
+
+  setPageSize(pageSize: number) {
+    this.pageSize = pageSize;
+  }
+}
 
 export class MockUserService {
   private USERS: User[] = USERS;
@@ -50,10 +81,25 @@ export class HttpUserService {
   getGroupForUser(id: string): Observable<any> {
     return this.http.get<any>(`api/security/user/${id}/group`);
   }
-  getAll(): Observable<User[]> {
-    return this.http
-      .get(`api/security/user/`)
-      .pipe(map((res: any) => res.users));
+  getAll(pageSize: number): Observable<UserDataSource> {
+    const dataSource = new UserDataSource(this, pageSize, (offset, limit) => {
+      return this.http
+        .get<Result<User>>(`api/security/user/`, {
+          params: new HttpParams()
+            .set('offset', offset + '')
+            .set('limit', limit + '')
+        })
+        .pipe(
+          map((res: any) => {
+            return {
+              total: res.total || 0,
+              items: res.users
+            };
+          })
+        );
+    });
+    dataSource.setCurrentPage(0);
+    return of(dataSource);
   }
 
   create(user: User): Observable<User> {
@@ -78,6 +124,31 @@ export class HttpUserService {
 
   updatePassword(user: User): Observable<any> {
     return this.http.put(`api/security/user/${user.id}/password`, user);
+  }
+
+  searchUser(keyword: string, pageSize: number): Observable<any> {
+    const dataSource = new UserDataSource(
+      this,
+      pageSize,
+      (offset, limit) => {
+        return this.http
+          .get(`api/security/user/search/${keyword}`, {
+            params: new HttpParams()
+              .set('offset', offset + '')
+              .set('limit', limit + '')
+          })
+          .pipe(
+            map((res: any) => {
+              return {
+                total: res.total || 0,
+                items: res.users
+              };
+            })
+          );
+      }
+    );
+    dataSource.setCurrentPage(0);
+    return of(dataSource);
   }
 
   private notifyChanges() {

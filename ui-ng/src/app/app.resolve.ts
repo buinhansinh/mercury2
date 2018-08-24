@@ -13,9 +13,7 @@ import { PermissionService } from './db/permission.service';
 
 @Injectable()
 export class PermissionResolver implements Resolve<Observable<any>> {
-  constructor(
-    private permissionService: PermissionService
-  ) {}
+  constructor(private permissionService: PermissionService) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     return this.permissionService.getPermissionsForCurrentUser();
