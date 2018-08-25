@@ -9,34 +9,11 @@ import { Permission } from './permission.model';
 import {
   PaginationDataSource,
   DataProvider,
-  Result
+  Result,
+  SimpleDataSource
 } from '../app-common/pagination-data-source';
 
-export class UserDataSource implements PaginationDataSource<User> {
-  public readonly totalItems = new BehaviorSubject<number>(0);
-  public readonly items: BehaviorSubject<User[]> = new BehaviorSubject<User[]>(
-    []
-  );
-  constructor(
-    private userService: UserService,
-    private pageSize = 10,
-    private dataProvider: DataProvider<User>
-  ) {}
-
-  setCurrentPage(pageIndex: number) {
-    const offset = (pageIndex < 0 ? 0 : pageIndex) * this.pageSize;
-    this.dataProvider(offset, this.pageSize)
-      .pipe(take(1))
-      .subscribe(result => {
-        this.totalItems.next(result.total);
-        this.items.next(result.items);
-      });
-  }
-
-  setPageSize(pageSize: number) {
-    this.pageSize = pageSize;
-  }
-}
+export class UserDataSource extends SimpleDataSource<User> {}
 
 export class MockUserService {
   private USERS: User[] = USERS;
@@ -82,7 +59,7 @@ export class HttpUserService {
     return this.http.get<any>(`api/security/user/${id}/group`);
   }
   getAll(pageSize: number): Observable<UserDataSource> {
-    const dataSource = new UserDataSource(this, pageSize, (offset, limit) => {
+    const dataSource = new UserDataSource(pageSize, (offset, limit) => {
       return this.http
         .get<Result<User>>(`api/security/user/`, {
           params: new HttpParams()
@@ -127,26 +104,22 @@ export class HttpUserService {
   }
 
   searchUser(keyword: string, pageSize: number): Observable<any> {
-    const dataSource = new UserDataSource(
-      this,
-      pageSize,
-      (offset, limit) => {
-        return this.http
-          .get(`api/security/user/search/${keyword}`, {
-            params: new HttpParams()
-              .set('offset', offset + '')
-              .set('limit', limit + '')
+    const dataSource = new UserDataSource(pageSize, (offset, limit) => {
+      return this.http
+        .get(`api/security/user/search/${keyword}`, {
+          params: new HttpParams()
+            .set('offset', offset + '')
+            .set('limit', limit + '')
+        })
+        .pipe(
+          map((res: any) => {
+            return {
+              total: res.total || 0,
+              items: res.users
+            };
           })
-          .pipe(
-            map((res: any) => {
-              return {
-                total: res.total || 0,
-                items: res.users
-              };
-            })
-          );
-      }
-    );
+        );
+    });
     dataSource.setCurrentPage(0);
     return of(dataSource);
   }
