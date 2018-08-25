@@ -15,7 +15,7 @@ import { PaginationDataSource } from '../../app-common/pagination-data-source';
 })
 export class GroupsComponent implements OnInit {
   private groupDataSource: PaginationDataSource<Group>;
-  private pageSize: number;
+  private pageSize = 10;
   destroy$: Subject<any> = new Subject();
   displayedColumns = ['name'];
   constructor(private groupSerice: GroupService, private dialog: MatDialog) {}

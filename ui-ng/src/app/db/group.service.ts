@@ -37,7 +37,7 @@ export class GroupService {
     return of(groupSource);
   }
   getGroups(): Observable<Group[]> {
-    return this.http.get<Group[]>(`api/security/group/`);
+    return this.http.get<Group[]>(`api/security/group/`).pipe(map((result: any) => result.groups));
   }
 
   updateGroup(group: Group): Observable<any> {
