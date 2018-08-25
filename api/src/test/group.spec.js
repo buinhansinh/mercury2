@@ -74,3 +74,47 @@ describe("Get Permissions", function() {
       });
   });
 });
+
+describe("Get Groups", function() {
+  const api = request.agent(app);
+
+  before(login(api));
+  after(logout(api));
+
+  it("should return a list of groups", function(done) {
+    api
+      .get(`/api/security/group`)
+      .expect(200)
+      .expect("Content-Type", /json/)
+      .end((err, res) => {
+        if (err) return done(err);
+        console.log(res.body);
+        done();
+      });
+  });
+});
+
+describe("Add a User to a Group twice", function() {
+  const api = request.agent(app);
+  var adminUser = null;
+
+  before(async () => {
+    adminUser = await q(db).user.getByName("admin");
+    adminGroup = await q(db).group.getByName("Admin");
+  });  
+  before(login(api));
+  after(logout(api));
+
+  it("should return 500", function(done) {
+    api
+      .put(`/api/security/group/${adminGroup.id}/user/${adminUser.id}`)
+      .expect(500)
+      .end((err, res) => {
+        if (err) return done(err);
+        console.log(res.body);
+        done();
+      });
+  });
+
+});
+

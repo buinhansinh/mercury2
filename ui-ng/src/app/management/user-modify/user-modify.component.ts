@@ -39,7 +39,8 @@ export class UserModifyComponent implements OnInit {
 
   loadData() {
     const data = this.route.snapshot.data.data;
-    this.allGroups = data.allGroups;
+    console.log(data);
+    this.allGroups = data.allGroups.groups;
     this.updateGroupsView(data.allGroups, data.userGroups);
     this.user = data.user;
     this.updateForm(this.user);

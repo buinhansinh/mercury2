@@ -1,4 +1,5 @@
-const router = require("express").Router();
+// const router = require("express").Router();
+const router = require("./router")
 const q = require("../db/query");
 const db = require("../db/connection");
 const bcrypt = require("bcryptjs");
@@ -10,10 +11,10 @@ router.get("/user", async function(req, res) {
   var offset, limit;
   var { offset = 0, limit = 10 } = req.query;
   const users = await q(db).user.getAll(offset, limit);
-  const total = await q(db).user.getAllCount();
+  const total = users.length > 0 ? users[0].count : 0;
   res.json({
     users: users,
-    total: total.count
+    total: total
   });
 });
 
@@ -32,18 +33,14 @@ router.get("/user/search/:name", async function(req, res) {
 // USER - CREATE
 router.post("/user", async function(req, res, next) {
   const user = req.body;
-  // check for usename duplicate. 
+  // check for usename duplicate.
   // since it's not a transaction, it might cause race conditions.
   const exists = await q(db).user.exists(user.name);
   if (exists) {
     const e = new Error("Username already exists");
     e.status = 409;
-    next(e);
+    throw e;
   } else {
-    const salt = bcrypt.genSaltSync(10);
-    const hash = bcrypt.hashSync(user.password, salt);
-    user["salt"] = salt;
-    user["password"] = hash;
     const ret = await q(db).user.insert(user);
     res.json(ret);
   }
@@ -57,14 +54,14 @@ router.get("/user/:id", async function(req, res) {
 
 // USER - UPDATE NAME
 router.put("/user/:id", async function(req, res, next) {
-  // check for usename duplicate. 
+  // check for usename duplicate.
   // since it's not a transaction, it might cause race conditions.
   const user = req.body;
   const userDb = await q(db).user.getByName(user.name);
-  if (userDb && userDb.id === req.params.id) {
+  if (userDb && userDb.id !== req.params.id) {
     const e = new Error("Username already exists");
     e.status = 409;
-    next(e);
+    throw e;
   } else {
     const ret = await q(db).user.update(req.params.id, req.body);
     res.json(ret);
@@ -79,9 +76,7 @@ router.delete("/user/:id", async function(req, res) {
 
 // USER - UPDATE PASSWORD
 router.put("/user/:id/password", async function(req, res) {
-  const salt = bcrypt.genSaltSync(10);
-  const hash = bcrypt.hashSync(req.body.password, salt);
-  const ret = await q(db).user.updatePassword(req.params.id, salt, hash);
+  const ret = await q(db).user.updatePassword(req.params.id, req.body.password);
   res.json(ret);
 });
 
@@ -110,7 +105,11 @@ router.get("/group", async function(req, res) {
   var offset, limit;
   var { offset = 0, limit = 10 } = req.query;
   const groups = await q(db).group.getAll(offset, limit);
-  res.json(groups);
+  const total = groups.length > 0 ? groups[0].count : 0;  
+  res.json({ 
+    groups: groups,
+    total: total
+  });
 });
 
 // GROUP - GET BY ID
@@ -125,11 +124,16 @@ router.get("/group/name/:name", async function(req, res) {
   res.json(ret);
 });
 
+const trycatch = func => (req, res, next) => func(req, res).catch(next);
+
 // GROUP - CREATE
-router.post("/group", async function(req, res) {
-  const ret = await q(db).group.insert(req.body);
-  res.json(ret);
-});
+router.post(
+  "/group",
+  trycatch(async function(req, res) {
+    const ret = await q(db).group.insert(req.body);
+    res.json(ret);
+  })
+);
 
 // GROUP - UPDATE
 router.put("/group/:id", async function(req, res) {
@@ -189,4 +193,4 @@ router.get("/permission", async function(req, res) {
   res.json(permissions);
 });
 
-module.exports = router;
+module.exports = router.route();

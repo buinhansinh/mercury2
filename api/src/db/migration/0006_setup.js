@@ -1,17 +1,13 @@
 const db = require("../connection");
 const q = require("../query");
-const bcrypt = require("bcryptjs");
 const logger = require("../../log");
 const Permission = require("../../enum/permission");
 
 module.exports = async () => {
-  const salt = await bcrypt.genSaltSync(10);
-  const hash = await bcrypt.hashSync("admin", salt);
   const admin = {
     name: "admin",
     display_name: "Administrator",
-    salt: salt,
-    password: hash
+    password: "admin"
   };
 
   return await db.tx(async t => {

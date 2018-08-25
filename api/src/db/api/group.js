@@ -2,7 +2,7 @@ const group = db => {
   return {
     getAll: async (offset, limit) => {
       return db.any(
-        `SELECT id, name FROM mercury.group ORDER BY name LIMIT $1 OFFSET $2`,
+        `SELECT id, name, COUNT(id) OVER() FROM mercury.group ORDER BY name LIMIT $1 OFFSET $2`,
         [limit, offset]
       );
     },
