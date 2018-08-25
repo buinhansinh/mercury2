@@ -3,9 +3,10 @@ import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { GroupService } from '../../db/group.service';
 import { Observable, Subject } from 'rxjs';
 import { Group } from '../../db/group.model';
-import { MatDialog } from '@angular/material';
+import { MatDialog, PageEvent } from '@angular/material';
 import { GroupFormComponent } from '../group-form/group-form.component';
 import { take, takeUntil } from 'rxjs/operators';
+import { PaginationDataSource } from '../../app-common/pagination-data-source';
 
 @Component({
   selector: 'app-groups',
@@ -13,8 +14,9 @@ import { take, takeUntil } from 'rxjs/operators';
   styleUrls: ['./groups.component.css']
 })
 export class GroupsComponent implements OnInit {
+  private groupDataSource: PaginationDataSource<Group>;
+  private pageSize: number;
   destroy$: Subject<any> = new Subject();
-  groups: Group[];
   displayedColumns = ['name'];
   constructor(private groupSerice: GroupService, private dialog: MatDialog) {}
 
@@ -25,9 +27,9 @@ export class GroupsComponent implements OnInit {
 
   private refreshData() {
     this.groupSerice
-      .getGroups()
+      .getGroupDataSource(this.pageSize)
       .pipe(take(1))
-      .subscribe(groups => (this.groups = groups));
+      .subscribe(groups => (this.groupDataSource = groups));
   }
 
   private subscribeToDataChanged() {
@@ -50,6 +52,13 @@ export class GroupsComponent implements OnInit {
 
   onDeleteGroup(group: any) {
     this.groupSerice.deleteGroup(group).subscribe();
+  }
+
+  onPageChange(pageEvent: PageEvent) {
+    if (!this.groupDataSource) return;
+    this.pageSize = pageEvent.pageSize;
+    this.groupDataSource.setPageSize(pageEvent.pageSize);
+    this.groupDataSource.setCurrentPage(pageEvent.pageIndex);
   }
 
   ngOnDestroy() {

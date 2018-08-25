@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Group } from './group.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of, Subject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
+import { SimpleDataSource } from '../app-common/pagination-data-source';
+
+export class GroupDataSource extends SimpleDataSource<Group> {}
 
 @Injectable()
 export class GroupService {
@@ -13,6 +16,26 @@ export class GroupService {
     return this.http.get<Group>(`api/security/group/${id}`);
   }
 
+  getGroupDataSource(pageSize: number): Observable<GroupDataSource> {
+    const groupSource = new GroupDataSource(pageSize, (offset, limit) => {
+      return this.http
+        .get(`api/security/group/`, {
+          params: new HttpParams()
+            .set('offset', offset + '')
+            .set('limit', limit + '')
+        })
+        .pipe(
+          map((res: any) => {
+            return {
+              total: res.total || 0,
+              items: res.groups
+            };
+          })
+        );
+    });
+    groupSource.setCurrentPage(0);
+    return of(groupSource);
+  }
   getGroups(): Observable<Group[]> {
     return this.http.get<Group[]>(`api/security/group/`);
   }
