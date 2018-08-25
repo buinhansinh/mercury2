@@ -6,6 +6,7 @@ const chai = require("chai");
 
 chai.use(require("chai-http"));
 expect = chai.expect;
+assert = chai.assert;
 
 const { login, logout } = require("./auth.spec");
 
@@ -27,41 +28,99 @@ describe("Get Users", function() {
   });
 });
 
-describe("Update User", function() {
+const someuser = {
+  name: "someuser",
+  display_name: "Some User",
+  password: "somepassword"
+};
+
+const admin = {
+  name: "admin"
+};
+
+const insertUser = user => async () => {
+  var ret = await q(db).user.insert(user);
+  user.id = ret.id;
+};
+
+const getUser = user => async () => {
+  var ret = await q(db).user.getByName(user.name);
+  Object.assign(user, ret);
+};
+
+const deleteUser = user => async () => {
+  const ret = await q(db).user.deleteById(user.id);
+};
+
+describe("Get user", function() {
   const api = request.agent(app);
-  var userId = null;
 
-  // login
   before(login(api));
+  before(insertUser(someuser));
+  after(deleteUser(someuser));
+  after(logout(api));
 
-  // insert a user
-  before(function(done) {
+  it("should return 2 users", function(done) {
     api
-      .post("/api/security/user")
-      .type("form")
-      .send({
-        name: "someuser",
-        display_name: "Some User",
-        password: "somepassword"
-      })
+      .get("/api/security/user")
       .expect(200)
       .expect("Content-Type", /json/)
       .end((err, res) => {
         if (err) return done(err);
         console.log(res.body);
-        userId = res.body.id;
+        expect(res.body.users).to.have.lengthOf(2);
         done();
       });
   });
+});
 
-  // update the user with the same name
-  it("should return 409", function(done) {
+
+describe("Update user", function() {
+  const api = request.agent(app);
+
+  before(login(api));
+  before(insertUser(someuser));
+  before(getUser(admin));
+  after(deleteUser(someuser));
+  after(logout(api));
+
+  // update the user with the same name as itself
+  it("should return 200", function(done) {
     api
-      .put(`/api/security/user/${userId}`)
+      .put(`/api/security/user/${someuser.id}`)
       .type("form")
       .send({
-        id: userId,
+        id: someuser.id,
         name: "someuser",
+        display_name: "Some Updated User",
+        active: "False"
+      })
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+        console.log(res.body);
+        done();
+      });
+  });
+});
+
+describe("Update user with a name conflict", function() {
+  const api = request.agent(app);
+
+  before(login(api));
+  before(insertUser(someuser));
+  before(getUser(admin));
+  after(deleteUser(someuser));
+  after(logout(api));
+
+  // update the user to a different name but same as admin
+  it("should return 409", function(done) {
+    api
+      .put(`/api/security/user/${someuser.id}`)
+      .type("form")
+      .send({
+        id: someuser.id,
+        name: "admin",
         display_name: "Some Updated User",
         active: "False"
       })
@@ -72,63 +131,16 @@ describe("Update User", function() {
         done();
       });
   });
-
-  // update the user agin
-  it("should return 200", function(done) {
-    api
-      .put(`/api/security/user/${userId}`)
-      .type("form")
-      .send({
-        id: userId,
-        name: "someupdateduser",
-        display_name: "Some Updated User",
-        active: "False"
-      })
-      .expect(200)
-      .end((err, res) => {
-        if (err) return done(err);
-        console.log(res.body);
-        done();
-      });
-  });
-
-  it("should return 2 users", function(done) {
-    api
-      .get("/api/security/user")
-      .expect(200)
-      .expect("Content-Type", /json/)
-      .end((err, res) => {
-        if (err) return done(err);
-        console.log(res.body);
-        done();
-      });
-  });
-
-  // delete the user
-  after(function(done) {
-    api
-      .delete(`/api/security/user/${userId}`)
-      .expect(200)
-      .end((err, res) => {
-        if (err) return done(err);
-        console.log(res.body);
-        done();
-      });
-  });
-
-  // logout
-  after(logout(api));
 });
 
 describe("Update user password", function() {
   const api = request.agent(app);
-  var admin = null;
 
   before(login(api));
-  before(async () => {
-    admin = await q(db).user.getByName("admin");
+  before(getUser(admin));
+  after(async () => {
+    q(db).user.updatePassword(admin.id, "admin");
   });
-
   after(logout(api));
 
   it("should return 200", function(done) {
@@ -146,25 +158,9 @@ describe("Update user password", function() {
         done();
       });
   });
-
-  it("should return 200", function(done) {
-    api
-      .put(`/api/security/user/${admin.id}/password`)
-      .type("form")
-      .send({
-        password: "admin"
-      })
-      .expect(200)
-      .expect("Content-Type", /json/)
-      .end((err, res) => {
-        if (err) return done(err);
-        console.log(res.body);
-        done();
-      });
-  });
 });
 
-describe("Search user", function() {
+describe("Search users", function() {
   const api = request.agent(app);
 
   before(login(api));
