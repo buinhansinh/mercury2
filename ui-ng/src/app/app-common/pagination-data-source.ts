@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 import { Observable, BehaviorSubject } from 'rxjs';
 import { take } from 'rxjs/operators';
-=======
-import { Observable } from 'rxjs';
->>>>>>> mercury2/master
 export interface Result<T> {
   items: T[];
   total: number;
